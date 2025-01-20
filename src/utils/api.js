@@ -2,8 +2,8 @@ import { Buffer } from "buffer";
 
 export const api = {
   async auth() {
-    const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-    const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+    const clientId = process.env.SPOTIFY_CLIENT_ID;
+    const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
     // Encode credentials for Basic Auth
     const authString = Buffer.from(`${clientId}:${clientSecret}`).toString(
