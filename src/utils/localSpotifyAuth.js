@@ -1,5 +1,7 @@
+import { Buffer } from "buffer";
+
 // functions/spotify-auth.js
-// import fetch from 'node-fetch';
+// import fetch from "node-fetch";
 
 // We'll store the token and its expiration in memory
 // Note: This will reset when the function cold starts
