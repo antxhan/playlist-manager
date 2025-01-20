@@ -17,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sync-branch": "CURRENT_BRANCH=$(git branch --show-current) && git checkout main && git pull && git checkout $CURRENT_BRANCH && git merge main && git push"
   },
   "eslintConfig": {
     "extends": [
