@@ -1,6 +1,7 @@
 import localSpotifyAuth from "./localSpotifyAuth";
 // import { Buffer } from "buffer";
 // import spotifyAuth from "../../netlify/functions/spotify-auth";
+//
 
 export async function getSpotifyToken() {
   if (process.env.NODE_ENV === "development") {
