@@ -1,24 +1,34 @@
-import localSpotifyAuth from "./localSpotifyAuth";
-// import { Buffer } from "buffer";
-// import spotifyAuth from "../../netlify/functions/spotify-auth";
-//
+import { Buffer } from "buffer";
 
-export async function getSpotifyToken() {
-  if (process.env.NODE_ENV === "development") {
-    return await localSpotifyAuth();
-    // return "BQDa_l_zaXU3Y3xeRTR0Nc3ZOiXA6YeXIaJBLQkqijqo7DRTCTrxiav2bU5pyyU4ZkP9";
-  } else {
+export const api = {
+  async auth() {
+    const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
+    const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+
+    // Encode credentials for Basic Auth
+    const authString = Buffer.from(`${clientId}:${clientSecret}`).toString(
+      "base64"
+    );
+
     try {
-      const response = await fetch(`/.netlify/functions/spotify-auth`);
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to fetch token");
-      }
+      const response = await fetch("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${authString}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "grant_type=client_credentials",
+      });
+
       const data = await response.json();
-      return data.access_token;
+
+      return {
+        data,
+      };
     } catch (error) {
-      console.error("Error:", error);
-      throw error;
+      return {
+        body: JSON.stringify({ error: "Failed to fetch token" }),
+      };
     }
-  }
-}
+  },
+};

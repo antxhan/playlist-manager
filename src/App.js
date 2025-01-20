@@ -1,7 +1,8 @@
-import { getSpotifyToken } from "./utils/api";
+import { api } from "./utils/api";
 
 function App() {
-  getSpotifyToken().then((res) => res.json().then((data) => console.log(data)));
+  api.auth().then((res) => console.log(res));
+  // .then((data) => console.log(data));
   return <div className="App">Hello world</div>;
 }
 
