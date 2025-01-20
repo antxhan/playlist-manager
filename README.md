@@ -1,6 +1,6 @@
 # Project 2: React App
 
-## [Live URL](the-playlist-manager.netlify.app)
+## [Live URL](https://the-playlist-manager.netlify.app/)
 
 ## Group Project Information
 
