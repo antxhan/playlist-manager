@@ -1,70 +1,124 @@
-# Getting Started with Create React App
+# Project 2: React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## [Live URL](the-playlist-manager.netlify.app)
 
-## Available Scripts
+## Group Project Information
 
-In the project directory, you can run:
+- **Deadline:** 5th of February
+- **Objective:** Build a React-based web application that allows users to manage a collection of items.
 
-### `npm start`
+## Description
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This project involves creating a React application where users can manage a collection of items. Users should be able to:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Add new entries
+- View them in an appealing list
+- Edit their details
+- Remove entries
 
-### `npm test`
+You can choose any type of data to manage, such as:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Favorite books
+- Recipes
+- Travel destinations
+- Movies
+- Songs
 
-### `npm run build`
+The primary goal is to create a **user-friendly, interactive interface** that encourages engagement and exploration of the app's features.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Requirements
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### **To Pass**
 
-### `npm run eject`
+#### **Data Management**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Implement functionality to **Create, Read, Update, and Delete (CRUD)** entries.
+- Each entry should include a **title** and additional relevant properties.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### **State Management**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Use React’s built-in state features to handle data and user inputs.
+- Ensure the UI updates dynamically when changes (e.g., adding or editing an entry) occur.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### **Styling**
 
-## Learn More
+- Apply **CSS** to ensure a clean, consistent design.
+- Ensure responsiveness across various screen sizes.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### **User Experience**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Include helpful navigation elements and clear instructions.
+- Provide form validation or hints to assist users in adding or modifying entries.
 
-### Code Splitting
+#### **Semantic HTML**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Use appropriate semantic HTML elements for improved accessibility and clarity.
 
-### Analyzing the Bundle Size
+#### **External API**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Fetch initial data using an **external API**.
 
-### Making a Progressive Web App
+#### **Documentation**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Add comments in your code where applicable.
 
-### Advanced Configuration
+#### **Deploy App**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Deploy your app using **Netlify** or **Vercel**.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### **To Pass with Distinction**
 
-### `npm run build` fails to minify
+#### **Advanced State Management**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Use `useContext` to share state or settings between components, avoiding prop drilling.
+
+#### **Performance**
+
+- Implement **lazy loading** to improve loading times.
+- Optimize the code to minimize size.
+
+#### **Accessibility**
+
+- Conduct an accessibility audit.
+- Ensure compatibility with **screen readers** and provide **keyboard navigation**.
+
+#### **Routing**
+
+- Use **React Router** to organize the application into separate pages or views.
+
+---
+
+## Evaluation Criteria
+
+### **Pass**
+
+- **Functionality:** Core features work as intended.
+- **Code Quality:** Well-structured code with comments where needed, following best practices.
+- **User Interface:** Visually coherent and easy to navigate.
+- **Responsiveness:** Layout adapts across devices.
+- **Semantic HTML:** Proper semantic markup is used.
+
+### **Pass with Distinction**
+
+- **Error Handling:** Handles potential errors and includes a loading state.
+- **Advanced State Management:** Uses `useContext` for state sharing.
+- **Routing:** Proper routing with browser navigation support.
+- **Performance:** Optimized for best performance.
+- **Accessibility:** Screen reader compatibility and keyboard navigation.
+
+---
+
+## Deliverables
+
+1. **GitHub Repository**: Containing all source code.
+2. **Live URL**: Hosted version of the app on Netlify or Vercel.
+3. **ReadMe**:
+   - Description of the project
+   - Overview of features
+   - Brief description of group member contributions
+4. **Group Presentation**:
+   - Max 15 minutes (10 minutes presenting + 5 minutes for questions).
