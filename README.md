@@ -122,3 +122,8 @@ The primary goal is to create a **user-friendly, interactive interface** that en
    - Brief description of group member contributions
 4. **Group Presentation**:
    - Max 15 minutes (10 minutes presenting + 5 minutes for questions).
+
+##Features
+
+- Netlify functions in order to authenticate with Spotify API safely without exposing the client credentials.
+- Spotify API to fetch data from Spotify.
