@@ -8,12 +8,7 @@ export async function getSpotifyToken() {
     // return "BQDa_l_zaXU3Y3xeRTR0Nc3ZOiXA6YeXIaJBLQkqijqo7DRTCTrxiav2bU5pyyU4ZkP9";
   } else {
     try {
-      // Get the base URL depending on environment
-      const baseUrl = "http://localhost:8888";
-
-      const response = await fetch(
-        `${baseUrl}/.netlify/functions/spotify-auth`
-      );
+      const response = await fetch(`/.netlify/functions/spotify-auth`);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to fetch token");
