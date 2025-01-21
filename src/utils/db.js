@@ -6,20 +6,23 @@ export const db = {
       const token = JSON.parse(localStorage.getItem("token"));
       if (!token) {
         // user needs to sign in: auth.signIn();
+        // auth.signIn();
         return null;
       } else if (token.expires_at < Date.now()) {
         if (token.refresh_token) {
           auth.refreshToken(token.refresh_token);
         } else {
           // user needs to sign in: auth.signIn();
+          // do it automatically
+          auth.signIn();
           return null;
         }
       }
       return token;
     },
     set(token) {
-      token.expires_at = Date.now() + token.expires_in * 1000;
-      // token.expires_at = Date.now() + 3 * 1000; // expires after 3 seconds for testing
+      // token.expires_at = Date.now() + token.expires_in * 1000;
+      token.expires_at = Date.now() + 3 * 1000; // expires after 3 seconds for testing
       localStorage.setItem("token", JSON.stringify(token));
     },
     delete() {
