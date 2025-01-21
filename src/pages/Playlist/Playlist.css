@@ -1,0 +1,70 @@
+.playlist {
+  --_playlist-gap: 1rem;
+
+  display: grid;
+  gap: var(--_playlist-gap);
+
+  padding: 1rem;
+
+  .playlist__head-wrapper {
+    container-type: inline-size;
+
+    .playlist__head {
+      display: grid;
+      gap: var(--_playlist-gap);
+
+      .playlist__image-wrapper {
+        justify-self: center;
+
+        background-color: rebeccapurple;
+        border: 2px solid lightgrey;
+        border-radius: 5px;
+        width: 15rem;
+        aspect-ratio: 1;
+      }
+
+      .playlist__info {
+        display: grid;
+        gap: var(--_playlist-gap);
+      }
+    }
+  }
+
+  .playlist__body {
+    .playlist__songs {
+      display: grid;
+      gap: calc(var(--_playlist-gap) / 2);
+
+      list-style: none;
+
+      > li {
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+        padding: 0.5rem;
+      }
+    }
+  }
+}
+
+@container (500px < width < 1000px) {
+  .playlist .playlist__head-wrapper {
+    .playlist__head {
+      display: flex;
+
+      .playlist__image-wrapper {
+        flex-shrink: 0;
+      }
+
+      .playlist__info {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+@media (min-width: 1000px) {
+  .playlist {
+    grid-template-columns: 450px 1fr;
+  }
+}
