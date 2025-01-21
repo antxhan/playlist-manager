@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     const token = db.token.get();
-    if (token && token.expires_at > Date.now() && token.refresh_token) {
+    if (token && token.expires_at > Date.now()) {
       setIsSignedIn(true);
     } else {
       setIsSignedIn(false);

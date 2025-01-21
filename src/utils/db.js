@@ -10,7 +10,6 @@ export const db = {
       } else if (token.expires_at < Date.now()) {
         if (token.refresh_token) {
           auth.refreshToken(token.refresh_token);
-          // return this.get();
         } else {
           // user needs to sign in: auth.signIn();
           return null;
@@ -19,8 +18,8 @@ export const db = {
       return token;
     },
     set(token) {
-      // token.expires_at = Date.now() + token.expires_in * 1000;
-      token.expires_at = Date.now() + 3 * 1000;
+      token.expires_at = Date.now() + token.expires_in * 1000;
+      // token.expires_at = Date.now() + 3 * 1000; // expires after 3 seconds for testing
       localStorage.setItem("token", JSON.stringify(token));
     },
     delete() {
