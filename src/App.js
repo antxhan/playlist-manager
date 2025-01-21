@@ -1,8 +1,8 @@
 // import { api } from "./utils/api";
 
 import { useEffect, useState } from "react";
-import { auth } from "./utils/auth";
 import { db } from "./utils/db";
+import SignInOutButton from "./components/SignInOutButton/SignInOutButton";
 
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -19,11 +19,7 @@ function App() {
   return (
     <div className="App">
       <div>Hello world</div>
-      {!isSignedIn ? (
-        <button onClick={() => auth.signIn()}>Sign In</button>
-      ) : (
-        <button onClick={() => auth.signOut()}>Sign Out</button>
-      )}
+      <SignInOutButton isSignedIn={isSignedIn} />
     </div>
   );
 }
