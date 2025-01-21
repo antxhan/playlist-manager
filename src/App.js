@@ -1,9 +1,13 @@
-import { api } from "./utils/api";
+// import { api } from "./utils/api";
 
 function App() {
-  api.auth().then((res) => console.log(res));
-  // .then((data) => console.log(data));
-  return <div className="App">Hello world</div>;
+  // KEEP COMMENTED OUT FOR NOW
+  // api.auth().then((res) => console.log(res));
+  return (
+    <div className="App">
+      <div>Hello world</div>
+    </div>
+  );
 }
 
 export default App;
