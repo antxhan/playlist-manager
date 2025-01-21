@@ -60,7 +60,7 @@ function Player(props) {
 				});
 			});
 
-			//Finally, the method calls to connect method to perform the connection of our new Spotify instance.
+			//connect(), the method calls to connect method to perform the connection of our new Spotify instance.
 			player.connect();
 		};
 	}, []);
