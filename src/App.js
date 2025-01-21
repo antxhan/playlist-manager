@@ -1,26 +1,15 @@
 // import { api } from "./utils/api";
 
-import { useEffect, useState } from "react";
-import { db } from "./utils/db";
-import SignInOutButton from "./components/SignInOutButton/SignInOutButton";
+// import { useEffect, useState } from "react";
+// import { db } from "./utils/db";
+// import SignInOutButton from "./components/SignInOutButton/SignInOutButton";
+import Layout from "./Layout";
 
 function App() {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-
-  useEffect(() => {
-    const token = db.token.get();
-    if (!token) {
-      setIsSignedIn(false);
-    } else {
-      setIsSignedIn(true);
-    }
-  }, []);
-
   return (
-    <div className="App">
+    <Layout>
       <div>Hello world</div>
-      <SignInOutButton isSignedIn={isSignedIn} />
-    </div>
+    </Layout>
   );
 }
 

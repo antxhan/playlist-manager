@@ -7,8 +7,10 @@ export const auth = {
   client_secret: process.env.REACT_APP_SPOTIFY_CLIENT_SECRET,
   redirect_uri: window.location.origin + "/callback",
   signIn() {
+    const origin = window.location.href;
     const state = generateRandomString(16);
     db.state.set(state);
+    db.returnTo.set(origin);
     const params = new URLSearchParams({
       client_id: this.client_id,
       redirect_uri: this.redirect_uri,
@@ -50,7 +52,8 @@ export const auth = {
           return;
         }
         db.token.set(data);
-        window.location.href = "/";
+        // redirect to where the user came from
+        window.location.href = db.returnTo.get();
       })
       .catch((error) => console.error("Error fetching token:", error));
   },

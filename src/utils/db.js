@@ -21,8 +21,8 @@ export const db = {
       return token;
     },
     set(token) {
-      // token.expires_at = Date.now() + token.expires_in * 1000;
-      token.expires_at = Date.now() + 3 * 1000; // expires after 3 seconds for testing
+      token.expires_at = Date.now() + token.expires_in * 1000;
+      // token.expires_at = Date.now() + 3 * 1000; // expires after 3 seconds for testing
       localStorage.setItem("token", JSON.stringify(token));
     },
     delete() {
@@ -30,11 +30,21 @@ export const db = {
     },
   },
   state: {
+    // state for spotify auth
     get() {
       return sessionStorage.getItem("spotify_auth_state");
     },
     set(state) {
       sessionStorage.setItem("spotify_auth_state", state);
+    },
+  },
+  returnTo: {
+    // where to redirect the user after signing in
+    get() {
+      return sessionStorage.getItem("return_to");
+    },
+    set(url) {
+      sessionStorage.setItem("return_to", url);
     },
   },
 };

@@ -1,6 +1,8 @@
+import { useAuth } from "../../hooks/useAuth";
 import { auth } from "../../utils/auth";
 
-export default function SignInOutButton({ isSignedIn }) {
+export default function SignInOutButton() {
+  const isSignedIn = useAuth();
   return !isSignedIn ? (
     <button onClick={() => auth.signIn()}>Sign In</button>
   ) : (
