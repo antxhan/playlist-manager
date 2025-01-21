@@ -1,8 +1,10 @@
 import { NavLink } from "react-router";
+import SignInOutButton from "../SignInOutButton/SignInOutButton";
 
 export default function Nav() {
   return (
     <nav>
+      <SignInOutButton />
       <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
         Home
       </NavLink>
