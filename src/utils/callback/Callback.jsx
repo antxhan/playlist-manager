@@ -1,6 +1,6 @@
 import { auth } from "../auth";
 
 export default function Callback() {
-  auth.getAuthCode();
+  auth.authenticate();
   return <div>Authenticating...</div>;
 }
