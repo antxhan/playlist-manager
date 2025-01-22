@@ -33,7 +33,7 @@ function Player({ token }) {
 
 		window.onSpotifyWebPlaybackSDKReady = () => {
 			const playerInstance = new window.Spotify.Player({
-				name: "Web Playback SDK",
+				name: "THE PLAYLIST MANAGER",
 				getOAuthToken: (cb) => cb(token.access_token),
 				volume: 0.5,
 			});
@@ -43,7 +43,6 @@ function Player({ token }) {
 			playerInstance.addListener("ready", ({ device_id }) => {
 				console.log("Ready with Device ID:", device_id);
 				setDeviceId(device_id);
-
 				// Transfer playback to Web Playback SDK
 				transferPlaybackToPlayer(device_id, token.access_token);
 			});
@@ -54,13 +53,22 @@ function Player({ token }) {
 				setPaused(state.paused);
 			});
 
-			playerInstance.connect();
+			playerInstance.connect().then((connected) => {
+				if (connected) {
+					if (player) {
+						player.pause(); // Pause playback after the player connects
+						console.log("Player connected but playback is paused.");
+					} else {
+						console.error("Player is not initialized yet.");
+					}
+				}
+			});
 		};
 
 		return () => {
 			if (player) player.disconnect();
 		};
-	}, []); //token.access_token
+	}, [token.access_token]); //token.access_token
 
 	return (
 		<div className="player__container">
@@ -69,6 +77,8 @@ function Player({ token }) {
 					src={current_track.album.images[0]?.url || null}
 					alt={current_track.name}
 					className="now-playing__cover"
+					width={200}
+					height={200}
 				/>
 				<div className="now-playing__side">
 					<div className="now-playing__name">{current_track.name}</div>
