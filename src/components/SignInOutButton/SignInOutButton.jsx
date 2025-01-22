@@ -1,11 +1,15 @@
+import "./SignInOutButton.css";
 import { useAuth } from "../../hooks/useAuth";
 import { auth } from "../../utils/auth";
 
 export default function SignInOutButton() {
   const isSignedIn = useAuth();
-  return !isSignedIn ? (
-    <button onClick={() => auth.signIn()}>Sign In</button>
-  ) : (
-    <button onClick={() => auth.signOut()}>Sign Out</button>
+  return (
+    <button
+      className="sign-in-out-button"
+      onClick={isSignedIn ? () => auth.signOut() : () => auth.signIn()}
+    >
+      {isSignedIn ? "Sign Out" : "Sign In"}
+    </button>
   );
 }

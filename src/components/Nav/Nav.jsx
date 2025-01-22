@@ -1,25 +1,41 @@
-import { NavLink } from "react-router";
+import "./Nav.css";
 import SignInOutButton from "../SignInOutButton/SignInOutButton";
+import { NavLink } from "react-router";
+import HomeIcon from "../../icons/HomeIcon";
+import PlaylistIcon from "../../icons/PlaylistIcon";
+import SettingsIcon from "../../icons/SettingsIcon";
+import SearchIcon from "../../icons/SearchIcon";
+import DiscoverIcon from "../../icons/DiscoverIcon";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Nav() {
+  const isSignedIn = useAuth();
+  const routes = [
+    { path: "/", label: "Home", icon: <HomeIcon /> },
+    { path: "/playlists", label: "Playlists", icon: <PlaylistIcon /> },
+    { path: "/search", label: "Search", icon: <SearchIcon /> },
+    { path: "/discover", label: "Discover", icon: <DiscoverIcon /> },
+    { path: "/settings", label: "Settings", icon: <SettingsIcon /> },
+  ];
   return (
-    <nav>
-      <SignInOutButton />
-      <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
-        Home
-      </NavLink>
-      <NavLink
-        to="/playlists"
-        className={({ isActive }) => (isActive ? "active" : "")}
-      >
-        Playlists
-      </NavLink>
-      <NavLink
-        to="/settings"
-        className={({ isActive }) => (isActive ? "active" : "")}
-      >
-        Settings
-      </NavLink>
+    <nav className="nav">
+      <ul>
+        {routes.map((route) => (
+          <li key={route.path}>
+            <NavLink
+              to={route.path}
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              {route.icon}
+              {route.icon}
+            </NavLink>
+            <span>{route.label}</span>
+          </li>
+        ))}
+        <li>
+          <SignInOutButton />
+        </li>
+      </ul>
     </nav>
   );
 }
