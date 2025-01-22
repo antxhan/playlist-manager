@@ -6,10 +6,8 @@ import PlaylistIcon from "../../icons/PlaylistIcon";
 import SettingsIcon from "../../icons/SettingsIcon";
 import SearchIcon from "../../icons/SearchIcon";
 import DiscoverIcon from "../../icons/DiscoverIcon";
-import { useAuth } from "../../hooks/useAuth";
 
 export default function Nav() {
-  const isSignedIn = useAuth();
   const routes = [
     { path: "/", label: "Home", icon: <HomeIcon /> },
     { path: "/playlists", label: "Playlists", icon: <PlaylistIcon /> },
