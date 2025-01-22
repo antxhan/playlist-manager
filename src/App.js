@@ -1,16 +1,15 @@
 // import { api } from "./utils/api";
-import Player from "./components/Nav/Player";
+
+// import { useEffect, useState } from "react";
+// import { db } from "./utils/db";
+// import SignInOutButton from "./components/SignInOutButton/SignInOutButton";
+import Layout from "./Layout";
 
 function App() {
-	// KEEP COMMENTED OUT FOR NOW
-	// api.auth().then((res) => console.log(res));
 	return (
-		<div className="App">
+		<Layout>
 			<div>Hello world</div>
-			<div className="bottom--temp">
-				<Player />
-			</div>
-		</div>
+		</Layout>
 	);
 }
 

@@ -1,34 +1,16 @@
-import { Buffer } from "buffer";
+import { db } from "./db";
 
 export const api = {
-  async auth() {
-    const clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-    const clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
-
-    // Encode credentials for Basic Auth
-    const authString = Buffer.from(`${clientId}:${clientSecret}`).toString(
-      "base64"
-    );
-
-    try {
-      const response = await fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
+  playlists: {
+    get() {
+      return fetch("https://api.spotify.com/v1/me/playlists", {
         headers: {
-          Authorization: `Basic ${authString}`,
-          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${db.token.get().access_token}`,
         },
-        body: "grant_type=client_credentials",
-      });
-
-      const data = await response.json();
-
-      return {
-        data,
-      };
-    } catch (error) {
-      return {
-        body: JSON.stringify({ error: "Failed to fetch token" }),
-      };
-    }
+      })
+        .then((res) => res.json())
+        .then((data) => data)
+        .catch((error) => console.error("Error fetching playlists:", error));
+    },
   },
 };
