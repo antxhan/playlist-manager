@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Playlists from "./pages/Playlists/Playlists";
+import Playlist from "./pages/Playlist/Playlist";
 import Callback from "./utils/callback/Callback";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -14,6 +15,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="playlists" element={<Playlists />} />
+        <Route path="/playlists/:id" element={<Playlist />} />
         <Route path="callback" element={<Callback />} />
       </Routes>
     </React.StrictMode>

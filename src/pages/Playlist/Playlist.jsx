@@ -1,7 +1,22 @@
 import "./Playlist.css";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { api } from "../../utils/api";
 
-export default function Playlist({ playlist }) {
-  console.log(playlist);
+export default function Playlist() {
+  const isSignedIn = useAuth();
+  const { id } = useParams();
+  const [playlist, setPlaylist] = useState(null);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      api.playlist.get(id).then((playlists) => setPlaylist(playlists));
+    }
+  }, [isSignedIn]);
+
+  if (playlist === null) return <h2>Loading...</h2>
+
   return (
     <section className="playlist-wrapper">
       <div className="playlist">
