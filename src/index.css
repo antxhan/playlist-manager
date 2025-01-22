@@ -9,3 +9,7 @@
 a.active {
   color: red;
 }
+
+button {
+  cursor: pointer;
+}
