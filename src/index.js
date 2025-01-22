@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Playlists from "./pages/Playlists/Playlists";
 import Callback from "./utils/callback/Callback";
+import NotFound from "./pages/NotFound/NotFound";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="playlists" element={<Playlists />} />
         <Route path="callback" element={<Callback />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </React.StrictMode>
   </BrowserRouter>

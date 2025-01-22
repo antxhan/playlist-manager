@@ -1,6 +1,11 @@
+import Layout from "../../Layout";
 import { auth } from "../auth";
 
 export default function Callback() {
   auth.authenticate();
-  return <div>Authenticating...</div>;
+  return (
+    <Layout>
+      <div>Authenticating...</div>
+    </Layout>
+  );
 }

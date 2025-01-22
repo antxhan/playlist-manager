@@ -21,7 +21,7 @@ export default function Layout({ children }) {
 	return (
 		<>
 			<Nav />
-			{children}
+			<main>{children}</main>
 			{isSignedIn ? token ? <Player token={token} /> : "" : <h1>Log in bro</h1>}
 		</>
 	);
