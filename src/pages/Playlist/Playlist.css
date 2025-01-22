@@ -3,12 +3,13 @@
   container-type: inline-size;
 
   .playlist {
+    --_playlist-padding: 1rem;
     --_playlist-gap: 1rem;
 
     display: grid;
     gap: var(--_playlist-gap);
 
-    padding: 1rem;
+    padding: var(--_playlist-padding);
 
     .playlist__head-wrapper {
       container-name: playlist__head-wrapper;
@@ -79,7 +80,23 @@
 @container playlist-wrapper (min-width: 1000px) {
   .playlist-wrapper {
     .playlist {
-      grid-template-columns: 500px 1fr;
+      --_playlist__head-width: 300px;
+      grid-template-columns: var(--_playlist__head-width) 1fr;
+
+      .playlist__head-wrapper {
+        position: fixed;
+        inset: var(--_playlist-padding) auto var(--_playlist-padding)
+          var(--_playlist-padding);
+
+        
+        .playlist__head {
+          width: var(--_playlist__head-width);
+        }
+      }
+
+      .playlist__body {
+        grid-column: 2;
+      }
     }
   }
 }
