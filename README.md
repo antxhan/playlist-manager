@@ -125,4 +125,6 @@ The primary goal is to create a **user-friendly, interactive interface** that en
 
 ##Features
 
+- React Router for routing.
+- Log In with Spotify API.
 - Spotify API to fetch data from Spotify.
