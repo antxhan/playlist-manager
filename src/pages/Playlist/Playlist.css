@@ -1,53 +1,65 @@
-.playlist {
-  --_playlist-gap: 1rem;
+.playlist-wrapper {
+  container-name: playlist-wrapper;
+  container-type: inline-size;
 
-  display: grid;
-  gap: var(--_playlist-gap);
+  .playlist {
+    --_playlist-gap: 1rem;
 
-  padding: 1rem;
+    display: grid;
+    gap: var(--_playlist-gap);
 
-  .playlist__head-wrapper {
-    container-type: inline-size;
+    padding: 1rem;
 
-    .playlist__head {
-      display: grid;
-      gap: var(--_playlist-gap);
+    .playlist__head-wrapper {
+      container-name: playlist__head-wrapper;
+      container-type: inline-size;
 
-      .playlist__image-wrapper {
-        justify-self: center;
-
-        background-color: rebeccapurple;
-        border: 2px solid lightgrey;
-        border-radius: 5px;
-        width: 15rem;
-        aspect-ratio: 1;
-      }
-
-      .playlist__info {
+      .playlist__head {
         display: grid;
         gap: var(--_playlist-gap);
+
+        .playlist__image-wrapper {
+          justify-self: center;
+
+          border-radius: 5px;
+          overflow: clip;
+
+          img {
+            width: 15rem;
+            aspect-ratio: 1;
+            object-fit: cover;
+          }
+        }
+
+        .playlist__info {
+          display: grid;
+          gap: var(--_playlist-gap);
+        }
       }
     }
-  }
 
-  .playlist__body {
-    .playlist__songs {
-      display: grid;
-      gap: calc(var(--_playlist-gap) / 2);
+    .playlist__body {
+      .playlist__tracks {
+        display: grid;
+        gap: calc(var(--_playlist-gap) / 2);
 
-      list-style: none;
+        list-style: none;
 
-      > li {
-        border: 1px solid lightgrey;
-        border-radius: 3px;
-        padding: 0.5rem;
+        > li > button {
+          display: flex;
+
+          border: 1px solid lightgrey;
+          border-radius: 3px;
+          padding: 0.5rem;
+          width: 100%;
+        }
       }
     }
   }
 }
 
-@container (500px < width < 1000px) {
-  .playlist .playlist__head-wrapper {
+@container playlist__head-wrapper (500px < width < 1000px) {
+  .playlist-wrapper .playlist .playlist__head-wrapper {
     .playlist__head {
       display: flex;
 
@@ -63,8 +75,10 @@
   }
 }
 
-@media (min-width: 1000px) {
-  .playlist {
-    grid-template-columns: 450px 1fr;
+@container playlist-wrapper (min-width: 1000px) {
+  .playlist-wrapper {
+    .playlist {
+      grid-template-columns: 500px 1fr;
+    }
   }
 }
