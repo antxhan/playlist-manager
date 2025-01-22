@@ -1,0 +1,9 @@
+.sign-in-out-button {
+  background: none;
+  color: var(--clr-neutral-400);
+  border: none;
+  &:hover {
+    color: var(--clr-neutral-000);
+    transition: color 0.1s ease-in-out;
+  }
+}
