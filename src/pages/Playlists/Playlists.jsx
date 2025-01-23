@@ -23,11 +23,8 @@ export default function Playlists() {
     <Layout>
       <ul>
         {playlists.map((playlist) => (
-          <li>
-            <button
-              key={playlist.id}
-              onClick={() => handlePlaylistClick(playlist)}
-            >
+          <li key={playlist.id}>
+            <button onClick={() => handlePlaylistClick(playlist)}>
               {playlist.name}
             </button>
           </li>
