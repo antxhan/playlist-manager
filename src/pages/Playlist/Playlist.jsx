@@ -14,7 +14,7 @@ export default function Playlist() {
     if (isSignedIn) {
       api.playlist.get(id).then((playlists) => setPlaylist(playlists));
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, id]);
 
   if (playlist === null) return <h2>Loading...</h2>;
 
