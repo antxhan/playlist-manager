@@ -123,7 +123,7 @@ The primary goal is to create a **user-friendly, interactive interface** that en
 4. **Group Presentation**:
    - Max 15 minutes (10 minutes presenting + 5 minutes for questions).
 
-##Features
+## Features
 
 - React Router for routing.
 - Log In with Spotify API.
