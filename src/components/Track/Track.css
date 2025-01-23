@@ -1,0 +1,39 @@
+.track {
+  container-type: inline-size;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  justify-items: start;
+
+  color: var(--clr-text);
+  background-color: var(--clr-bg);
+  border: none;
+  padding: 0.5rem;
+  width: 100%;
+
+  img {
+    border-radius: 0.5rem;
+  }
+}
+
+.track__info {
+  justify-self: start;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: start;
+
+  width: 100%;
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@container (min-width: 500px) {
+  .track__info {
+    grid-template-columns: repeat(2, minmax(175px, 1fr));
+    gap: 1rem;
+  }
+}
