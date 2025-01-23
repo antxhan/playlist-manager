@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Layout from "../../Layout";
 import { api } from "../../utils/api";
@@ -5,6 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 
 export default function Playlists() {
   const isSignedIn = useAuth();
+  const navigate = useNavigate();
   const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
@@ -13,13 +15,24 @@ export default function Playlists() {
     }
   }, [isSignedIn]);
 
+  const handlePlaylistClick = (playlist) => {
+    navigate(`/playlists/${playlist.id}`);
+  };
+
   return (
     <Layout>
-      <div>
+      <ul>
         {playlists.map((playlist) => (
-          <p key={playlist.id}>{playlist.name}</p>
+          <li>
+            <button
+              key={playlist.id}
+              onClick={() => handlePlaylistClick(playlist)}
+            >
+              {playlist.name}
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
     </Layout>
   );
 }
