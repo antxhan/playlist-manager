@@ -1,0 +1,17 @@
+.sign-in-with-spotify-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-wrap: nowrap;
+  background-color: var(--clr-neutral-900);
+  gap: 0.33rem;
+  color: var(--clr-neutral-000);
+  padding: 0.75rem 1.25rem;
+  border-radius: 100vw;
+  border: 1px solid var(--clr-neutral-400);
+  font-size: var(--fs-normal);
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    background-color: var(--clr-neutral-800);
+  }
+}
