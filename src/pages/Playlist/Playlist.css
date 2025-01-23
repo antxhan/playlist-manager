@@ -84,11 +84,12 @@
       grid-template-columns: var(--_playlist__head-width) 1fr;
 
       .playlist__head-wrapper {
-        position: fixed;
+        position: sticky;
         inset: var(--_playlist-padding) auto var(--_playlist-padding)
           var(--_playlist-padding);
 
-        
+        height: calc(100vh - 2 * var(--_playlist-padding));
+
         .playlist__head {
           width: var(--_playlist__head-width);
         }
