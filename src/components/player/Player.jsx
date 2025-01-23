@@ -17,7 +17,7 @@ const track = {
 function Player({ token }) {
 	const [player, setPlayer] = useState(null);
 	const [deviceId, setDeviceId] = useState(null);
-	const [is_paused, setPaused] = useState(false);
+	const [is_paused, setPaused] = useState(true);
 	const [current_track, setTrack] = useState(track);
 
 	const sdkInitializedRef = useRef(false);
