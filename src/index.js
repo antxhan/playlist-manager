@@ -8,6 +8,7 @@ import Playlists from "./pages/Playlists/Playlists";
 import Playlist from "./pages/Playlist/Playlist";
 import Callback from "./utils/callback/Callback";
 import NotFound from "./pages/NotFound/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,10 +16,14 @@ root.render(
     <React.StrictMode>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="playlists" element={<Playlists />} />
-        <Route path="/playlists/:id" element={<Playlist />} />
         <Route path="callback" element={<Callback />} />
         <Route path="*" element={<NotFound />} />
+        <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+          <Route path="playlists" element={<Playlists />} />
+        </Route>
+        <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+          <Route path="/playlists/:id" element={<Playlist />} />
+        </Route>
       </Routes>
     </React.StrictMode>
   </BrowserRouter>
