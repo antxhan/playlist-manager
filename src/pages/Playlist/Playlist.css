@@ -1,0 +1,102 @@
+.playlist-wrapper {
+  container-name: playlist-wrapper;
+  container-type: inline-size;
+
+  .playlist {
+    --_playlist-padding: 1rem;
+    --_playlist-gap: 1rem;
+
+    display: grid;
+    gap: var(--_playlist-gap);
+
+    padding: var(--_playlist-padding);
+
+    .playlist__head-wrapper {
+      container-name: playlist__head-wrapper;
+      container-type: inline-size;
+
+      .playlist__head {
+        display: grid;
+        gap: var(--_playlist-gap);
+
+        .playlist__image-wrapper {
+          justify-self: center;
+
+          border-radius: 5px;
+          overflow: clip;
+
+          img {
+            width: 15rem;
+            aspect-ratio: 1;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .playlist__info {
+          display: grid;
+          gap: var(--_playlist-gap);
+        }
+      }
+    }
+
+    .playlist__body {
+      .playlist__tracks {
+        display: grid;
+        gap: calc(var(--_playlist-gap) / 2);
+
+        list-style: none;
+
+        > li > button {
+          display: flex;
+
+          border: 1px solid lightgrey;
+          border-radius: 3px;
+          padding: 0.5rem;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@container playlist__head-wrapper (500px < width < 1000px) {
+  .playlist-wrapper .playlist .playlist__head-wrapper {
+    .playlist__head {
+      display: flex;
+
+      .playlist__image-wrapper {
+        flex-shrink: 0;
+      }
+
+      .playlist__info {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+@container playlist-wrapper (min-width: 1000px) {
+  .playlist-wrapper {
+    .playlist {
+      --_playlist__head-width: 300px;
+      grid-template-columns: var(--_playlist__head-width) 1fr;
+
+      .playlist__head-wrapper {
+        position: fixed;
+        inset: var(--_playlist-padding) auto var(--_playlist-padding)
+          var(--_playlist-padding);
+
+        
+        .playlist__head {
+          width: var(--_playlist__head-width);
+        }
+      }
+
+      .playlist__body {
+        grid-column: 2;
+      }
+    }
+  }
+}
