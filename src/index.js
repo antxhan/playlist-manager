@@ -10,17 +10,16 @@ import Callback from "./utils/callback/Callback";
 import NotFound from "./pages/NotFound/NotFound";
 import Player from "./components/player/Player";
 import { db } from "./utils/db";
-import Layout from "./Layout";
+// import { useAuth } from "./hooks/useAuth";
 
+//const isSignedIn = useAuth();
 const token = await db.token.get();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<BrowserRouter>
-		{/* <Player token={token} /> */}
 		{token && <Player token={token} />}
 		<React.StrictMode>
-			{/* <Layout> */}
 			<Routes>
 				<Route path="/" element={<App />} />
 				<Route path="playlists" element={<Playlists />} />
@@ -28,7 +27,6 @@ root.render(
 				<Route path="callback" element={<Callback />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
-			{/* </Layout> */}
 		</React.StrictMode>
 	</BrowserRouter>
 );
