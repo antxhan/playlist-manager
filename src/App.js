@@ -5,6 +5,7 @@ import Layout from "./Layout";
 
 function App() {
   const isSignedIn = useAuth();
+
   return (
     <Layout>
       <section className="home">
@@ -20,10 +21,8 @@ function App() {
 function HomeView() {
   return (
     <main>
-      <h2>Your Recent Playlists</h2>
-      <div>{"(Users most recent playlists)"}</div>
-      <h2>Make another playlist with...</h2>
-      <div>{"(Users top artists)"}</div>
+      <h2>Your Playlists</h2>
+      <div>{"(Users playlists)"}</div>
     </main>
   );
 }
