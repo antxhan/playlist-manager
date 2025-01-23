@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../utils/api";
 import Layout from "../../Layout";
+import Track from "../../components/Track/Track";
 
 export default function Playlist() {
   const isSignedIn = useAuth();
@@ -14,7 +15,7 @@ export default function Playlist() {
     if (isSignedIn) {
       api.playlist.get(id).then((playlists) => setPlaylist(playlists));
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, id]);
 
   if (playlist === null) return <h2>Loading...</h2>;
 
@@ -44,9 +45,7 @@ export default function Playlist() {
           <div className="playlist__body">
             <ul className="playlist__tracks">
               {playlist.tracks.items.map((item) => (
-                <li key={item.track.id}>
-                  <button>{item.track.name}</button>
-                </li>
+                <Track track={item.track} />
               ))}
             </ul>
           </div>

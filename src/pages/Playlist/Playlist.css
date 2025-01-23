@@ -22,7 +22,7 @@
         .playlist__image-wrapper {
           justify-self: center;
 
-          border-radius: 5px;
+          border-radius: 1rem;
           overflow: clip;
 
           img {
@@ -46,15 +46,6 @@
         gap: calc(var(--_playlist-gap) / 2);
 
         list-style: none;
-
-        > li > button {
-          display: flex;
-
-          border: 1px solid lightgrey;
-          border-radius: 3px;
-          padding: 0.5rem;
-          width: 100%;
-        }
       }
     }
   }
