@@ -1,11 +1,12 @@
 import "./Search.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Layout from "../../Layout";
-import { Link, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { api } from "../../utils/api";
 
 export default function Search() {
+  let navigate = useNavigate();
   const [searchResults, setSearchResults] = useState([]);
   const [nextPage, setNextPage] = useState(null);
   const [searchParams] = useSearchParams();
@@ -27,11 +28,17 @@ export default function Search() {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const q = e.target.q.value;
+    navigate(`/search?q=${q}`);
+  };
+
   return (
     <Layout>
       <section className="search">
         <header>
-          <SearchBar q={q} />
+          <SearchBar q={q} onSubmit={handleSubmit} />
         </header>
         <main>
           <ul>
