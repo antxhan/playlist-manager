@@ -12,7 +12,21 @@
   --clr-blue: #3c3abe;
   --clr-purple: #201121;
 
-  --clr-bg: var(--clr-purple);
+  --clr-bg: linear-gradient(
+      217deg,
+      hsl(from var(--clr-purple) h s l / 0.8),
+      hsl(from var(--clr-purple) h s l) 70.71%
+    ),
+    linear-gradient(
+      127deg,
+      hsl(from var(--clr-purple) h s 50% / 0.8),
+      hsl(from var(--clr-purple) h s 50%) 70.71%
+    ),
+    linear-gradient(
+      336deg,
+      hsl(from var(--clr-purple) h s 30% / 0.8),
+      hsl(from var(--clr-purple) h s 30%) 70.71%
+    );
   --clr-text: var(--clr-neutral-100);
 
   /* FONT FAMILIES */
@@ -35,7 +49,7 @@
 body {
   min-height: 100vh;
   color: var(--clr-text);
-  background-color: var(--clr-bg);
+  background: var(--clr-bg);
   font-family: var(--ff-sans);
 }
 

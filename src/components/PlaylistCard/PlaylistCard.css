@@ -1,0 +1,37 @@
+.playlist-card {
+  --_playlist-card-animation-duration: 500ms;
+
+  display: grid;
+  gap: 0.5rem;
+
+  background-color: transparent;
+  border-radius: 1rem;
+  padding: 1rem;
+  text-decoration: none;
+  transition: background-color var(--_playlist-card-animation-duration) ease;
+
+  > img {
+    border-radius: 1rem;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    transition: scale var(--_playlist-card-animation-duration) ease;
+  }
+
+  .playlist-card__info {
+    color: var(--clr-text);
+
+    p:last-of-type {
+      font-size: var(--fs-small);
+    }
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: hsl(from var(--clr-purple) h s 20%);
+
+    > img {
+      scale: 1.02;
+    }
+  }
+}

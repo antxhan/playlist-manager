@@ -8,10 +8,17 @@
   justify-items: start;
 
   color: var(--clr-text);
-  background-color: var(--clr-bg);
+  background-color: transparent;
   border: none;
-  padding: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
   width: 100%;
+  transition: background-color 200ms ease-out;
+
+  &:hover,
+  &:focus-visible {
+    background-color: hsl(from var(--clr-purple) h s 20%);
+  }
 
   img {
     border-radius: 0.5rem;

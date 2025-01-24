@@ -1,0 +1,25 @@
+.playlists {
+  container-type: inline-size;
+  padding: 1rem;
+
+  .playlist-grid {
+    --_playlist-grid-column-width: 150px;
+    --_playlist-grid-gap: 1rem;
+
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(var(--_playlist-grid-column-width), 1fr)
+    );
+    gap: var(--_playlist-grid-gap);
+
+    list-style: none;
+  }
+}
+
+@container (min-width: 1000px) {
+  .playlists .playlist-grid {
+    --_playlist-grid-column-width: 200px;
+    --_playlist-grid-gap: 2rem;
+  }
+}
