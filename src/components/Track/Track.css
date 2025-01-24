@@ -22,7 +22,7 @@
 
   img {
     border-radius: 0.5rem;
-    max-width: 4rem;
+    max-width: 2rem;
     aspect-ratio: 1;
     height: 100%;
     object-fit: cover;
@@ -38,11 +38,22 @@
   width: 100%;
 
   p {
-    text-wrap: pretty;
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space: unset;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
 @container (min-width: 500px) {
+  .track img {
+    max-width: 4rem;
+  }
+
   .track__info {
     grid-template-columns: repeat(2, minmax(175px, 1fr));
     gap: 1rem;
