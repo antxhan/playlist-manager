@@ -1,4 +1,5 @@
 import "./Track.css";
+import missingAlbumCover from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
 
 export default function Track({ track }) {
   const msToMMSS = (ms) => {
@@ -11,17 +12,22 @@ export default function Track({ track }) {
   };
 
   return (
-    <li key={track.id}>
-      <button className="track">
-        <img src={track.album?.images[2].url} alt="Track album cover" />
-        <div className="track__info">
-          <p className="track__name">{track.name}</p>
-          <p className="track__artists">
-            {track.artists.map((artist) => artist.name).join(", ")}
-          </p>
-        </div>
-        <p className="track__duration">{msToMMSS(track.duration_ms)}</p>
-      </button>
-    </li>
+    <button className="track">
+      <img
+        src={track.album?.images?.[2]?.url || missingAlbumCover}
+        alt="Track album cover"
+      />
+      <div className="track__info">
+        <p className="track__name">{track.name || "Unknown Track"}</p>
+        <p className="track__artists">
+          {track.artists
+            ? track.artists.map((artist) => artist.name).join(", ")
+            : "Unknown Artist"}
+        </p>
+      </div>
+      <p className="track__duration">
+        {track.duration_ms ? msToMMSS(track.duration_ms) : "--:--"}
+      </p>
+    </button>
   );
 }
