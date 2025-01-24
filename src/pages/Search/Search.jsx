@@ -15,7 +15,7 @@ export default function Search() {
 
   useEffect(() => {
     if (q) {
-      api.search.get(q).then((results) => {
+      api.search({ q }).then((results) => {
         setSearchResults(results.playlists.items);
         setNextPage(results.playlists.next);
       });
@@ -23,7 +23,7 @@ export default function Search() {
   }, [q]);
 
   const getNextPage = () => {
-    api.get(nextPage).then((results) => {
+    api.get({ url: nextPage }).then((results) => {
       setSearchResults([...searchResults, ...results.playlists.items]);
       setNextPage(results.playlists.next);
     });
