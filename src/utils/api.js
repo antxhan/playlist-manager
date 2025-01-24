@@ -25,15 +25,35 @@ export const api = {
     },
   },
   playlist: {
-    get(playlistID) {
-      return fetch(`https://api.spotify.com/v1/playlists/${playlistID}`, {
-        headers: {
-          Authorization: `Bearer ${db.token.get().access_token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => data)
-        .catch((error) => console.error("Error fetching playlist:", error));
+    info: {
+      get(id) {
+        return fetch(
+          `https://api.spotify.com/v1/playlists/${id}?fields=images,name,description,tracks(total)`,
+          {
+            headers: {
+              Authorization: `Bearer ${db.token.get().access_token}`,
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => data)
+          .catch((error) => console.error("Error fetching playlist:", error));
+      },
+    },
+    tracks: {
+      get(id, limit, offset) {
+        return fetch(
+          `https://api.spotify.com/v1/playlists/${id}/tracks?limit=${limit}&offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${db.token.get().access_token}`,
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => data)
+          .catch((error) => console.error("Error fetching playlists:", error));
+      },
     },
   },
   search: {
