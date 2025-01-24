@@ -37,9 +37,6 @@ export default function Playlist() {
 
   if (playlist === null) return <h2>Loading...</h2>;
 
-  console.log(playlist);
-  console.log(tracks);
-
   return (
     <Layout>
       <section className="playlist-wrapper">
