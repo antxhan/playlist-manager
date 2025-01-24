@@ -1,9 +1,10 @@
 import "./Search.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Layout from "../../Layout";
-import { Link, useNavigate, useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { api } from "../../utils/api";
+import PlaylistGrid from "../../components/PlaylistGrid/PlaylistGrid";
 
 export default function Search() {
   let navigate = useNavigate();
@@ -41,15 +42,7 @@ export default function Search() {
           <SearchBar q={q} onSubmit={handleSubmit} />
         </header>
         <main>
-          <ul>
-            {searchResults
-              .filter((res) => !!res)
-              .map((result) => (
-                <li key={result.id}>
-                  <Link to={`/playlists/${result.id}`}>{result.name}</Link>
-                </li>
-              ))}
-          </ul>
+          <PlaylistGrid playlists={searchResults.filter((res) => !!res)} />
           {searchResults.length > 0 ? (
             nextPage ? (
               <button onClick={() => getNextPage()}>Load more</button>

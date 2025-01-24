@@ -1,6 +1,5 @@
 .playlists {
   container-type: inline-size;
-  padding: 1rem;
 
   .playlist-grid {
     --_playlist-grid-column-width: 150px;
