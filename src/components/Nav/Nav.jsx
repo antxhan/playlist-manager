@@ -8,32 +8,41 @@ import SearchIcon from "../../icons/SearchIcon";
 import DiscoverIcon from "../../icons/DiscoverIcon";
 
 export default function Nav() {
-  const routes = [
-    { path: "/", label: "Home", icon: <HomeIcon /> },
-    { path: "/playlists", label: "Playlists", icon: <PlaylistIcon /> },
-    { path: "/search", label: "Search", icon: <SearchIcon /> },
-    { path: "/discover", label: "Discover", icon: <DiscoverIcon /> },
-    { path: "/settings", label: "Settings", icon: <SettingsIcon /> },
-  ];
+  const routes = {
+    main: [
+      { path: "/", label: "Home", icon: <HomeIcon /> },
+      { path: "/playlists", label: "Playlists", icon: <PlaylistIcon /> },
+      { path: "/search", label: "Search", icon: <SearchIcon /> },
+      { path: "/discover", label: "Discover", icon: <DiscoverIcon /> },
+    ],
+    secondary: [
+      { path: "/settings", label: "Settings", icon: <SettingsIcon /> },
+    ],
+  };
+
   return (
     <nav className="nav">
-      <ul>
-        {routes.map((route) => (
-          <li key={route.path}>
-            <NavLink
-              to={route.path}
-              className={({ isActive }) => (isActive ? "active" : "")}
-            >
-              {route.icon}
-              {route.icon}
-            </NavLink>
-            <span>{route.label}</span>
-          </li>
-        ))}
-        <li>
-          <SignInOutButton />
-        </li>
-      </ul>
+      {Object.keys(routes).map((key) => (
+        <ul key={key}>
+          {routes[key].map((route) => (
+            <li key={route.path}>
+              <NavLink
+                to={route.path}
+                className={({ isActive }) => (isActive ? "active" : "")}
+              >
+                {route.icon}
+                {route.icon}
+              </NavLink>
+              <span>{route.label}</span>
+            </li>
+          ))}
+          {key === "secondary" && (
+            <li>
+              <SignInOutButton />
+            </li>
+          )}
+        </ul>
+      ))}
     </nav>
   );
 }

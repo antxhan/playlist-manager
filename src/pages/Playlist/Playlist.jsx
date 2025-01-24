@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../utils/api";
 import Layout from "../../Layout";
+import Track from "../../components/Track/Track";
 import Player from "../../components/player/Player";
 import { db } from "../../utils/db";
 
@@ -19,11 +20,6 @@ export default function Playlist() {
 			api.playlist.get(id).then((playlists) => setPlaylist(playlists));
 		}
 	}, [isSignedIn, id]);
-
-	const handleSongClick = (track) => {
-		console.log("selected track: ", track);
-		setSelectedTrack(track); // store selected track
-	};
 
 	if (playlist === null) return <h2>Loading...</h2>;
 
@@ -53,17 +49,12 @@ export default function Playlist() {
 					<div className="playlist__body">
 						<ul className="playlist__tracks">
 							{playlist.tracks.items.map((item) => (
-								<li key={item.track.id}>
-									<button onClick={() => handleSongClick(item.track)}>
-										{item.track.name}
-									</button>
-								</li>
+								<Track track={item.track} />
 							))}
 						</ul>
 					</div>
 				</div>
 			</section>
-			{selectedTrack && <Player token={token} track={selectedTrack} />}
 		</Layout>
 	);
 }

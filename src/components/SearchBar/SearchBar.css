@@ -1,0 +1,25 @@
+.search-bar {
+  width: min(100%, 300px);
+  background-color: var(--clr-neutral-900);
+  border-radius: 1rem;
+  display: flex;
+  position: relative;
+  svg {
+    color: var(--clr-neutral-400);
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+  }
+  input {
+    color: var(--clr-neutral-000);
+    font-size: var(--fs-small);
+    border: none;
+    border-radius: inherit;
+    background: none;
+    height: 3rem;
+    width: 100%;
+    padding-inline-start: 2.25rem;
+    padding-inline-end: 1rem;
+  }
+}

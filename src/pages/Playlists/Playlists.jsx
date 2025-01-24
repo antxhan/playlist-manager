@@ -1,12 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Layout from "../../Layout";
 import { api } from "../../utils/api";
 import { useAuth } from "../../hooks/useAuth";
+import Layout from "../../Layout";
+import PlaylistGrid from "../../components/PlaylistGrid/PlaylistGrid";
 
 export default function Playlists() {
   const isSignedIn = useAuth();
-  const navigate = useNavigate();
   const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
@@ -15,24 +14,9 @@ export default function Playlists() {
     }
   }, [isSignedIn]);
 
-  const handlePlaylistClick = (playlist) => {
-    navigate(`/playlists/${playlist.id}`);
-  };
-
   return (
     <Layout>
-      <ul>
-        {playlists.map((playlist) => (
-          <li>
-            <button
-              key={playlist.id}
-              onClick={() => handlePlaylistClick(playlist)}
-            >
-              {playlist.name}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <PlaylistGrid playlists={playlists}/>
     </Layout>
   );
 }

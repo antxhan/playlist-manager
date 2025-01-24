@@ -8,24 +8,26 @@ import Playlists from "./pages/Playlists/Playlists";
 import Playlist from "./pages/Playlist/Playlist";
 import Callback from "./utils/callback/Callback";
 import NotFound from "./pages/NotFound/NotFound";
-import Player from "./components/player/Player";
-import { db } from "./utils/db";
-// import { useAuth } from "./hooks/useAuth";
-
-//const isSignedIn = useAuth();
-const token = await db.token.get();
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Search from "./pages/Search/Search";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<BrowserRouter>
-		{token && <Player token={token} />}
 		<React.StrictMode>
 			<Routes>
 				<Route path="/" element={<App />} />
-				<Route path="playlists" element={<Playlists />} />
-				<Route path="playlists/:id" element={<Playlist />} />
 				<Route path="callback" element={<Callback />} />
 				<Route path="*" element={<NotFound />} />
+				<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+					<Route path="playlists" element={<Playlists />} />
+				</Route>
+				<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+					<Route path="/playlists/:id" element={<Playlist />} />
+				</Route>
+				<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+					<Route path="/search?" element={<Search />} />
+				</Route>
 			</Routes>
 		</React.StrictMode>
 	</BrowserRouter>

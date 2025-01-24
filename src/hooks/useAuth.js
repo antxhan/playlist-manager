@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 import { db } from "../utils/db";
 
 export function useAuth() {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(null);
 
   useEffect(() => {
     const token = db.token.get();
-    if (!token) {
-      setIsSignedIn(false);
-    } else {
-      setIsSignedIn(true);
-    }
+    setIsSignedIn(!!token);
   }, []);
+
   return isSignedIn;
 }
