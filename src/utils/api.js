@@ -18,19 +18,6 @@ export const api = {
       .then((data) => data)
       .catch((error) => console.error("Error fetching data:", error));
   },
-  _createUrl(endpoint, params) {
-    const baseUrl = "https://api.spotify.com/v1/";
-    const url = new URL(baseUrl + endpoint);
-
-    // appends params to url if their value exists
-    if (params) {
-      url.search = new URLSearchParams(
-        Object.entries(params).filter(([key, value]) => value != null)
-      );
-    }
-
-    return url;
-  },
   playlists: {
     get() {
       return fetch("https://api.spotify.com/v1/me/playlists", {
@@ -77,5 +64,18 @@ export const api = {
   },
   search({ q, type = "playlist", limit = 50 }) {
     return this.get({ endpoint: "search", params: { q, type, limit } });
+  },
+  _createUrl(endpoint, params) {
+    const baseUrl = "https://api.spotify.com/v1/";
+    const url = new URL(baseUrl + endpoint);
+
+    // appends params to url if their value exists
+    if (params) {
+      url.search = new URLSearchParams(
+        Object.entries(params).filter(([key, value]) => value != null)
+      );
+    }
+
+    return url;
   },
 };
