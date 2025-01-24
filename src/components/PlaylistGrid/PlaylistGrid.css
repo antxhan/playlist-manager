@@ -8,7 +8,7 @@
 
     display: grid;
     grid-template-columns: repeat(
-      auto-fit,
+      auto-fill,
       minmax(var(--_playlist-grid-column-width), 1fr)
     );
     gap: var(--_playlist-grid-gap);
