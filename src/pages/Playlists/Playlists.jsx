@@ -10,13 +10,13 @@ export default function Playlists() {
 
   useEffect(() => {
     if (isSignedIn) {
-      api.playlists.get().then((playlists) => setPlaylists(playlists.items));
+      api.me.playlists().then((playlists) => setPlaylists(playlists.items));
     }
   }, [isSignedIn]);
 
   return (
     <Layout>
-      <PlaylistGrid playlists={playlists}/>
+      <PlaylistGrid playlists={playlists} />
     </Layout>
   );
 }

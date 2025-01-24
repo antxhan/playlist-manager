@@ -18,18 +18,16 @@ export const api = {
       .then((data) => data)
       .catch((error) => console.error("Error fetching data:", error));
   },
-  playlists: {
-    get() {
-      return fetch("https://api.spotify.com/v1/me/playlists", {
-        headers: {
-          Authorization: `Bearer ${db.token.get().access_token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => data)
-        .catch((error) => console.error("Error fetching playlists:", error));
+  me: Object.assign(
+    () => {
+      return api.get({ endpoint: "me" });
     },
-  },
+    {
+      playlists() {
+        return api.get({ endpoint: "me/playlists" });
+      },
+    }
+  ),
   playlist: {
     info: {
       get(id) {
