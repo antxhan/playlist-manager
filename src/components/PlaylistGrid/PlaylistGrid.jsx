@@ -7,7 +7,7 @@ export default function PlaylistGrid({ playlists }) {
       <ul className="playlist-grid">
         {playlists.map((playlist) => (
           <li key={playlist.id}>
-            <PlaylistCard playlist={playlist}/>
+            <PlaylistCard playlist={playlist} />
           </li>
         ))}
       </ul>

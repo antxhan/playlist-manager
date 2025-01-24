@@ -1,4 +1,7 @@
 .search {
-  padding-block-start: 4rem;
+  padding-block: 4rem;
   padding-inline: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
