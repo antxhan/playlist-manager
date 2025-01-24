@@ -18,50 +18,32 @@ export const api = {
       .then((data) => data)
       .catch((error) => console.error("Error fetching data:", error));
   },
-  playlists: {
-    get() {
-      return fetch("https://api.spotify.com/v1/me/playlists", {
-        headers: {
-          Authorization: `Bearer ${db.token.get().access_token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => data)
-        .catch((error) => console.error("Error fetching playlists:", error));
+  me: Object.assign(
+    () => {
+      return api.get({ endpoint: "me" });
     },
-  },
-  playlist: {
-    info: {
-      get(id) {
-        return fetch(
-          `https://api.spotify.com/v1/playlists/${id}?fields=images,name,description,tracks(total)`,
-          {
-            headers: {
-              Authorization: `Bearer ${db.token.get().access_token}`,
-            },
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => data)
-          .catch((error) => console.error("Error fetching playlist:", error));
+    {
+      playlists() {
+        return api.get({ endpoint: "me/playlists" });
       },
+    }
+  ),
+  playlist: Object.assign(
+    (id) => {
+      const fields = ["images", "name", "description", "tracks(total)"].join(
+        ","
+      );
+      return api.get({ endpoint: `playlists/${id}`, params: { fields } });
     },
-    tracks: {
-      get(id, limit, offset) {
-        return fetch(
-          `https://api.spotify.com/v1/playlists/${id}/tracks?limit=${limit}&offset=${offset}`,
-          {
-            headers: {
-              Authorization: `Bearer ${db.token.get().access_token}`,
-            },
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => data)
-          .catch((error) => console.error("Error fetching playlists:", error));
+    {
+      tracks({ id, limit = 100, offset = 0 }) {
+        return api.get({
+          endpoint: `playlists/${id}/tracks`,
+          params: { limit, offset },
+        });
       },
-    },
-  },
+    }
+  ),
   search({ q, type = "playlist", limit = 50 }) {
     return this.get({ endpoint: "search", params: { q, type, limit } });
   },

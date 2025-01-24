@@ -19,17 +19,19 @@ export default function Playlist() {
 
   const fetchTracks = useCallback(() => {
     if (isSignedIn && id) {
-      api.playlist.tracks.get(id, trackLimit, trackOffset).then((newTracks) => {
-        setTracks((prevTracks) => [...prevTracks, ...newTracks.items]);
-        setTracksHasMore(newTracks.next !== null);
-        setTrackOffset(trackOffset + trackLimit);
-      });
+      api.playlist
+        .tracks({ id, limit: trackLimit, offset: trackOffset })
+        .then((newTracks) => {
+          setTracks((prevTracks) => [...prevTracks, ...newTracks.items]);
+          setTracksHasMore(newTracks.next !== null);
+          setTrackOffset(trackOffset + trackLimit);
+        });
     }
   }, [isSignedIn, id, trackLimit, trackOffset]);
 
   useEffect(() => {
     if (isSignedIn && id && isInitialFetch) {
-      api.playlist.info.get(id).then((playlist) => setPlaylist(playlist));
+      api.playlist(id).then((playlist) => setPlaylist(playlist));
       fetchTracks();
       setIsInitialFetch(false);
     }
