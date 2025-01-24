@@ -57,7 +57,7 @@ export const api = {
     },
   },
   search: {
-    get(q, limit = 10) {
+    get(q, limit = 50) {
       return fetch(
         `https://api.spotify.com/v1/search?q=${q}&type=playlist&limit=${limit}`,
         {
