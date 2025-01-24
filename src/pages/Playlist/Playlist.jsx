@@ -1,23 +1,44 @@
 import "./Playlist.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../utils/api";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Playlist() {
   const isSignedIn = useAuth();
   const { id } = useParams();
   const [playlist, setPlaylist] = useState(null);
+  const [tracks, setTracks] = useState([]);
+  const [tracksHasMore, setTracksHasMore] = useState(true);
+  const [trackOffset, setTrackOffset] = useState(0);
+  const trackLimit = 20;
+  const [isInitialFetch, setIsInitialFetch] = useState(true);
+
+  const fetchTracks = useCallback(() => {
+    if (isSignedIn && id) {
+      api.playlist.tracks.get(id, trackLimit, trackOffset).then((newTracks) => {
+        setTracks((prevTracks) => [...prevTracks, ...newTracks.items]);
+        setTracksHasMore(newTracks.next !== null);
+        setTrackOffset(trackOffset + trackLimit);
+      });
+    }
+  }, [isSignedIn, id, trackLimit, trackOffset]);
 
   useEffect(() => {
-    if (isSignedIn) {
-      api.playlist.get(id).then((playlists) => setPlaylist(playlists));
+    if (isSignedIn && id && isInitialFetch) {
+      api.playlist.info.get(id).then((playlist) => setPlaylist(playlist));
+      fetchTracks();
+      setIsInitialFetch(false);
     }
-  }, [isSignedIn, id]);
+  }, [isSignedIn, id, isInitialFetch, fetchTracks]);
 
   if (playlist === null) return <h2>Loading...</h2>;
+
+  console.log(playlist);
+  console.log(tracks);
 
   return (
     <Layout>
@@ -43,11 +64,17 @@ export default function Playlist() {
             </div>
           </div>
           <div className="playlist__body">
-            <ul className="playlist__tracks">
-              {playlist.tracks.items.map((item) => (
-                <Track track={item.track} />
+            <InfiniteScroll
+              dataLength={tracks.length}
+              next={fetchTracks}
+              hasMore={tracksHasMore}
+              loader={<h2>Loading more tracks...</h2>}
+              className="playlist__tracks"
+            >
+              {tracks.map((item, index) => (
+                <Track key={item.track.id + index} track={item.track} />
               ))}
-            </ul>
+            </InfiniteScroll>
           </div>
         </div>
       </section>
