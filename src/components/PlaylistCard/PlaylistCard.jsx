@@ -1,8 +1,9 @@
+import { Link } from "react-router";
 import "./PlaylistCard.css";
 
 export default function PlaylistCard({ playlist }) {
   return (
-    <a href={`/playlists/${playlist.id}`} className="playlist-card">
+    <Link href={`/playlists/${playlist.id}`} className="playlist-card">
       <img
         src={
           playlist.images[1] ? playlist.images[1].url : playlist.images[0].url
@@ -13,6 +14,6 @@ export default function PlaylistCard({ playlist }) {
         <p>{playlist.name}</p>
         <p>{playlist.tracks.total} tracks</p>
       </div>
-    </a>
+    </Link>
   );
 }
