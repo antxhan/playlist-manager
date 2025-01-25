@@ -7,7 +7,7 @@
   align-items: center;
   justify-items: start;
 
-  color: var(--clr-text);
+  color: var(--clr-neutral-100);
   background-color: transparent;
   border: none;
   border-radius: 0.5rem;
