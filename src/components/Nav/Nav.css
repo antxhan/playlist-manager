@@ -6,7 +6,7 @@
   position: sticky;
   inset: 0 auto 0 0;
 
-  background: linear-gradient(
+  /* background: linear-gradient(
       217deg,
       hsl(from var(--clr-neutral-900) h s 5% / 0.8),
       hsl(from var(--clr-neutral-900) h s 5%) 70.71%
@@ -20,7 +20,9 @@
       336deg,
       hsl(from var(--clr-purple) h s 70% / 0.8),
       hsl(from var(--clr-purple) h s 70%) 70.71%
-    );
+    ); */
+
+  background-color: var(--clr-neutral-900-06);
   height: 100vh;
   width: 5rem;
   padding: 0.5rem;
