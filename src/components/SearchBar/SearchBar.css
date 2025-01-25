@@ -1,6 +1,6 @@
 .search-bar {
   width: min(100%, 300px);
-  background-color: var(--clr-neutral-900-06);
+  background-color: hsl(from var(--clr-neutral-900) h s l / 0.6);
   border-radius: 1rem;
   display: flex;
   position: relative;
