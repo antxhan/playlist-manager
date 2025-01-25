@@ -1,4 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+@font-face {
+  font-family: "Rubik";
+  src: url("/public/fonts/Rubik/Rubik-VariableFont_wght.ttf") format("truetype");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url("/public/fonts/Rubik/Rubik-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 :root {
   /* COLORS */
