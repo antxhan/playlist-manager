@@ -19,7 +19,7 @@
   }
 
   .playlist-card__info {
-    color: var(--clr-text);
+    color: var(--clr-neutral-100);
 
     p:last-of-type {
       font-size: var(--fs-small);
