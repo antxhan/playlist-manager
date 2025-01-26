@@ -21,20 +21,22 @@ export default function Home() {
   };
 
   return (
-    <section className="home">
-      <header>
-        <h1>Welcome {user ? user.display_name : ""}!</h1>
-      </header>
-      <main>
-        <div className="main__header">
-          <h2>Your Playlists</h2>
-          <SearchBar
-            placeholder="Search your playlists..."
-            onChange={handleChange}
-          />
-        </div>
-        <PlaylistGrid playlists={playlists} />
-      </main>
-    </section>
+    <div className="home-wrapper">
+      <section className="home">
+        <header>
+          <h1>Welcome {user ? user.display_name : ""}!</h1>
+        </header>
+        <main>
+          <div className="main__header">
+            <h2>Your Playlists</h2>
+            <SearchBar
+              placeholder="Search your playlists..."
+              onChange={handleChange}
+            />
+          </div>
+          <PlaylistGrid playlists={playlists} />
+        </main>
+      </section>
+    </div>
   );
 }
