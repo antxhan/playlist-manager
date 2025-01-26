@@ -46,6 +46,7 @@
         gap: calc(var(--_playlist-gap) / 2);
 
         list-style: none;
+        overflow: visible !important;
       }
     }
   }
