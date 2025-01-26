@@ -11,7 +11,7 @@
   background-color: transparent;
   border: none;
   border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   width: 100%;
   transition: background-color 200ms ease-out;
 
@@ -57,5 +57,11 @@
   .track__info {
     grid-template-columns: repeat(2, minmax(175px, 1fr));
     gap: 1rem;
+  }
+}
+
+@container (min-width: 1000px) {
+  .track {
+    padding: 0.5rem 1rem;
   }
 }
