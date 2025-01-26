@@ -1,14 +1,29 @@
-.home {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding-inline: 3rem;
-  gap: 0.5rem;
-  padding-block-start: 4rem;
-  header {
+.home-wrapper {
+  container-type: inline-size;
+
+  .home {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    padding: 4rem 1rem;
+    gap: 0.5rem;
+
+    .main__header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .playlists {
+      padding: 1rem 0;
+    }
+  }
+}
+
+@container (min-width: 750px) {
+  .home-wrapper .home {
+    padding-inline: 3rem;
   }
 }

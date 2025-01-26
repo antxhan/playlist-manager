@@ -46,6 +46,7 @@
         gap: calc(var(--_playlist-gap) / 2);
 
         list-style: none;
+        overflow: visible !important;
       }
     }
   }
@@ -76,8 +77,6 @@
       position: sticky;
       inset: var(--_playlist-padding) auto var(--_playlist-padding)
         var(--_playlist-padding);
-      z-index: -1;
-
       height: calc(100vh - 2 * var(--_playlist-padding));
       width: 300px;
     }
