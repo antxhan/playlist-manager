@@ -10,25 +10,43 @@ import Callback from "./utils/callback/Callback";
 import NotFound from "./pages/NotFound/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Search from "./pages/Search/Search";
+import { PlayerProvider } from "./components/player/PlayerContext";
+import { db } from "./utils/db";
+
+const token = db.token.get();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<BrowserRouter>
 		<React.StrictMode>
-			<Routes>
-				<Route path="/" element={<App />} />
-				<Route path="callback" element={<Callback />} />
-				<Route path="*" element={<NotFound />} />
-				<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
-					<Route path="playlists" element={<Playlists />} />
-				</Route>
-				<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
-					<Route path="/playlists/:id" element={<Playlist />} />
-				</Route>
-				<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
-					<Route path="/search?" element={<Search />} />
-				</Route>
-			</Routes>
+			{token ? (
+				<PlayerProvider token={token}>
+					<Routes>
+						<Route path="/" element={<App />} />
+						<Route path="callback" element={<Callback />} />
+						<Route path="*" element={<NotFound />} />
+						<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+							<Route path="playlists" element={<Playlists />} />
+							<Route path="/playlists/:id" element={<Playlist />} />
+						</Route>
+					</Routes>
+				</PlayerProvider>
+			) : (
+				<Routes>
+					<Route path="/" element={<App />} />
+					<Route path="callback" element={<Callback />} />
+					<Route path="*" element={<NotFound />} />
+					<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+						<Route path="playlists" element={<Playlists />} />
+					</Route>
+					<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+						<Route path="/playlists/:id" element={<Playlist />} />
+					</Route>
+					<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+						<Route path="/search?" element={<Search />} />
+					</Route>
+				</Routes>
+			)}
 		</React.StrictMode>
 	</BrowserRouter>
 );

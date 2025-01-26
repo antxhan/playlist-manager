@@ -6,8 +6,8 @@ import { api } from "../../utils/api";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { usePlayer } from "../../components/player/PlayerContext";
 
-const token = await db.token.get();
 export default function Playlist() {
 	const isSignedIn = useAuth();
 	const { id } = useParams();
@@ -17,6 +17,8 @@ export default function Playlist() {
 	const [trackOffset, setTrackOffset] = useState(0);
 	const trackLimit = 20;
 	const [isInitialFetch, setIsInitialFetch] = useState(true);
+
+	const { playTrack } = usePlayer();
 
 	const fetchTracks = useCallback(() => {
 		if (isSignedIn && id) {
@@ -71,7 +73,9 @@ export default function Playlist() {
 							loader={<h2>Loading more tracks...</h2>}
 							className="playlist__tracks">
 							{tracks.map((item, index) => (
-								<Track key={item.track.id + index} track={item.track} />
+								<div key={index} onClick={() => playTrack(item.track, id)}>
+									<Track track={item.track} />
+								</div>
 							))}
 						</InfiniteScroll>
 					</div>

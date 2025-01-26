@@ -1,10 +1,5 @@
-.player__container {
+.global-player {
 	position: fixed;
 	z-index: 9999;
-	left: 600px;
-}
-
-.player__main-wrapper {
-	display: flex;
-	align-items: center;
+	left: 900px;
 }

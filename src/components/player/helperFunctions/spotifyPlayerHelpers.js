@@ -1,4 +1,3 @@
-// Transfer playback to the Web Playback SDK
 export const transferPlaybackToPlayer = async (deviceId, token) => {
 	try {
 		await fetch("https://api.spotify.com/v1/me/player", {
@@ -18,50 +17,51 @@ export const transferPlaybackToPlayer = async (deviceId, token) => {
 	}
 };
 
-// Toggle play/pause state
-export const togglePlayPause = async (is_paused, token) => {
-	const endpoint = is_paused
-		? "https://api.spotify.com/v1/me/player/play"
-		: "https://api.spotify.com/v1/me/player/pause";
-
-	try {
-		await fetch(endpoint, {
-			method: "PUT",
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
-	} catch (err) {
-		console.error("Error toggling play/pause:", err);
-	}
-};
-
-// Skip to the next track
-export const skipToNextTrack = async (token) => {
+export const skipToNextTrack = async (accessToken, deviceId) => {
 	try {
 		await fetch("https://api.spotify.com/v1/me/player/next", {
 			method: "POST",
 			headers: {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${accessToken}`,
+				"Content-Type": "application/json",
 			},
+			body: JSON.stringify({
+				device_id: deviceId,
+			}),
 		});
-		console.log("Skipped to the next track.");
-	} catch (err) {
-		console.error("Error skipping to the next track:", err);
+	} catch (error) {
+		console.error("Error skipping to next track:", error);
 	}
 };
 
-// Skip to the previous track
-export const skipToPreviousTrack = async (token) => {
+export const skipToPreviousTrack = async (accessToken, deviceId) => {
 	try {
 		await fetch("https://api.spotify.com/v1/me/player/previous", {
 			method: "POST",
 			headers: {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${accessToken}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				device_id: deviceId,
+			}),
+		});
+	} catch (error) {
+		console.error("Error skipping to previous track:", error);
+	}
+};
+
+export const togglePlayPause = async (isPaused, accessToken) => {
+	try {
+		// Determine the action based on the current playback state.
+		const action = isPaused ? "play" : "pause";
+		await fetch(`https://api.spotify.com/v1/me/player/${action}`, {
+			method: "PUT",
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
 			},
 		});
-		console.log("Skipped to the previous track.");
-	} catch (err) {
-		console.error("Error skipping to the previous track:", err);
+	} catch (error) {
+		console.error(`Error toggling play/pause: ${error}`);
 	}
 };
