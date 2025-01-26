@@ -1,6 +1,8 @@
 .playlists {
   container-type: inline-size;
 
+  padding: 4rem 3rem;
+
   .playlist-grid {
     --_playlist-grid-column-width: 150px;
     --_playlist-grid-gap: 1rem;
@@ -13,6 +15,17 @@
     gap: var(--_playlist-grid-gap);
 
     list-style: none;
+
+    .playlist-card__info p {
+      display: -webkit-box;
+      line-clamp: 1;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      white-space: unset;
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
