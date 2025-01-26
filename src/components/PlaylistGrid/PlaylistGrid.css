@@ -1,7 +1,13 @@
+.playlists-wrapper {
+  container-name: playlists-wrapper;
+  container-type: inline-size;
+}
+
 .playlists {
+  container-name: playlists;
   container-type: inline-size;
 
-  padding: 4rem 3rem;
+  padding: 4rem 1rem;
 
   .playlist-grid {
     --_playlist-grid-column-width: 150px;
@@ -29,7 +35,15 @@
   }
 }
 
-@container (min-width: 1000px) {
+@container playlists-wrapper (min-width: 750px) {
+  .playlists-wrapper {
+    .playlists {
+      padding-inline: 3rem;
+    }
+  }
+}
+
+@container playlists (min-width: 1000px) {
   .playlists .playlist-grid {
     --_playlist-grid-column-width: 200px;
     --_playlist-grid-gap: 2rem;
