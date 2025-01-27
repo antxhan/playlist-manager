@@ -7,7 +7,7 @@ export default function PlaylistCard({ playlist }) {
     <Link to={`/playlists/${playlist.id}`} className="playlist-card">
       <img
         src={
-          playlist.images.length > 0
+          playlist.images && playlist.images.length > 0
             ? playlist.images[1]
               ? playlist.images[1].url
               : playlist.images[0].url

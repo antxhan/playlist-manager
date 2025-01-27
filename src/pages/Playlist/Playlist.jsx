@@ -8,6 +8,7 @@ import Track from "../../components/Track/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { usePlayer } from "../../hooks/usePlayer";
 import { decodeHTMLEntities } from "../../utils/utils";
+import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
 
 export default function Playlist() {
   const isSignedIn = useAuth();
@@ -57,9 +58,11 @@ export default function Playlist() {
               <div className="playlist__image-wrapper">
                 <img
                   src={
-                    playlist.images[1]
-                      ? playlist.images[1].url
-                      : playlist.images[0].url
+                    playlist.images && playlist.images.length > 0
+                      ? playlist.images[1]
+                        ? playlist.images[1].url
+                        : playlist.images[0].url
+                      : placeholderImage
                   }
                   alt="Playlist cover"
                 />
