@@ -1,12 +1,16 @@
 .global-player {
 	position: fixed;
+	left: 5rem;
+	right: 0;
 	z-index: 9999;
-	/* background-color: hsl(from var(--clr-neutral-900) h s l / 0.6); */
-	background-color: var(--clr-purple);
+	background-color: hsl(from var(--clr-neutral-900) h s l / 0.8);
+	/* background-color: var(--clr-purple); */
 	/* background-color: black; */
-	width: 100dvw;
-	padding: 0 2rem 0 2rem;
+
+	backdrop-filter: blur(4px);
+	padding: 0.5rem 2rem 0.5rem 2rem;
 	display: flex;
+	bottom: 0px;
 	.player--wrapper__left {
 		container-type: inline-size;
 
