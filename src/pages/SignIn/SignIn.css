@@ -1,14 +1,11 @@
-.sign-in {
-  padding-block-start: 4rem;
-  padding-inline: 3rem;
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
+.sign-in__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
+
 .sing-in__window {
   border: 1px solid var(--clr-neutral-800);
   padding: 1rem;
