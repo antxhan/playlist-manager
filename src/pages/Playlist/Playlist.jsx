@@ -7,6 +7,7 @@ import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { usePlayer } from "../../hooks/usePlayer";
+import { decodeHTMLEntities } from "../../utils/utils";
 
 export default function Playlist() {
   const isSignedIn = useAuth();
@@ -66,7 +67,7 @@ export default function Playlist() {
               <div className="playlist__info">
                 <h2>{playlist.name}</h2>
                 <p>{playlist.tracks.total} tracks</p>
-                <p>{playlist.description}</p>
+                <p>{decodeHTMLEntities(playlist.description)}</p>
               </div>
             </div>
           </div>
