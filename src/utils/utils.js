@@ -20,3 +20,9 @@ export function toCamelCase(str) {
     )
     .join("");
 }
+
+export function decodeHTMLEntities(str) {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = str;
+  return tempDiv.textContent || tempDiv.innerText || "";
+}
