@@ -11,8 +11,8 @@ export default function SignInOutButton() {
       <button
         className="sign-in-out-button"
         onClick={isSignedIn ? () => auth.signOut() : () => auth.signIn()}
+        aria-label={isSignedIn ? "Sign Out" : "Sign In"}
       >
-        {/* {isSignedIn ? "Sign Out" : "Sign In"} */}
         {isSignedIn ? <SignOutIcon /> : <SignInIcon />}
       </button>
       <span>{isSignedIn ? "Sign Out" : "Sign In"}</span>
