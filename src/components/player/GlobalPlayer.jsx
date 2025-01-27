@@ -1,45 +1,35 @@
-import React from "react";
-import { usePlayer } from "./PlayerContext";
+import { usePlayer } from "../../hooks/usePlayer";
+import { api } from "../../utils/api";
 
-const GlobalPlayer = () => {
-	// Access player context using the custom `usePlayer` hook
-	const playerContext = usePlayer();
+export default function GlobalPlayer() {
+  const player = usePlayer();
+  if (!player) return null;
+  const { currentTrack, isPaused, deviceId, setIsPaused } = player;
+  if (!currentTrack) return null;
+  return (
+    <div className="global-player">
+      <img
+        src={currentTrack.album.images[0]?.url}
+        alt={currentTrack.name}
+        width={100}
+        height={100}
+      />
 
-	if (!playerContext) return null;
+      <div>
+        <div>{currentTrack.name}</div>
+        <div>{currentTrack.artists[0]?.name}</div>
+      </div>
 
-	const {
-		currentTrack,
-		isPaused,
-		togglePlayPause,
-		skipToNext,
-		skipToPrevious,
-	} = playerContext;
-
-	// If there is no current track, do not render the player
-	if (!currentTrack) return null;
-
-	// Render the global player UI
-	return (
-		<div className="global-player">
-			<img
-				src={currentTrack.album.images[0]?.url}
-				alt={currentTrack.name}
-				width={100}
-				height={100}
-			/>
-
-			<div>
-				<div>{currentTrack.name}</div>
-				<div>{currentTrack.artists[0]?.name}</div>
-			</div>
-
-			<button onClick={skipToPrevious}>Prev</button>
-
-			<button onClick={togglePlayPause}>{isPaused ? "Play" : "Pause"} </button>
-
-			<button onClick={skipToNext}>Next</button>
-		</div>
-	);
-};
-
-export default GlobalPlayer;
+      <button onClick={() => api.player.previous(deviceId)}>Prev</button>
+      <button
+        onClick={() => {
+          isPaused ? api.player.play() : api.player.pause();
+          setIsPaused(!isPaused);
+        }}
+      >
+        {isPaused ? "Play" : "Pause"}
+      </button>
+      <button onClick={() => api.player.next(deviceId)}>Next</button>
+    </div>
+  );
+}
