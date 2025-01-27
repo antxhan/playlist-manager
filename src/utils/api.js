@@ -1,7 +1,8 @@
 import { db } from "./db";
 
 export const api = {
-  get({ url = "", endpoint = "", params = null, method = "GET" }) {
+  baseUrl: "https://api.spotify.com/v1/",
+  get({ url = "", endpoint = "", params = null }) {
     // if no url, construct it from endpoint and params
     if (!url) {
       url = this._createUrl(endpoint, params);
@@ -9,7 +10,7 @@ export const api = {
 
     // makes request to api and returns data
     return fetch(url, {
-      method: method,
+      method: "GET",
       headers: {
         Authorization: `Bearer ${db.token.get().access_token}`,
       },
@@ -18,8 +19,8 @@ export const api = {
       .then((data) => data)
       .catch((error) => console.error("Error fetching data:", error));
   },
-  post({ endpoint = "", body = null }) {
-    return fetch("https://api.spotify.com/v1/" + endpoint, {
+  post({ endpoint = "", body = {}, returnJSON = false }) {
+    return fetch(this.baseUrl + endpoint, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${db.token.get().access_token}`,
@@ -27,9 +28,28 @@ export const api = {
       },
       body: JSON.stringify(body),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (returnJSON) return res.json();
+        else return res;
+      })
       .then((data) => data)
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => console.error("Error posting data:", error));
+  },
+  put({ endpoint = "", body = {} }, returnJSON = false) {
+    return fetch(this.baseUrl + endpoint, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${db.token.get().access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: body ? JSON.stringify(body) : null,
+    })
+      .then((res) => {
+        if (returnJSON) return res.json();
+        else return res;
+      })
+      .then((data) => data)
+      .catch((error) => console.error("Error putting data:", error));
   },
   me: Object.assign(
     () => {
@@ -65,6 +85,20 @@ export const api = {
       return api.get({ endpoint: "me/player" });
     },
     {
+      play() {
+        return api.put({
+          endpoint: "me/player/play",
+        });
+      },
+    },
+    {
+      pause() {
+        return api.put({
+          endpoint: "me/player/pause",
+        });
+      },
+    },
+    {
       next(deviceId) {
         return api.post({
           endpoint: "me/player/next",
@@ -79,11 +113,34 @@ export const api = {
           body: { device_id: deviceId },
         });
       },
+    },
+    {
+      transferPlaybackToPlayer(deviceId) {
+        return api.put({
+          endpoint: "me/player",
+          body: {
+            device_ids: [deviceId],
+            play: false,
+          },
+        });
+      },
     }
   ),
+  track: Object.assign(() => {}, {
+    play: ({ trackUri, playlistId, deviceId }) => {
+      if (!deviceId) throw new Error("No device ID found");
+      return api.put({
+        endpoint: `me/player/play`,
+        body: {
+          context_uri: `spotify:playlist:${playlistId}`,
+          offset: { uri: trackUri },
+          device_id: deviceId,
+        },
+      });
+    },
+  }),
   _createUrl(endpoint, params) {
-    const baseUrl = "https://api.spotify.com/v1/";
-    const url = new URL(baseUrl + endpoint);
+    const url = new URL(this.baseUrl + endpoint);
 
     // appends params to url if their value exists
     if (params) {
