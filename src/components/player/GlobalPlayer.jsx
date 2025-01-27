@@ -1,4 +1,3 @@
-// GlobalPlayer.jsx
 import React from "react";
 import { usePlayer } from "./PlayerContext";
 

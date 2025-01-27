@@ -8,7 +8,7 @@ export const transferPlaybackToPlayer = async (deviceId, token) => {
 			},
 			body: JSON.stringify({
 				device_ids: [deviceId],
-				play: true,
+				play: false,
 			}),
 		});
 		console.log("Playback transferred to Web Playback SDK.");
