@@ -14,7 +14,7 @@ export const db = {
         } else {
           // user needs to sign in: auth.signIn();
           // do it automatically
-          auth.signIn();
+          // auth.signIn();
           return null;
         }
       }
