@@ -2,7 +2,7 @@ import "./Nav.css";
 import SignInOutButton from "../SignInOutButton/SignInOutButton";
 import { NavLink } from "react-router";
 import HomeIcon from "../../icons/HomeIcon";
-import PlaylistIcon from "../../icons/PlaylistIcon";
+// import PlaylistIcon from "../../icons/PlaylistIcon";
 import SettingsIcon from "../../icons/SettingsIcon";
 import SearchIcon from "../../icons/SearchIcon";
 // import DiscoverIcon from "../../icons/DiscoverIcon";
@@ -10,7 +10,7 @@ import SearchIcon from "../../icons/SearchIcon";
 export default function Nav() {
   const routes = [
     { path: "/", label: "Home", icon: <HomeIcon /> },
-    { path: "/playlists", label: "Playlists", icon: <PlaylistIcon /> },
+    // { path: "/playlists", label: "Playlists", icon: <PlaylistIcon /> },
     { path: "/search", label: "Search", icon: <SearchIcon /> },
     // { path: "/discover", label: "Discover", icon: <DiscoverIcon /> },
     { path: "/settings", label: "Settings", icon: <SettingsIcon /> },
