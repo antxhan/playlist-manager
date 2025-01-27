@@ -1,0 +1,5 @@
+.global-player {
+	position: fixed;
+	z-index: 9999;
+	left: 900px;
+}

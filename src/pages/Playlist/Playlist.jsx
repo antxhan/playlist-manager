@@ -6,77 +6,81 @@ import { api } from "../../utils/api";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { usePlayer } from "../../components/player/PlayerContext";
 
 export default function Playlist() {
-  const isSignedIn = useAuth();
-  const { id } = useParams();
-  const [playlist, setPlaylist] = useState(null);
-  const [tracks, setTracks] = useState([]);
-  const [tracksHasMore, setTracksHasMore] = useState(true);
-  const [trackOffset, setTrackOffset] = useState(0);
-  const trackLimit = 20;
-  const [isInitialFetch, setIsInitialFetch] = useState(true);
+	const isSignedIn = useAuth();
+	const { id } = useParams();
+	const [playlist, setPlaylist] = useState(null);
+	const [tracks, setTracks] = useState([]);
+	const [tracksHasMore, setTracksHasMore] = useState(true);
+	const [trackOffset, setTrackOffset] = useState(0);
+	const trackLimit = 20;
+	const [isInitialFetch, setIsInitialFetch] = useState(true);
 
-  const fetchTracks = useCallback(() => {
-    if (isSignedIn && id) {
-      api.playlist
-        .tracks({ id, limit: trackLimit, offset: trackOffset })
-        .then((newTracks) => {
-          setTracks((prevTracks) => [...prevTracks, ...newTracks.items]);
-          setTracksHasMore(newTracks.next !== null);
-          setTrackOffset(trackOffset + trackLimit);
-        });
-    }
-  }, [isSignedIn, id, trackLimit, trackOffset]);
+	const { playTrack } = usePlayer();
 
-  useEffect(() => {
-    if (isSignedIn && id && isInitialFetch) {
-      api.playlist(id).then((playlist) => setPlaylist(playlist));
-      fetchTracks();
-      setIsInitialFetch(false);
-    }
-  }, [isSignedIn, id, isInitialFetch, fetchTracks]);
+	const fetchTracks = useCallback(() => {
+		if (isSignedIn && id) {
+			api.playlist
+				.tracks({ id, limit: trackLimit, offset: trackOffset })
+				.then((newTracks) => {
+					setTracks((prevTracks) => [...prevTracks, ...newTracks.items]);
+					setTracksHasMore(newTracks.next !== null);
+					setTrackOffset(trackOffset + trackLimit);
+				});
+		}
+	}, [isSignedIn, id, trackLimit, trackOffset]);
 
-  if (playlist === null) return <h2>Loading...</h2>;
+	useEffect(() => {
+		if (isSignedIn && id && isInitialFetch) {
+			api.playlist(id).then((playlist) => setPlaylist(playlist));
+			fetchTracks();
+			setIsInitialFetch(false);
+		}
+	}, [isSignedIn, id, isInitialFetch, fetchTracks]);
 
-  return (
-    <Layout>
-      <section className="playlist-wrapper">
-        <div className="playlist">
-          <div className="playlist__head-wrapper">
-            <div className="playlist__head">
-              <div className="playlist__image-wrapper">
-                <img
-                  src={
-                    playlist.images[1]
-                      ? playlist.images[1].url
-                      : playlist.images[0].url
-                  }
-                  alt="Playlist cover"
-                />
-              </div>
-              <div className="playlist__info">
-                <h2>{playlist.name}</h2>
-                <p>{playlist.tracks.total} tracks</p>
-                <p>{playlist.description}</p>
-              </div>
-            </div>
-          </div>
-          <div className="playlist__body">
-            <InfiniteScroll
-              dataLength={tracks.length}
-              next={fetchTracks}
-              hasMore={tracksHasMore}
-              loader={<h2>Loading more tracks...</h2>}
-              className="playlist__tracks"
-            >
-              {tracks.map((item, index) => (
-                <Track key={item.track.id + index} track={item.track} />
-              ))}
-            </InfiniteScroll>
-          </div>
-        </div>
-      </section>
-    </Layout>
-  );
+	if (playlist === null) return <h2>Loading...</h2>;
+
+	return (
+		<Layout>
+			<section className="playlist-wrapper">
+				<div className="playlist">
+					<div className="playlist__head-wrapper">
+						<div className="playlist__head">
+							<div className="playlist__image-wrapper">
+								<img
+									src={
+										playlist.images[1]
+											? playlist.images[1].url
+											: playlist.images[0].url
+									}
+									alt="Playlist cover"
+								/>
+							</div>
+							<div className="playlist__info">
+								<h2>{playlist.name}</h2>
+								<p>{playlist.tracks.total} tracks</p>
+								<p>{playlist.description}</p>
+							</div>
+						</div>
+					</div>
+					<div className="playlist__body">
+						<InfiniteScroll
+							dataLength={tracks.length}
+							next={fetchTracks}
+							hasMore={tracksHasMore}
+							loader={<h2>Loading more tracks...</h2>}
+							className="playlist__tracks">
+							{tracks.map((item, index) => (
+								<div key={index} onClick={() => playTrack(item.track, id)}>
+									<Track track={item.track} />
+								</div>
+							))}
+						</InfiniteScroll>
+					</div>
+				</div>
+			</section>
+		</Layout>
+	);
 }
