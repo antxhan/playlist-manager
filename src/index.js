@@ -15,7 +15,7 @@ import { db } from "./utils/db";
 
 const token = db.token.get();
 const routes = (
-  <Routes>
+  <>
     <Route path="/" element={<App />} />
     <Route path="callback" element={<Callback />} />
     <Route path="*" element={<NotFound />} />
@@ -28,7 +28,7 @@ const routes = (
     <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
       <Route path="/search?" element={<Search />} />
     </Route>
-  </Routes>
+  </>
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -36,7 +36,9 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
       {token ? (
-        <PlayerProvider token={token}>{routes}</PlayerProvider>
+        <PlayerProvider token={token}>
+          {<Routes>{routes}</Routes>}
+        </PlayerProvider>
       ) : (
         <Routes>{routes}</Routes>
       )}
