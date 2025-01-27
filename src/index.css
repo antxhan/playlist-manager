@@ -62,6 +62,7 @@
 
 html {
   background: var(--clr-neutral-900);
+  color-scheme: dark;
 }
 
 body {
