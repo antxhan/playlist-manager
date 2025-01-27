@@ -5,7 +5,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Nav />
-      {children}
+      <section className="page-wrapper">{children}</section>
       <GlobalPlayer />
     </>
   );

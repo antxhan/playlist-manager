@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router";
-import Playlists from "./pages/Playlists/Playlists";
 import Playlist from "./pages/Playlist/Playlist";
 import Callback from "./utils/callback/Callback";
 import NotFound from "./pages/NotFound/NotFound";
@@ -19,9 +18,6 @@ const routes = (
     <Route path="/" element={<App />} />
     <Route path="callback" element={<Callback />} />
     <Route path="*" element={<NotFound />} />
-    <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
-      <Route path="playlists" element={<Playlists />} />
-    </Route>
     <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
       <Route path="/playlists/:id" element={<Playlist />} />
     </Route>

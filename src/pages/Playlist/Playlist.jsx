@@ -40,7 +40,12 @@ export default function Playlist() {
     }
   }, [isSignedIn, id, isInitialFetch, fetchTracks]);
 
-  if (playlist === null) return <h2>Loading...</h2>;
+  if (playlist === null)
+    return (
+      <Layout>
+        <h2>Loading...</h2>
+      </Layout>
+    );
 
   return (
     <Layout>
