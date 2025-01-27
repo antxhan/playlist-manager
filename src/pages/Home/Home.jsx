@@ -10,7 +10,6 @@ export default function Home() {
 
   useEffect(() => {
     api.me().then((user) => {
-      console.log(user);
       setUser(user);
     });
     api.me.playlists().then((playlists) => setPlaylists(playlists.items));
