@@ -3,16 +3,16 @@ import SignInWithSpotifyButton from "../../components/SignInWithSpotifyButton/Si
 
 export default function SignIn() {
   return (
-    <section className="sign-in">
-      <header>
+    <>
+      <header className="sign-in__header">
         <h1>Playlist Manager</h1>
       </header>
-      <main>
+      <main className="sign-in__main">
         <div className="sing-in__window">
           <p>Please sign in to continue</p>
           <SignInWithSpotifyButton />
         </div>
       </main>
-    </section>
+    </>
   );
 }
