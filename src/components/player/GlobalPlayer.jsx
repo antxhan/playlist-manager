@@ -6,19 +6,7 @@ import PlayIcon from "../../icons/PlayIcon";
 import PauseIcon from "../../icons/PauseIcon";
 
 const GlobalPlayer = () => {
-	// const NextIcon = NextSongIcon();
-	// const PreviousIcon = PreviousSongIcon();
-	// const Play = PlayIcon();
-	// const Pause = PauseIcon();
-	// Access player context using the custom `usePlayer` hook
 	const playerContext = usePlayer();
-
-	// const routes = [
-	// 	{ label: "Play song Icon", icon: <PlayIcon /> },
-	// 	{ label: "Pause song Icon", icon: <PauseIcon /> },
-	// 	{ label: "Skip to next song Icon", icon: <NextSongIcon /> },
-	// 	{ label: "Skip to previous song Icon", icon: <PreviousSongIcon /> },
-	// ];
 
 	if (!playerContext) return null;
 
@@ -33,7 +21,6 @@ const GlobalPlayer = () => {
 	// If there is no current track, do not render the player
 	if (!currentTrack) return null;
 
-	// Render the global player UI
 	return (
 		<div className="global-player">
 			<div className="player--wrapper__left">
