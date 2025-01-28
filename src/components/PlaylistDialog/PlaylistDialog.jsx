@@ -1,14 +1,13 @@
-import "./EditPlaylistDialog.css";
+import "./PlaylistDialog.css";
 import { useState } from "react";
-import StandardButton from "../buttons/StandardButton/StandardButton";
-import AccentButton from "../buttons/AccentButton/AccentButton";
 
-export default function EditPlaylistDialog({
+export default function PlaylistDialog({
   isOpen,
   onClose,
   onSubmit,
-  initialName,
-  initialDescription,
+  children,
+  initialName = "",
+  initialDescription = "",
 }) {
   const [name, setName] = useState(initialName);
   const [description, setDescription] = useState(initialDescription);
@@ -16,28 +15,27 @@ export default function EditPlaylistDialog({
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(name, description);
+    onClose();
   };
 
   return (
     isOpen && (
-      <dialog className="edit-dialog">
-        <div className="edit-dialog__form-wrapper">
+      <dialog className="playlist-dialog">
+        <div className="playlist-dialog__form-wrapper">
           <form onSubmit={handleSubmit}>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Playlist name"
+              placeholder="Playlist name (required)"
+              required
             />
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Playlist description"
             ></textarea>
-            <div className="edit-dialog__button-wrapper">
-              <AccentButton type="submit">Save</AccentButton>
-              <StandardButton onClick={onClose}>Cancel</StandardButton>
-            </div>
+            <div className="playlist-dialog__button-wrapper">{children}</div>
           </form>
         </div>
       </dialog>

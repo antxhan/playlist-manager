@@ -1,4 +1,4 @@
-.edit-dialog {
+.playlist-dialog {
   --_spacer: 1rem;
 
   container-type: inline-size;
@@ -17,17 +17,17 @@
   width: min(30rem, 80%);
 }
 
-.edit-dialog__form-wrapper {
+.playlist-dialog__form-wrapper {
   padding: var(--_spacer);
 }
 
-.edit-dialog form {
+.playlist-dialog form {
   display: grid;
   gap: var(--_spacer);
 }
 
-.edit-dialog input,
-.edit-dialog textarea {
+.playlist-dialog input,
+.playlist-dialog textarea {
   color: var(--clr-neutral-000);
   font-size: var(--fs-small);
   font-family: inherit;
@@ -38,19 +38,19 @@
   width: 100%;
 }
 
-.edit-dialog textarea {
+.playlist-dialog textarea {
   resize: none;
   aspect-ratio: 4 / 1;
 }
 
-.edit-dialog__button-wrapper {
+.playlist-dialog__button-wrapper {
   display: flex;
   justify-content: end;
   gap: var(--_spacer);
 }
 
 @container (min-width: 29rem) {
-  .edit-dialog__form-wrapper {
+  .playlist-dialog__form-wrapper {
     padding: calc(var(--_spacer) * 2);
   }
 }
