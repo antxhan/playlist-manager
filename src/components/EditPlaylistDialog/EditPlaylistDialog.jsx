@@ -1,5 +1,7 @@
-import './EditPlaylistDialog.css'
+import "./EditPlaylistDialog.css";
 import { useState } from "react";
+import StandardButton from "../buttons/StandardButton/StandardButton";
+import AccentButton from "../buttons/AccentButton/AccentButton";
 
 export default function EditPlaylistDialog({
   isOpen,
@@ -33,10 +35,8 @@ export default function EditPlaylistDialog({
               placeholder="Playlist description"
             ></textarea>
             <div className="edit-dialog__button-wrapper">
-              <button type="submit">Save</button>
-              <button type="button" onClick={onClose}>
-                Cancel
-              </button>
+              <AccentButton type="submit">Save</AccentButton>
+              <StandardButton onClick={onClose}>Cancel</StandardButton>
             </div>
           </form>
         </div>
