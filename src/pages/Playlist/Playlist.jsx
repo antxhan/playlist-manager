@@ -13,9 +13,9 @@ import EditIcon from "../../icons/EditIcon";
 import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
 
 export default function Playlist() {
+  const player = usePlayer();
   const isSignedIn = useAuth();
   const { id } = useParams();
-  const { playTrack } = usePlayer();
   const [playlist, setPlaylist] = useState(null);
   const [tracks, setTracks] = useState([]);
   const [tracksHasMore, setTracksHasMore] = useState(true);
@@ -119,7 +119,7 @@ export default function Playlist() {
               className="playlist__tracks"
             >
               {tracks.map((item, index) => (
-                <div key={index} onClick={() => playTrack(item.track, id)}>
+                <div key={index} onClick={() => api.track.play({trackUri: item.track.uri, playlistId: id, deviceId: player.deviceId})}>
                   <Track track={item.track} />
                 </div>
               ))}
