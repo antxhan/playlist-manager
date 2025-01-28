@@ -8,9 +8,11 @@ import he from "he";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
-import EditPlaylistDialog from "../../components/EditPlaylistDialog/EditPlaylistDialog";
+import EditPlaylistDialog from "../../components/PlaylistDialog/PlaylistDialog";
 import EditIcon from "../../icons/EditIcon";
 import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
+import StandardButton from "../../components/buttons/StandardButton/StandardButton";
+import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 
 export default function Playlist() {
   const player = usePlayer();
@@ -43,8 +45,7 @@ export default function Playlist() {
           endpoint: `playlists/${id}`,
           body: { name: newName, description: newDescription },
         })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           setPlaylist({
             ...playlist,
             name: he.decode(newName),
@@ -119,7 +120,16 @@ export default function Playlist() {
               className="playlist__tracks"
             >
               {tracks.map((item, index) => (
-                <div key={index} onClick={() => api.track.play({trackUri: item.track.uri, playlistId: id, deviceId: player.deviceId})}>
+                <div
+                  key={index}
+                  onClick={() =>
+                    api.track.play({
+                      trackUri: item.track.uri,
+                      playlistId: id,
+                      deviceId: player.deviceId,
+                    })
+                  }
+                >
                   <Track track={item.track} />
                 </div>
               ))}
@@ -132,7 +142,12 @@ export default function Playlist() {
           onSubmit={handleEditSubmit}
           initialName={playlist.name}
           initialDescription={playlist.description}
-        />
+        >
+          <AccentButton type="submit">Save</AccentButton>
+          <StandardButton onClick={() => setIsEditDialogOpen(false)}>
+            Cancel
+          </StandardButton>
+        </EditPlaylistDialog>
       </section>
     </Layout>
   );
