@@ -18,6 +18,9 @@
 
   ul li {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   ul li a {
@@ -42,7 +45,7 @@
     align-items: center;
     justify-content: center;
     color: var(--clr-neutral-400);
-    width: 100%;
+    width: max-content;
     transition: all 0.2s ease-in-out;
     &:hover,
     &:focus-visible {
