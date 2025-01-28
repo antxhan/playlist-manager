@@ -22,14 +22,47 @@
         .playlist__image-wrapper {
           justify-self: center;
 
+          position: relative;
+
           border-radius: 1rem;
           overflow: clip;
+          width: min(15rem, 100%);
+          aspect-ratio: 1;
 
           img {
-            width: 15rem;
-            aspect-ratio: 1;
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
             height: 100%;
             object-fit: cover;
+          }
+
+          .playlist__edit-btn {
+            background-color: transparent;
+            border: 1px solid var(--clr-neutral-100);
+            border: none;
+            border-radius: 0.25rem;
+            height: 100%;
+            width: 100%;
+            transition: all 300ms ease-in-out;
+
+            svg {
+              opacity: 0;
+            }
+
+            &:hover,
+            &:focus-visible {
+              background-color: hsl(from var(--clr-neutral-900) h s l / 0.6);
+
+              svg {
+                opacity: 1;
+              }
+            }
+          }
+
+          &:focus-within {
+            outline: 2px solid var(--clr-neutral-000);
           }
         }
 
@@ -79,6 +112,10 @@
         var(--_playlist-padding);
       height: calc(100vh - 2 * var(--_playlist-padding));
       width: 300px;
+
+      img {
+        z-index: -1;
+      }
     }
   }
 }

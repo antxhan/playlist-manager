@@ -142,13 +142,13 @@ export const api = {
   _createUrl(endpoint, params) {
     const url = new URL(this.baseUrl + endpoint);
 
-    // appends params to url if their value exists
-    if (params) {
-      url.search = new URLSearchParams(
-        Object.entries(params).filter(([key, value]) => value != null)
-      );
-    }
+		// appends params to url if their value exists
+		if (params) {
+			url.search = new URLSearchParams(
+				Object.entries(params).filter(([key, value]) => value != null)
+			);
+		}
 
-    return url;
-  },
+		return url;
+	},
 };
