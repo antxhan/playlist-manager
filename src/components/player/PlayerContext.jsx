@@ -63,6 +63,7 @@ export const PlayerProvider = ({ token, children }) => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		if (player) return null;
 		if (!token) {
 			setPlayer(null);
 			setIsLoading(false);
@@ -105,7 +106,7 @@ export const PlayerProvider = ({ token, children }) => {
 				player.disconnect();
 			}
 		};
-	}, [token]);
+	}, [token, player]);
 
 	const value = token
 		? {
