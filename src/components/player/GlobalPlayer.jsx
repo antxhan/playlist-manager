@@ -8,43 +8,92 @@ import PreviousSongIcon from "../../icons/PreviousSongIcon";
 export default function GlobalPlayer() {
 	const player = usePlayer();
 	if (!player) return null;
-	const { currentTrack, isPaused, deviceId, setIsPaused } = player;
-	if (!currentTrack) return null;
+
+	const {
+		currentTrack,
+		isPaused,
+		deviceId,
+		setIsPaused,
+		isSDKReady,
+		isLoading,
+	} = player;
+
+	//always render the player structure, but change content based on state
 	return (
 		<div className="global-player">
 			<div className="player--wrapper__left">
-				<img
-					src={currentTrack.album.images[0]?.url}
-					alt={currentTrack.name}
-					className="player--img"
-				/>
-
-				<div className="player--info__wrapper">
-					<div className="player--currentTrackName">{currentTrack.name}</div>
-					<div className="player--currentTrackArtists">
-						{currentTrack.artists[0]?.name}
-					</div>
-				</div>
+				{isLoading || !currentTrack ? (
+					//loading state
+					<>
+						<div
+							className="player--img animate-pulse"
+							style={{
+								backgroundColor: "var(--clr-neutral-400)",
+								width: "4rem",
+							}}
+						/>
+						<div className="player--info__wrapper">
+							<div
+								className="player--currentTrackName animate-pulse"
+								style={{
+									backgroundColor: "var(--clr-neutral-400)",
+									width: "4rem",
+									height: "1.2em",
+								}}
+							/>
+							<div
+								className="player--currentTrackArtists animate-pulse"
+								style={{
+									backgroundColor: "var(--clr-neutral-400)",
+									width: "2.5rem",
+									height: "0.8em",
+								}}
+							/>
+						</div>
+					</>
+				) : (
+					//actual player
+					<>
+						<img
+							src={currentTrack.album.images[0]?.url}
+							alt={currentTrack.name}
+							className="player--img"
+						/>
+						<div className="player--info__wrapper">
+							<div className="player--currentTrackName">
+								{currentTrack.name}
+							</div>
+							<div className="player--currentTrackArtists">
+								{currentTrack.artists[0]?.name}
+							</div>
+						</div>
+					</>
+				)}
 			</div>
 			<div className="player--wrapper__right">
 				<button
 					className="player--button"
-					onClick={() => api.player.previous(deviceId)}>
+					onClick={() => !isLoading && api.player.previous(deviceId)}
+					disabled={isLoading || !isSDKReady}>
 					<PreviousSongIcon />
 				</button>
 
 				<button
 					className="player--button"
 					onClick={() => {
-						isPaused ? api.player.play() : api.player.pause();
-						setIsPaused(!isPaused);
-					}}>
+						if (!isLoading) {
+							isPaused ? api.player.play() : api.player.pause();
+							setIsPaused(!isPaused);
+						}
+					}}
+					disabled={isLoading || !isSDKReady}>
 					{isPaused ? <PlayIcon /> : <PauseIcon />}
 				</button>
 
 				<button
 					className="player--button"
-					onClick={() => api.player.next(deviceId)}>
+					onClick={() => !isLoading && api.player.next(deviceId)}
+					disabled={isLoading || !isSDKReady}>
 					<NextSongIcon />
 				</button>
 			</div>
