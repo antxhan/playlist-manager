@@ -31,8 +31,8 @@ export default function Search() {
   const handleSearch = (e) => {
     e.preventDefault();
     const q = e.target.q.value;
+    setSearchResults([]);
     setSearchParams({ q });
-    // TODO: clear search results
   };
 
   return (
