@@ -116,6 +116,7 @@ export default function Playlist() {
                 <button
                   className="playlist__edit-btn"
                   onClick={() => setIsEditDialogOpen(true)}
+                  aria-label="Edit Playlist"
                 >
                   <EditIcon />
                 </button>
@@ -160,18 +161,25 @@ export default function Playlist() {
           initialName={playlist.name}
           initialDescription={playlist.description}
         >
-          <AccentButton type="submit">Save</AccentButton>
-          <StandardButton onClick={() => setIsConfirmDialogOpen(true)}>
+          <AccentButton type="submit" ariaLabel="Save">
+            Save
+          </AccentButton>
+          <StandardButton
+            onClick={() => setIsConfirmDialogOpen(true)}
+            ariaLabel="Delete Playlist"
+          >
             Delete Playlist
           </StandardButton>
         </EditPlaylistDialog>
         <ConfirmDialog
           isOpen={isConfirmDialogOpen}
           onClose={() => setIsConfirmDialogOpen(false)}
-          // onSubmit={}
           message="Do you want to delete your playlist?"
         >
-          <StandardButton onClick={handleDeletePlaylist}>
+          <StandardButton
+            onClick={handleDeletePlaylist}
+            ariaLabel="Delete Playlist"
+          >
             Delete Playlist
           </StandardButton>
         </ConfirmDialog>

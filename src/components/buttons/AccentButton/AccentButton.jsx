@@ -1,4 +1,4 @@
-import './AccentButton.css'
+import "./AccentButton.css";
 import StandardButton from "../StandardButton/StandardButton";
 
 export default function AccentButton({
@@ -6,12 +6,14 @@ export default function AccentButton({
   onClick,
   children,
   className,
+  ariaLabel,
 }) {
   return (
     <StandardButton
       type={type}
       onClick={onClick}
       className={`accent-btn ${className || ""}`}
+      ariaLabel={ariaLabel}
     >
       {children}
     </StandardButton>

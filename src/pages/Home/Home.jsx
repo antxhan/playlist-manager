@@ -45,7 +45,8 @@ export default function Home() {
             <h2>Your Playlists</h2>
             <StandardButton
               onClick={() => setIsDialogOpen(true)}
-              className={"small-btn"}
+              className="small-btn"
+              ariaLabel="Create Playlist"
             >
               <AddPlaylistIcon />
             </StandardButton>
@@ -62,7 +63,9 @@ export default function Home() {
           onSubmit={handleCreatePlaylistSubmit}
           title="Create Playlist"
         >
-          <AccentButton type="submit">Create Playlist</AccentButton>
+          <AccentButton type="submit" ariaLabel="Create Playlist">
+            Create Playlist
+          </AccentButton>
         </CreatePlaylistDialog>
       </main>
     </>
