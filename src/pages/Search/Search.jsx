@@ -36,23 +36,21 @@ export default function Search() {
 
   return (
     <Layout>
-      <section className="search">
-        <header>
-          <SearchBar q={q} onSubmit={handleSubmit} />
-        </header>
-        <main>
-          <PlaylistGrid playlists={searchResults.filter((res) => !!res)} />
-          {searchResults.length > 0 ? (
-            nextPage ? (
-              <button onClick={() => getNextPage()}>Load more</button>
-            ) : (
-              <p>No more results</p>
-            )
+      <header>
+        <SearchBar q={q} onSubmit={handleSubmit} />
+      </header>
+      <main>
+        <PlaylistGrid playlists={searchResults.filter((res) => !!res)} />
+        {searchResults.length > 0 ? (
+          nextPage ? (
+            <button onClick={() => getNextPage()}>Load more</button>
           ) : (
-            ""
-          )}
-        </main>
-      </section>
+            <p>No more results</p>
+          )
+        ) : (
+          ""
+        )}
+      </main>
     </Layout>
   );
 }
