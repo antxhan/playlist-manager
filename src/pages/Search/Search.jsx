@@ -41,11 +41,13 @@ export default function Search() {
         <SearchBar q={q} onSubmit={handleSearch} />
       </header>
       <main>
-        <InfinitePlaylistGrid
-          playlists={searchResults.filter((res) => !!res)}
-          getNextPage={getNextPage}
-          hasMore={nextPage}
-        />
+        {searchResults.length > 0 ? (
+          <InfinitePlaylistGrid
+            playlists={searchResults.filter((res) => !!res)}
+            getNextPage={getNextPage}
+            hasMore={nextPage}
+          />
+        ) : null}
       </main>
     </Layout>
   );
