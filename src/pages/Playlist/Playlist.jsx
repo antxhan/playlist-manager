@@ -1,6 +1,6 @@
 import "./Playlist.css";
 import { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../utils/api";
 import { usePlayer } from "../../hooks/usePlayer";
@@ -8,7 +8,8 @@ import he from "he";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
-import EditPlaylistDialog from "../../components/PlaylistDialog/PlaylistDialog";
+import EditPlaylistDialog from "../../components/dialogs/PlaylistDialog/PlaylistDialog";
+import ConfirmDialog from "../../components/dialogs/ConfirmDialog/ConfirmDialog";
 import EditIcon from "../../icons/EditIcon";
 import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
@@ -17,6 +18,7 @@ import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 export default function Playlist() {
   const player = usePlayer();
   const isSignedIn = useAuth();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [playlist, setPlaylist] = useState(null);
   const [tracks, setTracks] = useState([]);
@@ -25,6 +27,7 @@ export default function Playlist() {
   const trackLimit = 20;
   const [isInitialFetch, setIsInitialFetch] = useState(true);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
 
   const fetchTracks = useCallback(() => {
     if (isSignedIn && id) {
@@ -38,7 +41,7 @@ export default function Playlist() {
     }
   }, [isSignedIn, id, trackLimit, trackOffset]);
 
-  const handleEditSubmit = (newName, newDescription) => {
+  const handleEditPlaylist = (newName, newDescription) => {
     if (isSignedIn && id) {
       api
         .put({
@@ -56,6 +59,19 @@ export default function Playlist() {
         .catch((error) => {
           console.error("Failed to edit playlist:", error);
         });
+    }
+  };
+
+  const handleDeletePlaylist = () => {
+    if (isSignedIn && id) {
+      api
+        .delete({ endpoint: `playlists/${id}/followers` })
+        .then(() => {
+          setIsConfirmDialogOpen(false);
+          setIsEditDialogOpen(false);
+          navigate("/");
+        })
+        .catch((error) => console.error("Failed to delete playlist:", error));
     }
   };
 
@@ -139,15 +155,26 @@ export default function Playlist() {
         <EditPlaylistDialog
           isOpen={isEditDialogOpen}
           onClose={() => setIsEditDialogOpen(false)}
-          onSubmit={handleEditSubmit}
+          onSubmit={handleEditPlaylist}
+          title="Edit Playlist"
           initialName={playlist.name}
           initialDescription={playlist.description}
         >
           <AccentButton type="submit">Save</AccentButton>
-          <StandardButton onClick={() => setIsEditDialogOpen(false)}>
-            Cancel
+          <StandardButton onClick={() => setIsConfirmDialogOpen(true)}>
+            Delete Playlist
           </StandardButton>
         </EditPlaylistDialog>
+        <ConfirmDialog
+          isOpen={isConfirmDialogOpen}
+          onClose={() => setIsConfirmDialogOpen(false)}
+          // onSubmit={}
+          message="Do you want to delete your playlist?"
+        >
+          <StandardButton onClick={handleDeletePlaylist}>
+            Delete Playlist
+          </StandardButton>
+        </ConfirmDialog>
       </section>
     </Layout>
   );

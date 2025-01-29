@@ -1,0 +1,21 @@
+.dialog form {
+  display: grid;
+  gap: var(--_dialog-spacer);
+}
+
+.dialog input,
+.dialog textarea {
+  color: var(--clr-neutral-000);
+  font-size: var(--fs-small);
+  font-family: inherit;
+  background: none;
+  border: 1px solid var(--clr-neutral-100);
+  border-radius: 0.25rem;
+  padding: var(--_dialog-spacer);
+  width: 100%;
+}
+
+.dialog textarea {
+  resize: none;
+  aspect-ratio: 4 / 1;
+}

@@ -1,0 +1,48 @@
+.dialog {
+  container-type: inline-size;
+
+  display: block;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: var(--clr-bg);
+  border-color: var(--clr-neutral-100);
+  border-radius: 1rem;
+  box-shadow: 0 2px 100px rgba(0, 0, 0, 0.5);
+  width: min(30rem, 80%);
+}
+
+.dialog__content {
+  --_dialog-spacer: 1rem;
+
+  display: grid;
+  gap: var(--_dialog-spacer);
+
+  padding: var(--_dialog-spacer);
+}
+
+.dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dialog__body {
+  display: grid;
+  gap: var(--_dialog-spacer);
+}
+
+.dialog__button-wrapper {
+  display: flex;
+  justify-content: end;
+  gap: var(--_dialog-spacer);
+}
+
+@container (min-width: 29rem) {
+  .dialog__content {
+    padding: calc(var(--_dialog-spacer) * 2);
+  }
+}
