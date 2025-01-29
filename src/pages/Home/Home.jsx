@@ -56,7 +56,13 @@ export default function Home() {
             onChange={handleChange}
           />
         </div>
-        <PlaylistGrid playlists={playlists} />
+        {playlists.length > 0 ? (
+          <PlaylistGrid playlists={playlists} />
+        ) : (
+          <div>
+            You have no playlists. Create one by clicking the button above.
+          </div>
+        )}
         <CreatePlaylistDialog
           isOpen={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
