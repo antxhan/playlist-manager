@@ -1,7 +1,7 @@
 import "./ConfirmDialog.css";
 import Dialog from "../Dialog/Dialog";
 
-export default function ConfirmDialog({ isOpen, onClose, onSubmit, message, children }) {
+export default function ConfirmDialog({ isOpen, onClose, message, children }) {
   return (
     <Dialog isOpen={isOpen} onClose={onClose} title={"Confirmation"}>
       <p>{message}</p>
