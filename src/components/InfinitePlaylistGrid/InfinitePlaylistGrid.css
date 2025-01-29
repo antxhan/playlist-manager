@@ -1,0 +1,15 @@
+.infinite-playlists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  .playlist-card__info p {
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space: unset;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

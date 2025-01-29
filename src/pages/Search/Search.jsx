@@ -1,10 +1,10 @@
-import "./Search.css";
+// import "./Search.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Layout from "../../Layout";
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { api } from "../../utils/api";
-import PlaylistGrid from "../../components/PlaylistGrid/PlaylistGrid";
+import InfinitePlaylistGrid from "../../components/InfinitePlaylistGrid/InfinitePlaylistGrid";
 
 export default function Search() {
   const [searchResults, setSearchResults] = useState([]);
@@ -28,7 +28,7 @@ export default function Search() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     const q = e.target.q.value;
     setSearchParams({ q });
@@ -37,19 +37,14 @@ export default function Search() {
   return (
     <Layout>
       <header>
-        <SearchBar q={q} onSubmit={handleSubmit} />
+        <SearchBar q={q} onSubmit={handleSearch} />
       </header>
       <main>
-        <PlaylistGrid playlists={searchResults.filter((res) => !!res)} />
-        {searchResults.length > 0 ? (
-          nextPage ? (
-            <button onClick={() => getNextPage()}>Load more</button>
-          ) : (
-            <p>No more results</p>
-          )
-        ) : (
-          ""
-        )}
+        <InfinitePlaylistGrid
+          playlists={searchResults.filter((res) => !!res)}
+          getNextPage={getNextPage}
+          hasMore={nextPage}
+        />
       </main>
     </Layout>
   );
