@@ -9,8 +9,6 @@
     display: grid;
     gap: var(--_playlist-gap);
 
-    /* padding: var(--_playlist-padding); */
-
     .playlist__head-wrapper {
       container-name: playlist__head-wrapper;
       container-type: inline-size;

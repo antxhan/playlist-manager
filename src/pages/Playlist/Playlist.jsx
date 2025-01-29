@@ -14,6 +14,7 @@ import EditIcon from "../../icons/EditIcon";
 import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
+import PlaylistSkeleton from "../../components/skeletons/PlaylistSkeleton/PlaylistSkeleton";
 
 export default function Playlist() {
   const player = usePlayer();
@@ -92,7 +93,7 @@ export default function Playlist() {
   if (playlist === null)
     return (
       <Layout>
-        <h2>Loading...</h2>
+        <PlaylistSkeleton />
       </Layout>
     );
 
