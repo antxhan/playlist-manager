@@ -1,16 +1,18 @@
 .nav {
   display: flex;
+
   position: sticky;
   inset: 0 auto 0 0;
+  z-index: 9999;
+
   background-color: hsl(from var(--clr-neutral-900) h s l / 0.6);
   height: 100vh;
   width: 5rem;
-  z-index: 9999;
 
   ul {
     display: flex;
     flex-direction: column;
-    position: fixed;
+    
     gap: 1.5rem;
     height: 100%;
     width: inherit;
@@ -18,10 +20,11 @@
   }
 
   ul li {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    position: relative;
   }
 
   ul li a {
@@ -45,9 +48,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     color: var(--clr-neutral-500);
     width: max-content;
     transition: all 0.2s ease-in-out;
+
     &:hover,
     &:focus-visible {
       color: var(--clr-neutral-000);
@@ -58,16 +63,17 @@
     position: absolute;
     top: 50%;
     left: 4rem;
+
+    background-color: #100911;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    color: var(--clr-neutral-000);
+    font-size: var(--fs-small);
     visibility: hidden;
     opacity: 0;
     text-wrap: nowrap;
     transform: translateY(-50%);
-    border: 1px solid black;
     padding: 0.25rem 0.5rem;
-    border-radius: 0.5rem;
-    background-color: #100911;
-    color: var(--clr-neutral-000);
-    font-size: var(--fs-small);
     box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
     transition: all 200ms ease-in-out;
     transition-delay: 200ms;
@@ -77,8 +83,8 @@
   ul li a:focus-visible + span,
   ul li button:hover + span,
   ul li button:focus-visible + span {
-    visibility: visible;
     opacity: 1;
+    visibility: visible;
   }
 
   ul li:nth-last-child(2) {
@@ -89,32 +95,24 @@
 @media (max-width: 700px) {
   .nav {
     z-index: 9999;
-    /* position: static; */
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     top: calc(100% - 5rem);
-    /* max-height: 6rem; */
     background-color: var(--clr-neutral-900);
     width: auto;
     height: auto;
   }
   .nav ul {
     position: static;
-    /* position: fixed; */
-    /* flex-direction: row; */
     padding: 0;
-    /* justify-content: space-between; */
-    /* border: 1px solid red; */
     width: 100%;
-    /* padding-inline: 3rem; */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
     padding-block: 0.75rem;
     li {
-      /* background-color: green; */
       flex-direction: column;
       span {
         position: static;
@@ -154,44 +152,39 @@
 
 @media (max-width: 700px) {
   .nav {
-    z-index: 9999;
-    /* position: static; */
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: calc(100% - 5rem);
-    /* max-height: 6rem; */
+    inset: calc(100% - 5rem) 0 0 0;
+    z-index: 9999;
+
     background-color: var(--clr-neutral-900);
     width: auto;
     height: auto;
   }
   .nav ul {
-    position: static;
-    /* position: fixed; */
-    /* flex-direction: row; */
-    padding: 0;
-    /* justify-content: space-between; */
-    /* border: 1px solid red; */
-    width: 100%;
-    /* padding-inline: 3rem; */
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
+
+    position: static;
+
+    padding: 0;
+    width: 100%;
     padding-block: 0.75rem;
     li {
-      /* background-color: green; */
       flex-direction: column;
+
       span {
-        position: static;
         display: flex;
+        
+        position: static;
+        
+        border: none;
+        color: var(--clr-neutral-500);
         opacity: 1;
         visibility: visible;
-        border: none;
         transform: initial;
         padding: 0;
         box-shadow: none;
-        color: var(--clr-neutral-500);
         transition-delay: 0s;
       }
     }
@@ -200,6 +193,7 @@
       height: 100%;
       min-width: 100%;
       padding-bottom: 0.5rem;
+      
       svg {
         width: 2rem;
         height: 2rem;
