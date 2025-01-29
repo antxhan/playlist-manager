@@ -25,6 +25,7 @@
           border-radius: 1rem;
           overflow: clip;
           width: min(15rem, 100%);
+          height: 100%;
           aspect-ratio: 1;
 
           img {
@@ -106,9 +107,11 @@
 
     .playlist__head-wrapper {
       position: sticky;
-      inset: var(--_playlist-padding) auto var(--_playlist-padding)
-        var(--_playlist-padding);
-      height: calc(100vh - 2 * var(--_playlist-padding));
+      top: var(--_page-wrapper-padding-top);
+      height: calc(
+        100vh - var(--_page-wrapper-padding-top) -
+          var(--_page-wrapper-padding-bottom)
+      );
       width: 300px;
 
       .playlist__head .playlist__image-wrapper {
