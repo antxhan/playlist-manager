@@ -44,7 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--clr-neutral-400);
+    color: var(--clr-neutral-500);
     width: max-content;
     transition: all 0.2s ease-in-out;
     &:hover,
@@ -82,5 +82,71 @@
 
   ul li:nth-last-child(2) {
     margin-top: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .nav {
+    z-index: 9999;
+    /* position: static; */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: calc(100% - 5rem);
+    /* max-height: 6rem; */
+    background-color: var(--clr-neutral-900);
+    width: auto;
+    height: auto;
+  }
+  .nav ul {
+    position: static;
+    /* position: fixed; */
+    /* flex-direction: row; */
+    padding: 0;
+    /* justify-content: space-between; */
+    /* border: 1px solid red; */
+    width: 100%;
+    /* padding-inline: 3rem; */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding-block: 0.75rem;
+    li {
+      /* background-color: green; */
+      flex-direction: column;
+      span {
+        position: static;
+        display: flex;
+        opacity: 1;
+        visibility: visible;
+        border: none;
+        transform: initial;
+        padding: 0;
+        box-shadow: none;
+        color: var(--clr-neutral-500);
+        transition-delay: 0s;
+      }
+    }
+    a,
+    button {
+      height: 100%;
+      min-width: 100%;
+      padding-bottom: 0.5rem;
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+    button:hover + span,
+    a:hover + span {
+      color: var(--clr-neutral-000);
+    }
+    a.active + span {
+      color: var(--clr-neutral-000);
+    }
+  }
+  .nav ul li:nth-last-child(2) {
+    margin-top: 0;
   }
 }
