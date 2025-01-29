@@ -20,6 +20,7 @@
   --clr-neutral-000: #fff;
   --clr-neutral-100: #fcfcff;
   --clr-neutral-400: #c4c4c4;
+  --clr-neutral-500: #a3a3a3;
   --clr-neutral-700: #2d2e37;
   --clr-neutral-800: #161616;
   --clr-neutral-900: #000;
@@ -91,7 +92,23 @@ button {
 }
 
 @media (max-width: 700px) {
+  #root {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto auto;
+    height: 100svh;
+  }
+  .nav {
+    grid-row: 3;
+    border-top: 1px solid var(--clr-neutral-700);
+  }
   .page-wrapper {
     padding-inline: 2rem;
+    padding-block-start: 2rem;
+    padding-block-end: 11rem;
+    /* min-height: 100%; */
+  }
+  .global-player {
+    grid-row: 2;
+    /* position: initial !important; */
   }
 }
