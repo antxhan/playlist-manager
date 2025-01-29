@@ -1,101 +1,110 @@
 .global-player {
-	position: fixed;
-	left: 5rem;
-	right: 0;
-	z-index: auto;
-	background-color: hsl(from var(--clr-neutral-900) h s l / 0.8);
+  position: fixed;
+  left: 5rem;
+  right: 0;
+  z-index: 9999;
+  background-color: hsl(from var(--clr-neutral-900) h s l / 0.8);
 
-	backdrop-filter: blur(4px);
-	padding: 0.5rem 2rem 0.5rem 2rem;
-	display: flex;
-	bottom: 0px;
+  backdrop-filter: blur(4px);
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  display: flex;
+  bottom: 0px;
 
-	.player--wrapper__left {
-		container-type: inline-size;
+  .player--wrapper__left {
+    container-type: inline-size;
 
-		display: grid;
-		grid-template-columns: auto 1fr auto;
-		gap: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
 
-		border-radius: 0.5rem;
-		padding: 0.5rem 0;
-		width: 100%;
-		transition: background-color 200ms ease-out;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    width: 100%;
+    transition: background-color 200ms ease-out;
 
-		.player--img {
-			border-radius: 0.5rem;
-			max-width: 4rem;
-			aspect-ratio: 1;
-			height: 100%;
-			object-fit: cover;
-		}
-		.player--info__wrapper {
-			display: flex;
-			flex-direction: column;
-			gap: 0.3em;
-			justify-content: center;
-			.player--currentTrackName {
-				font-size: var(--fs-normal);
-				display: -webkit-box;
-				line-clamp: 1;
-				-webkit-line-clamp: 1;
-				-webkit-box-orient: vertical;
-				white-space: unset;
-				word-break: break-all;
-				overflow: hidden;
-				text-overflow: ellipsis;
-			}
-			.player--currentTrackArtists {
-				font-size: var(--fs-small);
-				color: var(--clr-neutral-400);
-				display: -webkit-box;
-				line-clamp: 1;
-				-webkit-line-clamp: 1;
-				-webkit-box-orient: vertical;
-				white-space: unset;
-				word-break: break-all;
-				overflow: hidden;
-				text-overflow: ellipsis;
-			}
-		}
-	}
+    .player--img {
+      border-radius: 0.5rem;
+      max-width: 4rem;
+      aspect-ratio: 1;
+      height: 100%;
+      object-fit: cover;
+    }
+    .player--info__wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3em;
+      justify-content: center;
+      .player--currentTrackName {
+        font-size: var(--fs-normal);
+        display: -webkit-box;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        white-space: unset;
+        word-break: break-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .player--currentTrackArtists {
+        font-size: var(--fs-small);
+        color: var(--clr-neutral-400);
+        display: -webkit-box;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        white-space: unset;
+        word-break: break-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
 
-	.player--wrapper__right {
-		display: flex;
-		gap: 1rem;
-		.player--button {
-			color: var(--clr-neutral-400);
-			background-color: transparent;
-			border: none;
-			transition: all 0.2s ease-in-out;
-			&:hover,
-			&:focus-visible {
-				color: var(--clr-neutral-000);
-			}
-		}
-	}
+  .player--wrapper__right {
+    display: flex;
+    gap: 1rem;
+    .player--button {
+      color: var(--clr-neutral-400);
+      background-color: transparent;
+      border: none;
+      transition: all 0.2s ease-in-out;
+      &:hover,
+      &:focus-visible {
+        color: var(--clr-neutral-000);
+      }
+    }
+  }
 }
 
 @container (max-width: 500px) {
-	.global-player {
-		.player--wrapper__left {
-			.player--img {
-				max-width: 2.5rem;
-			}
-		}
-	}
+  .global-player {
+    .player--wrapper__left {
+      .player--img {
+        max-width: 2.5rem;
+      }
+    }
+  }
 }
 
 .animate-pulse {
-	animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes pulse {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.5;
-	}
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (max-width: 700px) {
+  .global-player {
+    width: 100%;
+    left: 0;
+    bottom: 5rem;
+    position: fixed;
+  }
 }
