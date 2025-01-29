@@ -1,0 +1,21 @@
+.standard-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  
+  color: var(--clr-neutral-100);
+  background-color: transparent;
+  border: 1px solid var(--clr-neutral-100);
+  border: 1px solid hsl(from var(--clr-purple) h s 30%);
+  border-radius: 0.25rem;
+  padding: calc(var(--_spacer) / 2) var(--_spacer);
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+
+  &:hover, &:focus-visible {
+    color: var(--clr-neutral-000);
+    background-color: hsl(from var(--clr-purple) h s 20%);
+    border-color: var(--clr-neutral-100);
+  }
+}

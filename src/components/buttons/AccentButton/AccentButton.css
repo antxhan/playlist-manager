@@ -1,0 +1,9 @@
+.accent-btn {
+  background-color: var(--clr-blue);
+  border-color: transparent;
+
+  &:hover,
+  &:focus-visible {
+    background-color: hsl(from var(--clr-blue) h s 52%);
+  }
+}
