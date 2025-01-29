@@ -46,7 +46,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         min-height: var(--fs-normal);
-        &.skeleton {
+        &.skeleton,
+        &.disabled {
           max-width: 10rem;
         }
       }
@@ -61,7 +62,8 @@
         word-break: break-all;
         overflow: hidden;
         text-overflow: ellipsis;
-        &.skeleton {
+        &.skeleton,
+        &.disabled {
           max-width: 6rem;
           height: var(--fs-small);
         }
@@ -80,6 +82,12 @@
       &:hover,
       &:focus-visible {
         color: var(--clr-neutral-000);
+      }
+      &[disabled] {
+        color: var(--clr-neutral-700);
+        &:hover {
+          cursor: initial;
+        }
       }
     }
   }
@@ -125,4 +133,6 @@
 }
 
 .disabled {
+  background-color: var(--clr-neutral-700);
+  border-radius: 1rem;
 }

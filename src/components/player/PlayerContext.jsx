@@ -61,42 +61,51 @@ export const PlayerProvider = ({ token, children }) => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isSDKReady, setIsSDKReady] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userIsPremium, setUserIsPremium] = useState(false);
 
   useEffect(() => {
-    if (!player) {
-      if (!token) {
-        setPlayer(null);
-        setIsLoading(false);
-        setIsSDKReady(false);
-      }
+    api.me().then((user) => {
+      setUserIsPremium(user.product === "premium");
+    });
+  }, []);
 
-      if (token) {
-        let scriptLoaded = false;
+  useEffect(() => {
+    if (userIsPremium) {
+      if (!player) {
+        if (!token) {
+          setPlayer(null);
+          setIsLoading(false);
+          setIsSDKReady(false);
+        }
 
-        const initializePlayer = () => {
-          console.log("Initializing Spotify Player");
-          createPlayerInstance(
-            token,
-            setPlayer,
-            setDeviceId,
-            setIsPaused,
-            setCurrentTrack,
-            setIsSDKReady,
-            setIsLoading
-          );
-          scriptLoaded = true;
-        };
+        if (token) {
+          let scriptLoaded = false;
 
-        if (!scriptLoaded) {
-          setIsLoading(true);
-          loadSDKScript();
+          const initializePlayer = () => {
+            console.log("Initializing Spotify Player");
+            createPlayerInstance(
+              token,
+              setPlayer,
+              setDeviceId,
+              setIsPaused,
+              setCurrentTrack,
+              setIsSDKReady,
+              setIsLoading
+            );
+            scriptLoaded = true;
+          };
 
-          // Set up the SDK Ready callback
-          window.onSpotifyWebPlaybackSDKReady = initializePlayer;
+          if (!scriptLoaded) {
+            setIsLoading(true);
+            loadSDKScript();
 
-          // Check if SDK is already loaded
-          if (window.Spotify) {
-            initializePlayer();
+            // Set up the SDK Ready callback
+            window.onSpotifyWebPlaybackSDKReady = initializePlayer;
+
+            // Check if SDK is already loaded
+            if (window.Spotify) {
+              initializePlayer();
+            }
           }
         }
       }
@@ -108,19 +117,20 @@ export const PlayerProvider = ({ token, children }) => {
         player.disconnect();
       }
     };
-  }, [token, player]);
+  }, [token, player, userIsPremium]);
 
-  const value = token
-    ? {
-        player,
-        currentTrack,
-        isPaused,
-        deviceId,
-        setIsPaused,
-        isSDKReady,
-        isLoading,
-      }
-    : null;
+  const value =
+    token && userIsPremium
+      ? {
+          player,
+          currentTrack,
+          isPaused,
+          deviceId,
+          setIsPaused,
+          isSDKReady,
+          isLoading,
+        }
+      : null;
 
   return (
     <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>

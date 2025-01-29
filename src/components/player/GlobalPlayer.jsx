@@ -7,7 +7,31 @@ import PreviousSongIcon from "../../icons/PreviousSongIcon";
 
 export default function GlobalPlayer() {
   const player = usePlayer();
-  if (!player) return null;
+  if (!player)
+    return (
+      <div className="global-player">
+        <div className="player--wrapper__left">
+          <div className="player--img disabled" />
+          <div className="player--info__wrapper">
+            <div className="player--currentTrackName disabled" />
+            <div className="player--currentTrackArtists disabled" />
+          </div>
+        </div>
+        <div className="player--wrapper__right">
+          <button className="player--button" disabled={true}>
+            <PreviousSongIcon />
+          </button>
+
+          <button className="player--button" disabled={true}>
+            <PlayIcon />
+          </button>
+
+          <button className="player--button" disabled={true}>
+            <NextSongIcon />
+          </button>
+        </div>
+      </div>
+    );
 
   const {
     currentTrack,
