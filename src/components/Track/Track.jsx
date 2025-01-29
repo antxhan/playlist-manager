@@ -11,18 +11,19 @@ export default function Track({ track }) {
       .padStart(2, "0")}`;
   };
 
+  if (!track) return null;
+
   return (
     <button className="track">
       <img
-        src={track.album?.images?.[2]?.url || missingAlbumCover}
+        src={track?.album?.images?.[2]?.url || missingAlbumCover}
         alt="Track album cover"
       />
       <div className="track__info">
-        <p className="track__name">{track.name || "Unknown Track"}</p>
+        <p className="track__name">{track?.name || "Unknown Track"}</p>
         <p className="track__artists">
-          {track.artists
-            ? track.artists.map((artist) => artist.name).join(", ")
-            : "Unknown Artist"}
+          {track?.artists.map((artist) => artist.name).join(", ") ||
+            "Unknown Artist"}
         </p>
       </div>
       <p className="track__duration">
