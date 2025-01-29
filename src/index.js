@@ -9,7 +9,7 @@ import Callback from "./utils/callback/Callback";
 import NotFound from "./pages/NotFound/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Search from "./pages/Search/Search";
-import { PlayerProvider } from "./components/player/PlayerContext";
+import { PlayerProvider } from "./components/Player/PlayerContext";
 import { db } from "./utils/db";
 
 const token = db.token.get();
