@@ -1,15 +1,12 @@
 import Nav from "./components/Nav/Nav";
-import GlobalPlayer from "./components/player/GlobalPlayer";
-import { usePlayer } from "./hooks/usePlayer";
+import GlobalPlayer from "./components/Player/GlobalPlayer";
 
 export default function Layout({ children }) {
-	const player = usePlayer();
-
-	return (
-		<>
-			<Nav />
-			<section className="page-wrapper">{children}</section>
-			{player && <GlobalPlayer />}
-		</>
-	);
+  return (
+    <>
+      <Nav />
+      <section className="page-wrapper">{children}</section>
+      <GlobalPlayer />
+    </>
+  );
 }

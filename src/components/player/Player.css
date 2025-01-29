@@ -25,6 +25,7 @@
     .player--img {
       border-radius: 0.5rem;
       max-width: 4rem;
+      width: 4rem;
       aspect-ratio: 1;
       height: 100%;
       object-fit: cover;
@@ -44,6 +45,11 @@
         word-break: break-all;
         overflow: hidden;
         text-overflow: ellipsis;
+        min-height: var(--fs-normal);
+        &.skeleton,
+        &.disabled {
+          max-width: 10rem;
+        }
       }
       .player--currentTrackArtists {
         font-size: var(--fs-small);
@@ -56,6 +62,11 @@
         word-break: break-all;
         overflow: hidden;
         text-overflow: ellipsis;
+        &.skeleton,
+        &.disabled {
+          max-width: 6rem;
+          height: var(--fs-small);
+        }
       }
     }
   }
@@ -71,6 +82,12 @@
       &:hover,
       &:focus-visible {
         color: var(--clr-neutral-000);
+      }
+      &[disabled] {
+        color: var(--clr-neutral-700);
+        &:hover {
+          cursor: initial;
+        }
       }
     }
   }
@@ -107,4 +124,15 @@
     bottom: 5rem;
     position: fixed;
   }
+}
+
+.skeleton {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--clr-neutral-500);
+  border-radius: 1rem;
+}
+
+.disabled {
+  background-color: var(--clr-neutral-700);
+  border-radius: 1rem;
 }
