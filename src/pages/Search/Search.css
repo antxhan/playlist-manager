@@ -1,5 +1,16 @@
-.search {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+@media (max-width: 700px) {
+  .page-wrapper {
+    padding-top: 6rem;
+  }
+  header {
+    background-color: hsl(from var(--clr-neutral-900) h s l / 0.8);
+    backdrop-filter: blur(4px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    padding-block: 1rem;
+    padding-inline: 2rem;
+  }
 }
