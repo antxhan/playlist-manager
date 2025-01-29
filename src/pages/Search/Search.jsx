@@ -1,4 +1,4 @@
-// import "./Search.css";
+import "./Search.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Layout from "../../Layout";
 import { useSearchParams } from "react-router";
@@ -32,6 +32,7 @@ export default function Search() {
     e.preventDefault();
     const q = e.target.q.value;
     setSearchParams({ q });
+    // TODO: clear search results
   };
 
   return (
