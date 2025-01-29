@@ -63,7 +63,7 @@ export const PlayerProvider = ({ token, children }) => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		if (player) return null;
+		if (player) return;
 		if (!token) {
 			setPlayer(null);
 			setIsLoading(false);
