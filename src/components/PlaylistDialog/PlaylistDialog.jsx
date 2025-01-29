@@ -1,5 +1,5 @@
 import "./PlaylistDialog.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function PlaylistDialog({
   isOpen,
@@ -11,6 +11,13 @@ export default function PlaylistDialog({
 }) {
   const [name, setName] = useState(initialName);
   const [description, setDescription] = useState(initialDescription);
+
+  useEffect(() => {
+    if (isOpen) {
+      setName(initialName);
+      setDescription(initialDescription);
+    }
+  }, [isOpen, initialName, initialDescription]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
