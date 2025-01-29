@@ -128,3 +128,4 @@ The primary goal is to create a **user-friendly, interactive interface** that en
 - React Router for routing.
 - Log In with Spotify API.
 - Spotify API to fetch data from Spotify.
+- Create, read, update and delete playlists
