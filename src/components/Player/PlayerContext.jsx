@@ -152,7 +152,7 @@ export const PlayerProvider = ({ token, children }) => {
 
 	useEffect(() => {
 		if (isSDKReady && deviceId) {
-			api.player.setVolume(volume, deviceId);
+			api.player.setVolume(volume);
 		}
 	}, [isSDKReady, deviceId, volume]);
 
