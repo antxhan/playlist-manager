@@ -28,7 +28,29 @@
 
   font-size: small;
 
-  [type="checkbox"] {
-    width: fit-content;
+  input[type="checkbox"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    transition: all 200ms ease;
+
+    &:checked {
+      background-color: var(--clr-blue);
+    }
+
+    &:checked::before {
+      content: "\2713";
+      display: block;
+      color: var(--clr-neutral-000);
+      font-size: 2rem;
+      line-height: 20px;
+    }
   }
 }
