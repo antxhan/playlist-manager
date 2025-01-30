@@ -5,7 +5,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
-import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialog/PlaylistDialog";
+import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialogs/CreatePlaylistDialog/CreatePlaylistDialog";
 import InfinitePlaylistGrid from "../../components/InfinitePlaylistGrid/InfinitePlaylistGrid";
 
 export default function Home() {
