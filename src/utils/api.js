@@ -1,4 +1,6 @@
+import { error } from "ajv/dist/vocabularies/applicator/dependencies";
 import { db } from "./db";
+import FetchError from "./fetchError";
 
 export const api = {
   baseUrl: "https://api.spotify.com/v1/",
@@ -9,15 +11,25 @@ export const api = {
     }
 
     // makes request to api and returns data
-    return fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${db.token.get().access_token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => data)
-      .catch((error) => console.error("Error fetching data:", error));
+    return (
+      fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${db.token.get().access_token}`,
+        },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new FetchError("HTTP error!", res.status);
+          }
+          return res.json();
+        })
+        .then((data) => data)
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+          throw error;
+        })
+    );
   },
   post({ endpoint = "", body = {}, returnJSON = false }) {
     return fetch(this.baseUrl + endpoint, {
