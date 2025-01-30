@@ -158,10 +158,8 @@ export const api = {
 		},
 		{
 			setVolume(volumePercent) {
-				//deviceId
 				return api.put({
 					endpoint: `me/player/volume?volume_percent=${volumePercent}`,
-					// body: { device_id: deviceId },
 				});
 			},
 		}

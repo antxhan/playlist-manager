@@ -20,8 +20,7 @@ function createPlayerInstance(
 	setCurrentTrack,
 	setIsSDKReady,
 	setIsLoading,
-	setVolumeState,
-	setVolume
+	setVolumeState
 ) {
 	const playerInstance = new window.Spotify.Player({
 		name: "THE PLAYLIST MANAGER",
@@ -122,7 +121,7 @@ export const PlayerProvider = ({ token, children }) => {
 							setCurrentTrack,
 							setIsSDKReady,
 							setIsLoading,
-							setVolume
+							setVolumeState
 						);
 						scriptLoaded = true;
 					};
