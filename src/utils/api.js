@@ -10,25 +10,23 @@ export const api = {
     }
 
     // makes request to api and returns data
-    return (
-      fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${db.token.get().access_token}`,
-        },
+    return fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${db.token.get().access_token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new FetchError("HTTP error!", res.status);
+        }
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) {
-            throw new FetchError("HTTP error!", res.status);
-          }
-          return res.json();
-        })
-        .then((data) => data)
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-          throw error;
-        })
-    );
+      .then((data) => data)
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        throw error;
+      });
   },
   post({ endpoint = "", body = {}, returnJSON = false }) {
     return fetch(this.baseUrl + endpoint, {
@@ -40,6 +38,9 @@ export const api = {
       body: JSON.stringify(body),
     })
       .then((res) => {
+        if (!res.ok) {
+          throw new FetchError("HTTP error!", res.status);
+        }
         if (returnJSON) return res.json();
         else return res;
       })
@@ -56,6 +57,9 @@ export const api = {
       body: body ? JSON.stringify(body) : null,
     })
       .then((res) => {
+        if (!res.ok) {
+          throw new FetchError("HTTP error!", res.status);
+        }
         if (returnJSON) return res.json();
         else return res;
       })
@@ -77,7 +81,7 @@ export const api = {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+          throw new FetchError("HTTP error!", res.status);
         }
         return res.text();
       })
