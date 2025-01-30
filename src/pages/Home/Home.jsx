@@ -2,15 +2,16 @@ import "./Home.css";
 import { useEffect, useState } from "react";
 import { api } from "../../utils/api";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import PlaylistGrid from "../../components/PlaylistGrid/PlaylistGrid";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialog/PlaylistDialog";
+import InfinitePlaylistGrid from "../../components/InfinitePlaylistGrid/InfinitePlaylistGrid";
 
 export default function Home() {
   const [user, setUser] = useState(null);
   const [playlists, setPlaylists] = useState([]);
+  const [nextPage, setNextPage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleChange = (e) => {
@@ -28,11 +29,16 @@ export default function Home() {
   };
 
   useEffect(() => {
-    api.me().then((user) => {
-      setUser(user);
-    });
+    api.me().then((user) => setUser(user));
     api.me.playlists().then((playlists) => setPlaylists(playlists.items));
   }, []);
+
+  const getNextPage = () => {
+    api.get({ url: nextPage }).then((results) => {
+      setPlaylists([...playlists, ...results.items]);
+      setNextPage(results.next);
+    });
+  };
 
   return (
     <>
@@ -57,7 +63,12 @@ export default function Home() {
           />
         </div>
         {playlists.length > 0 ? (
-          <PlaylistGrid playlists={playlists} />
+          <InfinitePlaylistGrid
+            playlists={playlists}
+            hasMore={nextPage}
+            getNextPage={getNextPage}
+            endMessage={null}
+          />
         ) : (
           <div>
             You have no playlists. Create one by clicking the button above.
