@@ -19,3 +19,16 @@
   resize: none;
   aspect-ratio: 4 / 1;
 }
+
+.playlist-dialog__checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 1rem;
+
+  font-size: small;
+
+  [type="checkbox"] {
+    width: fit-content;
+  }
+}

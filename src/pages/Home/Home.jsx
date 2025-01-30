@@ -6,7 +6,7 @@ import PlaylistGrid from "../../components/PlaylistGrid/PlaylistGrid";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
-import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialog/PlaylistDialog";
+import CreatePlaylistDialog from "../../components/dialogs/playlistDialogs/CreatePlaylistDialog/CreatePlaylistDialog";
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -17,12 +17,30 @@ export default function Home() {
     console.log(e.target.value);
   };
 
-  const handleCreatePlaylistSubmit = async (name, description) => {
+  const handleCreatePlaylistSubmit = async (
+    name,
+    description,
+    addTopTracks
+  ) => {
     const response = await api.post({
       endpoint: `users/${user.id}/playlists`,
       body: { name: name, description: description },
     });
     const newPlaylist = await response.json();
+
+    if (addTopTracks) {
+      const topTracks = await api.get({
+        endpoint: "me/top/tracks",
+        params: { time_range: 'long_term', limit: 20 },
+      });
+
+      await api.post({
+        endpoint: `playlists/${newPlaylist.id}/tracks`,
+        body: { uris: topTracks.items.map((track) => track.uri) },
+      });
+
+      newPlaylist.tracks = { total: topTracks.items.length };
+    }
 
     setPlaylists((prevPlaylists) => [newPlaylist, ...prevPlaylists]);
   };
@@ -69,7 +87,10 @@ export default function Home() {
           onSubmit={handleCreatePlaylistSubmit}
           title="Create Playlist"
         >
-          <AccentButton type="submit" ariaLabel="Create Playlist">
+          <AccentButton
+            type="submit"
+            ariaLabel="'Create Playlist' confirmation"
+          >
             Create Playlist
           </AccentButton>
         </CreatePlaylistDialog>
