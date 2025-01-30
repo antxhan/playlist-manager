@@ -35,6 +35,9 @@
           }
 
           .playlist__edit-btn {
+            --playlist-edit-btn-transition-duration: 300ms;
+            --playlist-edit-btn-transition-effect: ease-in-out;
+
             position: absolute;
             inset: 0;
 
@@ -44,10 +47,13 @@
             border-radius: 0.25rem;
             height: 100%;
             width: 100%;
-            transition: all 300ms ease-in-out;
+            transition: all var(--playlist-edit-btn-transition-duration)
+              var(--playlist-edit-btn-transition-effect);
 
             svg {
               opacity: 0;
+              transition: opacity var(--playlist-edit-btn-transition-duration)
+                var(--playlist-edit-btn-transition-effect);
             }
 
             &:hover,
