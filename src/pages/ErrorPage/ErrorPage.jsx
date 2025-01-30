@@ -1,7 +1,6 @@
 import "./ErrorPage.css";
 import { useLocation, NavLink } from "react-router-dom";
 import Layout from "../../Layout";
-import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 
 export default function ErrorPage() {

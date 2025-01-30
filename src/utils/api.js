@@ -1,4 +1,3 @@
-import { error } from "ajv/dist/vocabularies/applicator/dependencies";
 import { db } from "./db";
 import FetchError from "./fetchError";
 
