@@ -1,5 +1,5 @@
 import "./Player.css";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback, useRef } from "react";
 import { api } from "../../utils/api";
 
 export const PlayerContext = createContext(undefined);
@@ -19,7 +19,8 @@ function createPlayerInstance(
 	setIsPaused,
 	setCurrentTrack,
 	setIsSDKReady,
-	setIsLoading
+	setIsLoading,
+	setVolumeState
 ) {
 	const playerInstance = new window.Spotify.Player({
 		name: "THE PLAYLIST MANAGER",
@@ -30,6 +31,9 @@ function createPlayerInstance(
 	playerInstance.addListener("ready", ({ device_id }) => {
 		setDeviceId(device_id);
 		api.player.transferPlaybackToPlayer(device_id);
+		playerInstance.getVolume().then((vol) => {
+			setVolumeState(vol * 100);
+		});
 		setIsSDKReady(true);
 		setIsLoading(false);
 	});
@@ -62,6 +66,32 @@ export const PlayerProvider = ({ token, children }) => {
 	const [isSDKReady, setIsSDKReady] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [userIsPremium, setUserIsPremium] = useState(false);
+	const [volume, setVolumeState] = useState(50);
+
+	const debouncedApiSetVolume = useRef(null);
+
+	const setVolume = useCallback(
+		(newVolume) => {
+			setVolumeState(newVolume);
+
+			//set volume in local player immediately
+			if (player) {
+				player.setVolume(newVolume / 100, deviceId);
+			}
+
+			//debounce API calls to Spotify
+			if (debouncedApiSetVolume.current) {
+				clearTimeout(debouncedApiSetVolume.current);
+			}
+
+			debouncedApiSetVolume.current = setTimeout(() => {
+				if (isSDKReady && deviceId) {
+					api.player.setVolume(newVolume);
+				}
+			}, 200);
+		},
+		[player, isSDKReady, deviceId]
+	);
 
 	useEffect(() => {
 		api.me().then((user) => {
@@ -90,7 +120,8 @@ export const PlayerProvider = ({ token, children }) => {
 							setIsPaused,
 							setCurrentTrack,
 							setIsSDKReady,
-							setIsLoading
+							setIsLoading,
+							setVolumeState
 						);
 						scriptLoaded = true;
 					};
@@ -119,6 +150,12 @@ export const PlayerProvider = ({ token, children }) => {
 		};
 	}, [token, player, userIsPremium]);
 
+	useEffect(() => {
+		if (isSDKReady && deviceId) {
+			api.player.setVolume(volume, deviceId);
+		}
+	}, [isSDKReady, deviceId, volume]);
+
 	const value =
 		token && userIsPremium
 			? {
@@ -129,6 +166,8 @@ export const PlayerProvider = ({ token, children }) => {
 					setIsPaused,
 					isSDKReady,
 					isLoading,
+					volume,
+					setVolume,
 			  }
 			: null;
 

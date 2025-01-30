@@ -2,12 +2,12 @@ import { db } from "./db";
 import FetchError from "./fetchError";
 
 export const api = {
-  baseUrl: "https://api.spotify.com/v1/",
-  get({ url = "", endpoint = "", params = null }) {
-    // if no url, construct it from endpoint and params
-    if (!url) {
-      url = this._createUrl(endpoint, params);
-    }
+	baseUrl: "https://api.spotify.com/v1/",
+	get({ url = "", endpoint = "", params = null }) {
+		// if no url, construct it from endpoint and params
+		if (!url) {
+			url = this._createUrl(endpoint, params);
+		}
 
     // makes request to api and returns data
     return fetch(url, {
@@ -188,13 +188,13 @@ export const api = {
   _createUrl(endpoint, params) {
     const url = new URL(this.baseUrl + endpoint);
 
-    // appends params to url if their value exists
-    if (params) {
-      url.search = new URLSearchParams(
-        Object.entries(params).filter(([key, value]) => value != null)
-      );
-    }
+		// appends params to url if their value exists
+		if (params) {
+			url.search = new URLSearchParams(
+				Object.entries(params).filter(([key, value]) => value != null)
+			);
+		}
 
-    return url;
-  },
+		return url;
+	},
 };
