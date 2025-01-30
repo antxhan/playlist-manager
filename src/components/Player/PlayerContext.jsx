@@ -1,5 +1,5 @@
 import "./Player.css";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import { api } from "../../utils/api";
 
 export const PlayerContext = createContext(undefined);
@@ -19,7 +19,9 @@ function createPlayerInstance(
 	setIsPaused,
 	setCurrentTrack,
 	setIsSDKReady,
-	setIsLoading
+	setIsLoading,
+	setVolumeState,
+	setVolume
 ) {
 	const playerInstance = new window.Spotify.Player({
 		name: "THE PLAYLIST MANAGER",
@@ -30,6 +32,9 @@ function createPlayerInstance(
 	playerInstance.addListener("ready", ({ device_id }) => {
 		setDeviceId(device_id);
 		api.player.transferPlaybackToPlayer(device_id);
+		playerInstance.getVolume().then((vol) => {
+			setVolumeState(vol * 100);
+		});
 		setIsSDKReady(true);
 		setIsLoading(false);
 	});
@@ -62,6 +67,37 @@ export const PlayerProvider = ({ token, children }) => {
 	const [isSDKReady, setIsSDKReady] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [userIsPremium, setUserIsPremium] = useState(false);
+	const [volume, setVolumeState] = useState(50);
+
+	const debouncedApiSetVolume = useCallback(
+		(newVolume) => {
+			const timeout = setTimeout(() => {
+				if (isSDKReady && deviceId) {
+					api.player.setVolume(newVolume);
+				}
+			}, 500);
+			return () => clearTimeout(timeout);
+		},
+		[isSDKReady, deviceId]
+	);
+
+	const setVolume = useCallback(
+		(newVolume) => {
+			setVolumeState(newVolume);
+			if (player) {
+				player.setVolume(newVolume / 100).then(() => {
+					debouncedApiSetVolume(newVolume);
+				});
+			}
+		},
+		[player, debouncedApiSetVolume]
+	);
+
+	useEffect(() => {
+		return () => {
+			// No need to call cancel on debouncedApiSetVolume
+		};
+	}, []);
 
 	useEffect(() => {
 		api.me().then((user) => {
@@ -90,7 +126,8 @@ export const PlayerProvider = ({ token, children }) => {
 							setIsPaused,
 							setCurrentTrack,
 							setIsSDKReady,
-							setIsLoading
+							setIsLoading,
+							setVolume
 						);
 						scriptLoaded = true;
 					};
@@ -119,6 +156,12 @@ export const PlayerProvider = ({ token, children }) => {
 		};
 	}, [token, player, userIsPremium]);
 
+	useEffect(() => {
+		if (isSDKReady && deviceId) {
+			api.player.setVolume(volume);
+		}
+	}, [isSDKReady, deviceId]);
+
 	const value =
 		token && userIsPremium
 			? {
@@ -129,6 +172,8 @@ export const PlayerProvider = ({ token, children }) => {
 					setIsPaused,
 					isSDKReady,
 					isLoading,
+					volume,
+					setVolume,
 			  }
 			: null;
 

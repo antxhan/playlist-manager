@@ -4,11 +4,10 @@ import PlayIcon from "../../icons/PlayIcon";
 import PauseIcon from "../../icons/PauseIcon";
 import NextSongIcon from "../../icons/NextSongIcon";
 import PreviousSongIcon from "../../icons/PreviousSongIcon";
-import { useState } from "react";
+import VolumeControl from "./VolumeControl";
 
 export default function GlobalPlayer() {
 	const player = usePlayer();
-	const [volume, setVolume] = useState(50);
 	if (!player)
 		return (
 			<div className="global-player">
@@ -43,16 +42,6 @@ export default function GlobalPlayer() {
 		isSDKReady,
 		isLoading,
 	} = player;
-
-	const handleVolumeChange = async (event) => {
-		const newVolume = event.target.value;
-		if (!isNaN(newVolume)) {
-			setVolume(newVolume);
-			await api.player.setVolume(newVolume);
-
-			console.log(newVolume);
-		}
-	};
 
 	//always render the player structure, but change content based on state
 	return (
@@ -113,17 +102,7 @@ export default function GlobalPlayer() {
 					<NextSongIcon />
 				</button>
 			</div>
-			<div className="player--volume-wrapper">
-				<input
-					className="player--volume-slider"
-					type="range"
-					min="0"
-					max="100"
-					step="1"
-					value={volume ?? 50}
-					onChange={handleVolumeChange}
-				/>
-			</div>
+			<VolumeControl />
 		</div>
 	);
 }

@@ -1,0 +1,8 @@
+.volume-control {
+	display: flex;
+	align-items: center;
+}
+
+.volume-slider {
+	cursor: pointer;
+}
