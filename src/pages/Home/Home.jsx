@@ -6,7 +6,7 @@ import PlaylistGrid from "../../components/PlaylistGrid/PlaylistGrid";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
-import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialog/PlaylistDialog";
+import CreatePlaylistDialog from "../../components/dialogs/playlistDialogs/CreatePlaylistDialog/CreatePlaylistDialog";
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -69,7 +69,10 @@ export default function Home() {
           onSubmit={handleCreatePlaylistSubmit}
           title="Create Playlist"
         >
-          <AccentButton type="submit" ariaLabel="Create Playlist">
+          <AccentButton
+            type="submit"
+            ariaLabel="'Create Playlist' confirmation"
+          >
             Create Playlist
           </AccentButton>
         </CreatePlaylistDialog>
