@@ -37,7 +37,7 @@ export default function Search() {
 
   return (
     <Layout>
-      <header>
+      <header className="page-header">
         <SearchBar q={q} onSubmit={handleSearch} />
       </header>
       <main>
