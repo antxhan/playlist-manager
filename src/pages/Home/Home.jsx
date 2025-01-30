@@ -17,12 +17,30 @@ export default function Home() {
     console.log(e.target.value);
   };
 
-  const handleCreatePlaylistSubmit = async (name, description) => {
+  const handleCreatePlaylistSubmit = async (
+    name,
+    description,
+    addTopTracks
+  ) => {
     const response = await api.post({
       endpoint: `users/${user.id}/playlists`,
       body: { name: name, description: description },
     });
     const newPlaylist = await response.json();
+
+    if (addTopTracks) {
+      const topTracks = await api.get({
+        endpoint: "me/top/tracks",
+        params: { time_range: 'long_term', limit: 20 },
+      });
+
+      await api.post({
+        endpoint: `playlists/${newPlaylist.id}/tracks`,
+        body: { uris: topTracks.items.map((track) => track.uri) },
+      });
+
+      newPlaylist.tracks = { total: topTracks.items.length };
+    }
 
     setPlaylists((prevPlaylists) => [newPlaylist, ...prevPlaylists]);
   };

@@ -12,12 +12,14 @@ export default function CreatePlaylistDialog({
 }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [addTopTracks, setAddTopTracks] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(name, description);
+    onSubmit(name, description, addTopTracks);
     setName("");
     setDescription("");
+    setAddTopTracks(false);
     onClose();
   };
 
@@ -38,6 +40,17 @@ export default function CreatePlaylistDialog({
           placeholder="Playlist description"
           aria-label="Playlist description"
         ></textarea>
+        <div className="playlist-dialog__checkbox-wrapper">
+          <input
+            type="checkbox"
+            id="addTopTracks"
+            checked={addTopTracks}
+            onChange={(e) => setAddTopTracks(e.target.checked)}
+          />
+          <label htmlFor="addTopTracks">
+            Add your top 20 tracks
+          </label>
+        </div>
         <div className="dialog__button-wrapper">{children}</div>
       </form>
     </Dialog>
