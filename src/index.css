@@ -99,7 +99,6 @@ button {
   #root {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto auto;
-    height: 100svh;
   }
   .nav {
     grid-row: 3;
@@ -109,10 +108,8 @@ button {
     padding-inline: 2rem;
     padding-block-start: 2rem;
     padding-block-end: 11rem;
-    /* min-height: 100%; */
   }
   .global-player {
     grid-row: 2;
-    /* position: initial !important; */
   }
 }
