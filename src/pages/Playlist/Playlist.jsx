@@ -8,7 +8,7 @@ import he from "he";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
-import EditPlaylistDialog from "../../components/dialogs/playlistDialogs/EditPlaylistDialog/EditPlaylistDialog";
+import EditPlaylistDialog from "../../components/dialogs/PlaylistDialogs/EditPlaylistDialog/EditPlaylistDialog";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog/ConfirmDialog";
 import EditIcon from "../../icons/EditIcon";
 import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
