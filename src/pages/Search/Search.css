@@ -2,7 +2,7 @@
   .page-wrapper {
     padding-top: 6rem;
   }
-  header {
+  .page-header {
     background-color: hsl(from var(--clr-neutral-900) h s l / 0.8);
     backdrop-filter: blur(4px);
     position: fixed;

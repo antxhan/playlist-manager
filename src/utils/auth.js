@@ -16,7 +16,7 @@ export const auth = {
       redirect_uri: this.redirect_uri,
       response_type: "code",
       scope:
-        "streaming user-read-private user-read-email user-read-playback-state user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative",
+        "streaming user-top-read user-read-private user-read-email user-read-playback-state user-modify-playback-state user-read-currently-playing playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative",
       state,
     });
     const url = `https://accounts.spotify.com/authorize?${params.toString()}`;
