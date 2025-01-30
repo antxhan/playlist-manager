@@ -1,5 +1,5 @@
 import "./Player.css";
-import { createContext, useState, useEffect, useCallback } from "react";
+import { createContext, useState, useEffect, useCallback, useRef } from "react";
 import { api } from "../../utils/api";
 
 export const PlayerContext = createContext(undefined);
@@ -69,35 +69,30 @@ export const PlayerProvider = ({ token, children }) => {
 	const [userIsPremium, setUserIsPremium] = useState(false);
 	const [volume, setVolumeState] = useState(50);
 
-	const debouncedApiSetVolume = useCallback(
-		(newVolume) => {
-			const timeout = setTimeout(() => {
-				if (isSDKReady && deviceId) {
-					api.player.setVolume(newVolume);
-				}
-			}, 500);
-			return () => clearTimeout(timeout);
-		},
-		[isSDKReady, deviceId]
-	);
+	const debouncedApiSetVolume = useRef(null);
 
 	const setVolume = useCallback(
 		(newVolume) => {
 			setVolumeState(newVolume);
-			if (player) {
-				player.setVolume(newVolume / 100).then(() => {
-					debouncedApiSetVolume(newVolume);
-				});
-			}
-		},
-		[player, debouncedApiSetVolume]
-	);
 
-	useEffect(() => {
-		return () => {
-			// No need to call cancel on debouncedApiSetVolume
-		};
-	}, []);
+			//set volume in local player immediately
+			if (player) {
+				player.setVolume(newVolume / 100, deviceId);
+			}
+
+			//debounce API calls to Spotify
+			if (debouncedApiSetVolume.current) {
+				clearTimeout(debouncedApiSetVolume.current);
+			}
+
+			debouncedApiSetVolume.current = setTimeout(() => {
+				if (isSDKReady && deviceId) {
+					api.player.setVolume(newVolume);
+				}
+			}, 200);
+		},
+		[player, isSDKReady, deviceId]
+	);
 
 	useEffect(() => {
 		api.me().then((user) => {
@@ -158,9 +153,9 @@ export const PlayerProvider = ({ token, children }) => {
 
 	useEffect(() => {
 		if (isSDKReady && deviceId) {
-			api.player.setVolume(volume);
+			api.player.setVolume(volume, deviceId);
 		}
-	}, [isSDKReady, deviceId]);
+	}, [isSDKReady, deviceId, volume]);
 
 	const value =
 		token && userIsPremium
