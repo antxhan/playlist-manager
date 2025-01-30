@@ -129,3 +129,4 @@ The primary goal is to create a **user-friendly, interactive interface** that en
 - Log In with Spotify API.
 - Spotify API to fetch data from Spotify.
 - Create, read, update and delete playlists
+- Option to add user's favorite tracks when creating a playlist
