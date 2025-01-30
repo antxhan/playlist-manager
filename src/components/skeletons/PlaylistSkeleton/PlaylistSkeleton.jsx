@@ -15,7 +15,7 @@ export default function PlaylistSkeleton() {
         </div>
         <div className="playlist__body">
           <div className="playlist__tracks playlist-skeleton__tracks">
-            {[...Array(5)].map((_, index) => (
+            {[...Array(10)].map((_, index) => (
               <div key={index} className="track playlist-skeleton__track"></div>
             ))}
           </div>

@@ -1,5 +1,5 @@
-import { Link } from "react-router";
 import "./PlaylistCard.css";
+import { Link } from "react-router";
 import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
 
 export default function PlaylistCard({ playlist }) {
@@ -17,6 +17,7 @@ export default function PlaylistCard({ playlist }) {
       />
       <div className="playlist-card__info">
         <p>{playlist.name}</p>
+        <p>{playlist.owner.display_name}</p>
         <p>{playlist.tracks.total} tracks</p>
       </div>
     </Link>

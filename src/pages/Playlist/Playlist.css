@@ -68,6 +68,11 @@
         .playlist__info {
           display: grid;
           gap: var(--_playlist-gap);
+
+          .playlist__info-group {
+            display: flex;
+            gap: 1rem;
+          }
         }
       }
     }

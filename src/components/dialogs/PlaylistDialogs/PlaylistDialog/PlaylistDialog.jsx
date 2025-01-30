@@ -1,6 +1,6 @@
 import "./PlaylistDialog.css";
 import { useState, useEffect } from "react";
-import Dialog from "../Dialog/Dialog";
+import Dialog from "../../Dialog/Dialog";
 
 export default function PlaylistDialog({
   isOpen,

@@ -21,7 +21,7 @@
   .playlist-card__info {
     color: var(--clr-neutral-100);
 
-    p:last-of-type {
+    p:not(:first-of-type) {
       font-size: var(--fs-small);
     }
   }

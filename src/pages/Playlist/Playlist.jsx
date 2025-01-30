@@ -8,7 +8,7 @@ import he from "he";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
 import InfiniteScroll from "react-infinite-scroll-component";
-import EditPlaylistDialog from "../../components/dialogs/PlaylistDialog/PlaylistDialog";
+import EditPlaylistDialog from "../../components/dialogs/PlaylistDialogs/EditPlaylistDialog/EditPlaylistDialog";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog/ConfirmDialog";
 import EditIcon from "../../icons/EditIcon";
 import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
@@ -21,7 +21,7 @@ export default function Playlist() {
   const isSignedIn = useAuth();
   const navigate = useNavigate();
   const { id } = useParams();
-  const [playlist, setPlaylist] = useState(null);
+  const [playlist, setPlaylist] = useState([]);
   const [tracks, setTracks] = useState([]);
   const [tracksHasMore, setTracksHasMore] = useState(true);
   const [trackOffset, setTrackOffset] = useState(0);
@@ -29,6 +29,7 @@ export default function Playlist() {
   const [isInitialFetch, setIsInitialFetch] = useState(true);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchTracks = useCallback(() => {
     if (isSignedIn && id) {
@@ -78,19 +79,22 @@ export default function Playlist() {
 
   useEffect(() => {
     if (isSignedIn && id && isInitialFetch) {
-      api.playlist(id).then(({ description, name, ...playlist }) =>
-        setPlaylist({
-          ...playlist,
-          name: he.decode(name),
-          description: he.decode(description),
-        })
-      );
+      api
+        .playlist(id)
+        .then(({ description, name, ...playlist }) =>
+          setPlaylist({
+            ...playlist,
+            name: he.decode(name),
+            description: he.decode(description),
+          })
+        )
+        .then(() => setIsLoading(false));
       fetchTracks();
       setIsInitialFetch(false);
     }
   }, [isSignedIn, id, isInitialFetch, fetchTracks]);
 
-  if (playlist === null)
+  if (isLoading)
     return (
       <Layout>
         <PlaylistSkeleton />
@@ -126,7 +130,10 @@ export default function Playlist() {
                 <h2 onClick={() => setIsEditDialogOpen(true)}>
                   {playlist.name}
                 </h2>
-                <p>{playlist.tracks.total} tracks</p>
+                <div className="playlist__info-group">
+                  <p>{playlist.owner.display_name}</p>
+                  <p>{playlist.tracks.total} tracks</p>
+                </div>
                 <p onClick={() => setIsEditDialogOpen(true)}>
                   {playlist.description}
                 </p>
@@ -183,7 +190,7 @@ export default function Playlist() {
         >
           <StandardButton
             onClick={handleDeletePlaylist}
-            ariaLabel="Delete Playlist"
+            ariaLabel="'Delete Playlist' confirmation"
           >
             Delete Playlist
           </StandardButton>

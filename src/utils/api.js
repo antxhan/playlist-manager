@@ -90,9 +90,13 @@ export const api = {
 	),
 	playlist: Object.assign(
 		(id) => {
-			const fields = ["images", "name", "description", "tracks(total)"].join(
-				","
-			);
+			const fields = [
+				"images",
+				"name",
+				"description",
+				"tracks(total)",
+				"owner(display_name",
+			].join(",");
 			return api.get({ endpoint: `playlists/${id}`, params: { fields } });
 		},
 		{

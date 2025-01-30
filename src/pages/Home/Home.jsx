@@ -2,37 +2,61 @@ import "./Home.css";
 import { useEffect, useState } from "react";
 import { api } from "../../utils/api";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import PlaylistGrid from "../../components/PlaylistGrid/PlaylistGrid";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
-import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialog/PlaylistDialog";
+import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialogs/CreatePlaylistDialog/CreatePlaylistDialog";
+import InfinitePlaylistGrid from "../../components/InfinitePlaylistGrid/InfinitePlaylistGrid";
 
 export default function Home() {
   const [user, setUser] = useState(null);
   const [playlists, setPlaylists] = useState([]);
+  const [nextPage, setNextPage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleChange = (e) => {
     console.log(e.target.value);
   };
 
-  const handleCreatePlaylistSubmit = async (name, description) => {
+  const handleCreatePlaylistSubmit = async (
+    name,
+    description,
+    addTopTracks
+  ) => {
     const response = await api.post({
       endpoint: `users/${user.id}/playlists`,
       body: { name: name, description: description },
     });
     const newPlaylist = await response.json();
 
+    if (addTopTracks) {
+      const topTracks = await api.get({
+        endpoint: "me/top/tracks",
+        params: { time_range: "long_term", limit: 20 },
+      });
+
+      await api.post({
+        endpoint: `playlists/${newPlaylist.id}/tracks`,
+        body: { uris: topTracks.items.map((track) => track.uri) },
+      });
+
+      newPlaylist.tracks = { total: topTracks.items.length };
+    }
+
     setPlaylists((prevPlaylists) => [newPlaylist, ...prevPlaylists]);
   };
 
   useEffect(() => {
-    api.me().then((user) => {
-      setUser(user);
-    });
+    api.me().then((user) => setUser(user));
     api.me.playlists().then((playlists) => setPlaylists(playlists.items));
   }, []);
+
+  const getNextPage = () => {
+    api.get({ url: nextPage }).then((results) => {
+      setPlaylists([...playlists, ...results.items]);
+      setNextPage(results.next);
+    });
+  };
 
   return (
     <>
@@ -57,7 +81,12 @@ export default function Home() {
           />
         </div>
         {playlists.length > 0 ? (
-          <PlaylistGrid playlists={playlists} />
+          <InfinitePlaylistGrid
+            playlists={playlists}
+            hasMore={nextPage}
+            getNextPage={getNextPage}
+            endMessage={null}
+          />
         ) : (
           <div>
             You have no playlists. Create one by clicking the button above.
@@ -69,7 +98,10 @@ export default function Home() {
           onSubmit={handleCreatePlaylistSubmit}
           title="Create Playlist"
         >
-          <AccentButton type="submit" ariaLabel="Create Playlist">
+          <AccentButton
+            type="submit"
+            ariaLabel="'Create Playlist' confirmation"
+          >
             Create Playlist
           </AccentButton>
         </CreatePlaylistDialog>
