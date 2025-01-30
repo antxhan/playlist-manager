@@ -36,7 +36,7 @@ export default function Home() {
 
   return (
     <>
-      <header className="home__header">
+      <header className="home__header page-header">
         <h1>Welcome {user ? user.display_name : ""}!</h1>
       </header>
       <main className="home__main">
