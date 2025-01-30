@@ -126,7 +126,10 @@ export default function Playlist() {
                 <h2 onClick={() => setIsEditDialogOpen(true)}>
                   {playlist.name}
                 </h2>
-                <p>{playlist.tracks.total} tracks</p>
+                <div className="playlist__info-group">
+                  <p>{playlist.owner.display_name}</p>
+                  <p>{playlist.tracks.total} tracks</p>
+                </div>
                 <p onClick={() => setIsEditDialogOpen(true)}>
                   {playlist.description}
                 </p>
