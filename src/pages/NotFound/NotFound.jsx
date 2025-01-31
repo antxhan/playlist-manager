@@ -1,5 +1,6 @@
 import "./NotFound.css";
 import "../ErrorPage/ErrorPage.css";
+import { Link } from "react-router-dom";
 import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import Layout from "../../Layout";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
@@ -21,9 +22,16 @@ export default function NotFound() {
 
           <p>Maybe you can find what you need back at home</p>
         </div>
-        <a onClick={() => navigateWithTransition("/")} className="error__cta">
+        <Link
+          to={{
+            pathname: "/",
+            state: { transition: true },
+          }}
+          className="error__cta"
+          onClick={() => navigateWithTransition("/")}
+        >
           <AccentButton>Back to Home</AccentButton>
-        </a>
+        </Link>
       </div>
     </Layout>
   );
