@@ -31,6 +31,7 @@ export default function GlobalPlayer() {
 						<NextSongIcon />
 					</button>
 				</div>
+				<VolumeControl />
 			</div>
 		);
 
@@ -102,7 +103,7 @@ export default function GlobalPlayer() {
 					<NextSongIcon />
 				</button>
 			</div>
-			<VolumeControl />
+			<VolumeControl disabled={isLoading || !isSDKReady} />
 		</div>
 	);
 }
