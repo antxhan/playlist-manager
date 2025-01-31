@@ -46,6 +46,5 @@
 }
 
 .playlist-card__image {
-  width: min(100%, 150px);
   aspect-ratio: 1;
 }
