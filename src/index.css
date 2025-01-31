@@ -94,6 +94,24 @@ body {
 
 button {
   cursor: pointer;
+  background-color: transparent;
+}
+
+.skeleton {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: hsl(from var(--clr-neutral-500) h s l / 0.33);
+  border-radius: 1rem;
+  min-height: var(--fs-small);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @media (max-width: 700px) {

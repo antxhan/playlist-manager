@@ -28,6 +28,7 @@ export default function PlaylistCard({ playlist }) {
         }
         alt="Playlist cover"
         width={150}
+        loading="lazy"
       />
       <div className="playlist-card__info">
         <p>{playlist.name || "Unknown Playlist"}</p>

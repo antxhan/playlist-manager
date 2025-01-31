@@ -8,7 +8,7 @@
   justify-items: start;
 
   color: var(--clr-neutral-100);
-  background-color: transparent;
+  /* background-color: transparent; */
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem 0;

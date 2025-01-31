@@ -1,13 +1,20 @@
 import "./InfinitePlaylistGrid.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PlaylistCard from "../PlaylistCard/PlaylistCard";
+import PlaylistCardSkeleton from "../PlaylistCard/Skeleton";
 
 export default function InfinitePlaylistGrid({
   playlists,
   getNextPage,
   hasMore,
   endMessage = "No more results",
-  loading = <p>Loading...</p>,
+  loading = (
+    <>
+      {Array.from(Array(10)).map((i) => (
+        <PlaylistCardSkeleton key={i} />
+      ))}
+    </>
+  ),
 }) {
   return (
     <InfiniteScroll

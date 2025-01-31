@@ -101,6 +101,11 @@ export default function Playlist() {
     }
   }, [isSignedIn, id, isInitialFetch, handleError, fetchTracks]);
 
+  // return (
+  //   <Layout>
+  //     <PlaylistSkeleton />
+  //   </Layout>
+  // );
   if (isLoading)
     return (
       <Layout>
