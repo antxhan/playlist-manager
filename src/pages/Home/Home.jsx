@@ -1,8 +1,7 @@
 import "./Home.css";
 import { useEffect, useState, useCallback } from "react";
-import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
+import { useHandleError } from "../../hooks/useHandleError";
 import { api } from "../../utils/api";
-import { errorResponseMessages } from "../../utils/fetchError";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
@@ -11,29 +10,11 @@ import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialogs/Creat
 import InfinitePlaylistGrid from "../../components/InfinitePlaylistGrid/InfinitePlaylistGrid";
 
 export default function Home() {
-  const navigateWithTransition = useNavigateWithTransition();
+  const handleError = useHandleError();
   const [user, setUser] = useState(null);
   const [playlists, setPlaylists] = useState([]);
   const [nextPage, setNextPage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const handleError = useCallback(
-    (error, additionalMessage = null) => {
-      const errorMessage =
-        errorResponseMessages[error.statusCode] ??
-        "An unexpected error occured.";
-
-      navigateWithTransition("/error", {
-        state: {
-          message: additionalMessage
-            ? additionalMessage + " " + errorMessage
-            : errorMessage,
-          statusCode: error.statusCode,
-        },
-      });
-    },
-    [navigateWithTransition]
-  );
 
   const handleChange = (e) => {
     console.log(e.target.value);
