@@ -5,11 +5,13 @@ import { api } from "../../utils/api";
 export const PlayerContext = createContext(undefined);
 
 function loadSDKScript() {
-	// dynamically load the Spotify Web Playback SDK script
-	const script = document.createElement("script");
-	script.src = "https://sdk.scdn.co/spotify-player.js";
-	script.async = true;
-	document.body.appendChild(script);
+	if (!window.Spotify) {
+		// dynamically load the Spotify Web Playback SDK script
+		const script = document.createElement("script");
+		script.src = "https://sdk.scdn.co/spotify-player.js";
+		script.async = true;
+		document.body.appendChild(script);
+	}
 }
 
 function createPlayerInstance(
@@ -86,81 +88,26 @@ export const PlayerProvider = ({ token, children }) => {
 
 			debouncedApiSetVolume.current = setTimeout(() => {
 				if (isSDKReady && deviceId) {
-					api.player.setVolume(newVolume);
+					console.log("Setting volume via API:", newVolume, deviceId);
+					api.player
+						.setVolume(newVolume, deviceId)
+						.catch((err) => console.error("Failed to set volume:", err));
 				}
 			}, 200);
 		},
 		[player, isSDKReady, deviceId]
 	);
 
-	// useEffect(() => {
-	// 	api.me().then((user) => {
-	// 		setUserIsPremium(user.product === "premium");
-	// 	});
-	// }, []);
-
 	useEffect(() => {
 		if (token) {
 			api
 				.me()
 				.then((user) => {
-					console.log("User API response:", user);
 					setUserIsPremium(user.product === "premium");
 				})
 				.catch((err) => console.error("Error fetching user data:", err));
 		}
 	}, [token]);
-
-	// useEffect(() => {
-	// 	if (userIsPremium) {
-	// 		if (!player) {
-	// 			if (!token) {
-	// 				setPlayer(null);
-	// 				setIsLoading(false);
-	// 				setIsSDKReady(false);
-	// 			}
-
-	// 			if (token) {
-	// 				let scriptLoaded = false;
-
-	// 				const initializePlayer = () => {
-	// 					console.log("Initializing Spotify Player");
-	// 					createPlayerInstance(
-	// 						token,
-	// 						setPlayer,
-	// 						setDeviceId,
-	// 						setIsPaused,
-	// 						setCurrentTrack,
-	// 						setIsSDKReady,
-	// 						setIsLoading,
-	// 						setVolumeState
-	// 					);
-	// 					scriptLoaded = true;
-	// 				};
-
-	// 				if (!scriptLoaded) {
-	// 					setIsLoading(true);
-	// 					loadSDKScript();
-
-	// 					// Set up the SDK Ready callback
-	// 					window.onSpotifyWebPlaybackSDKReady = initializePlayer;
-
-	// 					// Check if SDK is already loaded
-	// 					if (window.Spotify) {
-	// 						initializePlayer();
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-
-	// 	return () => {
-	// 		if (player) {
-	// 			console.log("Disconnecting Spotify Player");
-	// 			player.disconnect();
-	// 		}
-	// 	};
-	// }, [token, player, userIsPremium]);
 
 	useEffect(() => {
 		if (!userIsPremium || !token) {
@@ -200,17 +147,20 @@ export const PlayerProvider = ({ token, children }) => {
 		}
 	}, [token, player, userIsPremium]);
 
-	// useEffect(() => {
-	// 	if (isSDKReady && deviceId) {
-	// 		api.player.setVolume(volume);
-	// 	}
-	// }, [isSDKReady, deviceId, volume]);
+	useEffect(() => {
+		return () => {
+			if (player) {
+				console.log("Disconnecting Spotify Player");
+				player.disconnect();
+			}
+		};
+	}, [player]);
 
 	useEffect(() => {
 		if (isSDKReady && deviceId) {
 			api.player
-				.setVolume(volume)
-				.catch((err) => console.error("Failed to set volume:", err));
+				.setVolume(volume, deviceId)
+				.catch((err) => console.error("Failed to set volume:", err, deviceId));
 		} else {
 			console.warn("Skipping API calls - SDK not ready or deviceId missing");
 		}

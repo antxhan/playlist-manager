@@ -9,8 +9,6 @@ import VolumeControl from "./VolumeControl";
 
 export default function GlobalPlayer() {
 	const player = usePlayer();
-	// console.log("GlobalPlayer usePlayer() result:", player);
-
 	const [isWaitingForPlayer, setIsWaitingForPlayer] = useState(true);
 
 	// Wait for the player to be available
