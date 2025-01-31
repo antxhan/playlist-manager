@@ -5,7 +5,14 @@
 }
 
 .view-more {
+  display: flex;
+  justify-content: center;
   text-align: center;
+
+  a {
+    text-decoration: none;
+  }
+  
   .skeleton {
     width: 8ch;
     height: var(--fs-normal);

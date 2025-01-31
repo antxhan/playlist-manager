@@ -6,6 +6,7 @@ import { api } from "../../utils/api";
 import InfinitePlaylistGridSkeleton from "../InfinitePlaylistGrid/Skeleton";
 import TopGenresSkeleton from "../TopGenres/Skeleton";
 import { useAuth } from "../../hooks/useAuth";
+import StandardButton from "../buttons/StandardButton/StandardButton";
 
 const TopGenres = lazy(() => import("../TopGenres/TopGenres"));
 const RecommendGrid = lazy(() => import("./RecommendGrid"));
@@ -17,11 +18,16 @@ export default function RecommendView() {
 
   useEffect(() => {
     if (isSignedIn) {
-      console.log("isSignedIn");
       api.me.top().then((data) => {
         const genres = data.items.map((artist) => artist.genres).flat();
         const sortedGenres = sortByFrequency(genres);
-        setTopGenres(sortedGenres.slice(0, 10).map((g) => g.item));
+        console.log(sortedGenres);
+        setTopGenres(
+          sortedGenres
+            .filter((g) => g.item !== "visa")
+            .slice(0, 10)
+            .map((g) => g.item)
+        );
       });
     }
   }, [isSignedIn]);
@@ -56,7 +62,9 @@ export default function RecommendView() {
       </Suspense>
       <div className="view-more">
         {recommendedGenre ? (
-          <Link to={`/search?q=${recommendedGenre}`}>See more</Link>
+          <Link to={`/search?q=${recommendedGenre}`}>
+            <StandardButton>See more</StandardButton>
+          </Link>
         ) : (
           <span className="skeleton"></span>
         )}
