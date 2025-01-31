@@ -85,7 +85,7 @@ export default function Home() {
       .playlists()
       .then((playlists) => setPlaylists(playlists.items))
       .catch((error) => handleError(error, "Failed to fetch playlists."));
-  }, []);
+  }, [handleError]);
 
   const getNextPage = () => {
     api
