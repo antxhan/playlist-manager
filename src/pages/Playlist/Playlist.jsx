@@ -101,11 +101,6 @@ export default function Playlist() {
     }
   }, [isSignedIn, id, isInitialFetch, handleError, fetchTracks]);
 
-  // return (
-  //   <Layout>
-  //     <PlaylistSkeleton />
-  //   </Layout>
-  // );
   if (isLoading)
     return (
       <Layout>
@@ -123,9 +118,7 @@ export default function Playlist() {
                 <img
                   src={
                     playlist.images && playlist.images.length > 0
-                      ? playlist.images[1]
-                        ? playlist.images[1].url
-                        : playlist.images[0].url
+                      ? playlist.images[0].url
                       : placeholderImage
                   }
                   alt="Playlist cover"
@@ -140,11 +133,19 @@ export default function Playlist() {
               </div>
               <div className="playlist__info">
                 <h2 onClick={() => setIsEditDialogOpen(true)}>
-                  {playlist.name}
+                  {playlist.name || "Unknown Playlist"}
                 </h2>
                 <div className="playlist__info-group">
-                  <p>{playlist.owner.display_name}</p>
-                  <p>{playlist.tracks.total} tracks</p>
+                  {playlist.owner
+                    ? playlist.owner.display_name
+                      ? playlist.owner.display_name
+                      : playlist.owner.id
+                    : "Unknown owner"}
+                  <p>
+                    {playlist.tracks.total > 0
+                      ? `${playlist.tracks.total} tracks`
+                      : "No tracks"}
+                  </p>
                 </div>
                 <p onClick={() => setIsEditDialogOpen(true)}>
                   {playlist.description}
@@ -164,11 +165,15 @@ export default function Playlist() {
                 <div
                   key={index}
                   onClick={() =>
-                    api.track.play({
-                      trackUri: item.track.uri,
-                      playlistId: id,
-                      deviceId: player.deviceId,
-                    })
+                    api.track
+                      .play({
+                        trackUri: item.track.uri,
+                        playlistId: id,
+                        deviceId: player.deviceId,
+                      })
+                      .catch((error) =>
+                        handleError(error, "Failed to play track.")
+                      )
                   }
                 >
                   <Track track={item.track} />

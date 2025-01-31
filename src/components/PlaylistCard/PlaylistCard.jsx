@@ -32,8 +32,18 @@ export default function PlaylistCard({ playlist }) {
       />
       <div className="playlist-card__info">
         <p>{playlist.name || "Unknown Playlist"}</p>
-        <p>{playlist.owner.display_name || "No owner"}</p>
-        {playlist.tracks.total && <p>{playlist.tracks.total} tracks</p>}
+        <p>
+          {playlist.owner
+            ? playlist.owner.display_name
+              ? playlist.owner.display_name
+              : playlist.owner.id
+            : "Unknown owner"}
+        </p>
+        <p>
+          {playlist.tracks.total > 0
+            ? `${playlist.tracks.total} tracks`
+            : "No tracks"}
+        </p>
       </div>
     </Link>
   );
