@@ -9,6 +9,7 @@ import Callback from "./utils/callback/Callback";
 import NotFound from "./pages/NotFound/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Search from "./pages/Search/Search";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { PlayerProvider } from "./components/Player/PlayerContext";
 import { db } from "./utils/db";
 
@@ -18,6 +19,7 @@ const routes = (
     <Route path="/" element={<App />} />
     <Route path="callback" element={<Callback />} />
     <Route path="*" element={<NotFound />} />
+    <Route path="/error" element={<ErrorPage />} />
     <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
       <Route path="/playlists/:id" element={<Playlist />} />
     </Route>

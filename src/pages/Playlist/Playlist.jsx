@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../utils/api";
 import { usePlayer } from "../../hooks/usePlayer";
+import { errorResponseMessages } from "../../utils/fetchError";
 import he from "he";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
@@ -11,7 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import EditPlaylistDialog from "../../components/dialogs/PlaylistDialogs/EditPlaylistDialog/EditPlaylistDialog";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog/ConfirmDialog";
 import EditIcon from "../../icons/EditIcon";
-import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
+import placeholderImage from "../../img/placeholder.webp";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 import PlaylistSkeleton from "../../components/skeletons/PlaylistSkeleton/PlaylistSkeleton";
@@ -31,6 +32,20 @@ export default function Playlist() {
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const handleError = useCallback(
+    (error, additionalMessage = null) => {
+      navigate("/error", {
+        state: {
+          message: additionalMessage
+            ? additionalMessage + " " + errorResponseMessages[error.statusCode]
+            : errorResponseMessages[error.statusCode],
+          statusCode: error.statusCode,
+        },
+      });
+    },
+    [navigate]
+  );
+
   const fetchTracks = useCallback(() => {
     if (isSignedIn && id) {
       api.playlist
@@ -39,9 +54,12 @@ export default function Playlist() {
           setTracks((prevTracks) => [...prevTracks, ...newTracks.items]);
           setTracksHasMore(newTracks.next !== null);
           setTrackOffset(trackOffset + trackLimit);
-        });
+        })
+        .catch((error) =>
+          handleError(error, "Failed to fetch playlist tracks.")
+        );
     }
-  }, [isSignedIn, id, trackLimit, trackOffset]);
+  }, [isSignedIn, id, trackLimit, trackOffset, handleError]);
 
   const handleEditPlaylist = (newName, newDescription) => {
     if (isSignedIn && id) {
@@ -59,7 +77,7 @@ export default function Playlist() {
           setIsEditDialogOpen(false);
         })
         .catch((error) => {
-          console.error("Failed to edit playlist:", error);
+          handleError(error, "Failed to edit playlist.");
         });
     }
   };
@@ -73,7 +91,7 @@ export default function Playlist() {
           setIsEditDialogOpen(false);
           navigate("/");
         })
-        .catch((error) => console.error("Failed to delete playlist:", error));
+        .catch((error) => handleError(error, "Failed to delete playlist."));
     }
   };
 
@@ -81,18 +99,19 @@ export default function Playlist() {
     if (isSignedIn && id && isInitialFetch) {
       api
         .playlist(id)
-        .then(({ description, name, ...playlist }) =>
+        .then(({ description, name, ...playlist }) => {
           setPlaylist({
             ...playlist,
             name: he.decode(name),
             description: he.decode(description),
-          })
-        )
-        .then(() => setIsLoading(false));
+          });
+        })
+        .then(() => setIsLoading(false))
+        .catch((error) => handleError(error, "Failed to fetch playlist data."));
       fetchTracks();
       setIsInitialFetch(false);
     }
-  }, [isSignedIn, id, isInitialFetch, fetchTracks]);
+  }, [isSignedIn, id, isInitialFetch, handleError, fetchTracks]);
 
   if (isLoading)
     return (

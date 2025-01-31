@@ -1,5 +1,5 @@
 import "./Track.css";
-import missingAlbumCover from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
+import missingAlbumCover from "../../img/placeholder.webp";
 
 export default function Track({ track }) {
   const msToMMSS = (ms) => {

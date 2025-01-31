@@ -1,6 +1,6 @@
 import "./PlaylistCard.css";
 import { Link } from "react-router";
-import placeholderImage from "../../img/daniel-schludi-l8cvrt3Hpec-unsplash.jpg";
+import placeholderImage from "../../img/placeholder.webp";
 
 export default function PlaylistCard({ playlist }) {
   return (
@@ -14,6 +14,7 @@ export default function PlaylistCard({ playlist }) {
             : placeholderImage
         }
         alt="Playlist cover"
+        width={150}
       />
       <div className="playlist-card__info">
         <p>{playlist.name}</p>

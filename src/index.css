@@ -76,6 +76,7 @@ body {
 #root {
   display: grid;
   grid-template-columns: auto 1fr;
+  min-height: inherit;
 }
 
 .page-wrapper {

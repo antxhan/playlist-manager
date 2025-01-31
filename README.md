@@ -128,5 +128,7 @@ The primary goal is to create a **user-friendly, interactive interface** that en
 - React Router for routing.
 - Log In with Spotify API.
 - Spotify API to fetch data from Spotify.
-- Create, read, update and delete playlists
-- Option to add user's favorite tracks when creating a playlist
+- Create, read, update and delete playlists.
+- Option to add user's favorite tracks when creating a playlist.
+- Play music with Spotify Web Playback SDK and API.
+- Search for Spotify playlists.
