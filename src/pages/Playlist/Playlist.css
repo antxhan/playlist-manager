@@ -77,7 +77,13 @@
 
           .playlist__info-group {
             display: flex;
+            align-items: center;
             gap: 1rem;
+            .bullet-icon {
+              width: 0.5rem;
+              height: 0.5rem;
+              color: var(--clr-neutral-600);
+            }
           }
         }
       }
