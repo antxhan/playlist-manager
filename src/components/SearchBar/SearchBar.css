@@ -4,6 +4,11 @@
   border-radius: 1rem;
   display: flex;
   position: relative;
+  transition: background-color 0.1s ease-in-out;
+  &:hover,
+  &:focus-within {
+    background-color: hsl(from var(--clr-neutral-700) h s l / 0.5);
+  }
   svg {
     color: var(--clr-neutral-400);
     position: absolute;

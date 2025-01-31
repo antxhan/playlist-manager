@@ -26,3 +26,34 @@ export function decodeHTMLEntities(str) {
   tempDiv.innerHTML = str;
   return tempDiv.textContent || tempDiv.innerText || "";
 }
+
+export function sortByFrequency(items) {
+  const itemCount = items.reduce((countMap, item) => {
+    countMap[item] = (countMap[item] || 0) + 1;
+    return countMap;
+  }, {});
+
+  const sortedItems = Object.keys(itemCount).sort(
+    (a, b) => itemCount[b] - itemCount[a]
+  );
+
+  return sortedItems.map((item) => ({
+    item,
+    count: itemCount[item],
+  }));
+}
+
+export function toCapitalize(str) {
+  if (typeof str !== "string" || str.length === 0) {
+    return "";
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+export function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    [array[i], array[randomIndex]] = [array[randomIndex], array[i]];
+  }
+  return array;
+}

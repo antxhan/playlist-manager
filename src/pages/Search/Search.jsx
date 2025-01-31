@@ -5,12 +5,15 @@ import { useSearchParams } from "react-router";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { api } from "../../utils/api";
 import InfinitePlaylistGridSkeleton from "../../components/InfinitePlaylistGrid/Skeleton";
+import RecommendView from "../../components/RecommendView/RecommendView";
 const InfinitePlaylistGrid = lazy(() =>
   import("../../components/InfinitePlaylistGrid/InfinitePlaylistGrid")
 );
 
 export default function Search() {
   const [searchResults, setSearchResults] = useState([]);
+  // const [topGenres, setTopGenres] = useState([]);
+  // const [recommendedResults, setRecommendedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [nextPage, setNextPage] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,7 +21,7 @@ export default function Search() {
 
   useEffect(() => {
     if (q) {
-      setIsLoading(true);
+      // setIsLoading(true);
       api.search({ q }).then((results) => {
         setSearchResults(results.playlists.items);
         setNextPage(results.playlists.next);
@@ -57,7 +60,12 @@ export default function Search() {
           </Suspense>
         ) : isLoading ? (
           <InfinitePlaylistGridSkeleton />
-        ) : null}
+        ) : (
+          <RecommendView
+          // topGenres={topGenres}
+          // recommendedResults={recommendedResults}
+          />
+        )}
       </main>
     </Layout>
   );

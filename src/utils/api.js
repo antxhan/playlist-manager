@@ -101,6 +101,11 @@ export const api = {
       playlists() {
         return api.get({ endpoint: "me/playlists" });
       },
+    },
+    {
+      top(type = "artists", limit = 50) {
+        return api.get({ endpoint: `me/top/${type}`, params: { limit } });
+      },
     }
   ),
   playlist: Object.assign(

@@ -1,0 +1,27 @@
+.recommend-view {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.view-more {
+  text-align: center;
+  .skeleton {
+    width: 8ch;
+    height: var(--fs-normal);
+    display: inline-block;
+  }
+}
+
+.recommended__header-title {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.recommended-genre {
+  display: inline-block;
+  &.skeleton {
+    width: 10ch;
+  }
+}
