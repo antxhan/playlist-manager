@@ -1,8 +1,7 @@
 import "./Home.css";
-import { useEffect, useState, useCallback, Suspense, lazy } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, Suspense, lazy } from "react";
+import { useHandleError } from "../../hooks/useHandleError";
 import { api } from "../../utils/api";
-import { errorResponseMessages } from "../../utils/fetchError";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
@@ -14,30 +13,12 @@ const InfinitePlaylistGrid = lazy(() =>
 );
 
 export default function Home() {
-  const navigate = useNavigate();
+  const handleError = useHandleError();
   const [user, setUser] = useState(null);
   const [playlists, setPlaylists] = useState([]);
   const [playlistsAreLoading, setPlaylistsAreLoading] = useState(true);
   const [nextPage, setNextPage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const handleError = useCallback(
-    (error, additionalMessage = null) => {
-      const errorMessage =
-        errorResponseMessages[error.statusCode] ??
-        "An unexpected error occured.";
-
-      navigate("/error", {
-        state: {
-          message: additionalMessage
-            ? additionalMessage + " " + errorMessage
-            : errorMessage,
-          statusCode: error.statusCode,
-        },
-      });
-    },
-    [navigate]
-  );
 
   const handleChange = (e) => {
     console.log(e.target.value);

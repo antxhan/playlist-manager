@@ -1,14 +1,31 @@
 import "./PlaylistCard.css";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import placeholderImage from "../../img/placeholder.webp";
 
 export default function PlaylistCard({ playlist }) {
+  const navigateWithTransition = useNavigateWithTransition();
+
   if (!playlist) return null;
 
   return (
-    <Link to={`/playlists/${playlist.id}`} className="playlist-card">
+    <Link
+      to={{
+        pathname: `/playlists/${playlist.id}`,
+        state: { transition: true },
+      }}
+      className="playlist-card"
+      onClick={(e) => {
+        e.preventDefault();
+        navigateWithTransition(`/playlists/${playlist.id}`);
+      }}
+    >
       <img
-        src={playlist.images ? playlist.images[0].url : placeholderImage}
+        src={
+          playlist.images && playlist.images[0]
+            ? playlist.images[0].url
+            : placeholderImage
+        }
         alt="Playlist cover"
         width={150}
         loading="lazy"

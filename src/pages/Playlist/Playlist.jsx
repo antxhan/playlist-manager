@@ -1,10 +1,11 @@
 import "./Playlist.css";
 import { useState, useEffect, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { api } from "../../utils/api";
+import { useHandleError } from "../../hooks/useHandleError";
+import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import { usePlayer } from "../../hooks/usePlayer";
-import { errorResponseMessages } from "../../utils/fetchError";
+import { api } from "../../utils/api";
 import he from "he";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
@@ -20,7 +21,8 @@ import PlaylistSkeleton from "../../components/skeletons/PlaylistSkeleton/Playli
 export default function Playlist() {
   const player = usePlayer();
   const isSignedIn = useAuth();
-  const navigate = useNavigate();
+  const navigateWithTransition = useNavigateWithTransition();
+  const handleError = useHandleError();
   const { id } = useParams();
   const [playlist, setPlaylist] = useState([]);
   const [tracks, setTracks] = useState([]);
@@ -31,24 +33,6 @@ export default function Playlist() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  const handleError = useCallback(
-    (error, additionalMessage = null) => {
-      const errorMessage =
-        errorResponseMessages[error.statusCode] ??
-        "An unexpected error occured.";
-
-      navigate("/error", {
-        state: {
-          message: additionalMessage
-            ? additionalMessage + " " + errorMessage
-            : errorMessage,
-          statusCode: error.statusCode,
-        },
-      });
-    },
-    [navigate]
-  );
 
   const fetchTracks = useCallback(() => {
     if (isSignedIn && id) {
@@ -93,7 +77,7 @@ export default function Playlist() {
         .then(() => {
           setIsConfirmDialogOpen(false);
           setIsEditDialogOpen(false);
-          navigate("/");
+          navigateWithTransition("/");
         })
         .catch((error) => handleError(error, "Failed to delete playlist."));
     }
