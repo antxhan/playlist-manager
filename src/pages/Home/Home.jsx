@@ -1,6 +1,6 @@
 import "./Home.css";
 import { useEffect, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import { api } from "../../utils/api";
 import { errorResponseMessages } from "../../utils/fetchError";
 import SearchBar from "../../components/SearchBar/SearchBar";
@@ -11,7 +11,7 @@ import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialogs/Creat
 import InfinitePlaylistGrid from "../../components/InfinitePlaylistGrid/InfinitePlaylistGrid";
 
 export default function Home() {
-  const navigate = useNavigate();
+  const navigateWithTransition = useNavigateWithTransition();
   const [user, setUser] = useState(null);
   const [playlists, setPlaylists] = useState([]);
   const [nextPage, setNextPage] = useState(null);
@@ -23,7 +23,7 @@ export default function Home() {
         errorResponseMessages[error.statusCode] ??
         "An unexpected error occured.";
 
-      navigate("/error", {
+      navigateWithTransition("/error", {
         state: {
           message: additionalMessage
             ? additionalMessage + " " + errorMessage
@@ -32,7 +32,7 @@ export default function Home() {
         },
       });
     },
-    [navigate]
+    [navigateWithTransition]
   );
 
   const handleChange = (e) => {
