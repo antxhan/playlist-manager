@@ -49,6 +49,7 @@
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
   /* FONT SIZES */
+  --fs-large: 1.5rem;
   --fs-normal: 1rem;
   --fs-small: 0.8rem;
 }
@@ -90,6 +91,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+h2 {
+  font-size: var(--fs-large);
 }
 
 button {

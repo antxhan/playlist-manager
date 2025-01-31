@@ -7,3 +7,17 @@
 .view-more {
   text-align: center;
 }
+
+.recommended__header-title {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.recommended-genre {
+  display: inline-block;
+  /* margin-left: 0.5rem; */
+  &.skeleton {
+    width: 10ch;
+  }
+}
