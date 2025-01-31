@@ -4,7 +4,7 @@ import "./VolumeControl.css";
 import VolumeOnIcon from "../../icons/VolumeOnIcon";
 import VolumeOffIcon from "../../icons/VolumeOffIcon";
 
-export default function VolumeControl() {
+export default function VolumeControl({ disabled }) {
 	const playerContext = usePlayer();
 	const [prevVolume, setPrevVolume] = useState(50);
 	const [localVolume, setLocalVolume] = useState(50);
@@ -32,7 +32,25 @@ export default function VolumeControl() {
 
 	// Early return if no player context
 	if (!playerContext) {
-		return null;
+		return (
+			<div className="volume-control" role="group" aria-label="Volume controls">
+				<button className="volume-button" disabled>
+					<VolumeOnIcon />
+				</button>
+				<div className="volume-slider-wrapper">
+					<input
+						className="volume-slider disabled"
+						type="range"
+						min="0"
+						max="100"
+						step="1"
+						value={50}
+						disabled
+						aria-label="Volume"
+					/>
+				</div>
+			</div>
+		);
 	}
 
 	const { volume, setVolume } = playerContext;
@@ -57,6 +75,8 @@ export default function VolumeControl() {
 	};
 
 	const handleVolumeChange = (event) => {
+		if (disabled) return;
+
 		const newVolume = Number(event.target.value);
 		setLocalVolume(newVolume);
 
@@ -73,25 +93,27 @@ export default function VolumeControl() {
 
 	return (
 		<div
-			className="volume-control"
+			className={`volume-control ${disabled ? "disabled" : ""}`}
 			role="group"
 			aria-label="Volume controls"
 			ref={sliderRef}>
 			<button
 				className="volume-button"
 				onClick={toggleMute}
+				disabled={disabled}
 				aria-label={volume > 0 ? "Mute" : "Unmute"}>
 				{volume > 0 ? <VolumeOnIcon /> : <VolumeOffIcon />}
 			</button>
 			<div className={`volume-slider-wrapper ${showSlider ? "visible" : ""}`}>
 				<input
-					className="volume-slider"
+					className={`volume-slider ${disabled ? "disabled" : ""}`}
 					type="range"
 					min="0"
 					max="100"
 					step="1"
 					value={localVolume}
 					onChange={handleVolumeChange}
+					disabled={disabled}
 					aria-label="Volume"
 				/>
 			</div>

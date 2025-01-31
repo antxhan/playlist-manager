@@ -119,6 +119,21 @@
 	margin-top: 0;
 }
 
+.volume-control.disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.volume-slider.disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+.volume-button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
 /*show thumb on hover for desktop */
 @media (min-width: 601px) {
 	/*webkit hover */
