@@ -4,18 +4,17 @@ import { api } from "../../utils/api";
 import InfinitePlaylistGridSkeleton from "../InfinitePlaylistGrid/Skeleton";
 const PlaylistGrid = lazy(() => import("../PlaylistGrid/PlaylistGrid"));
 
-export default function RecommendGrid({ topGenres }) {
+export default function RecommendGrid({ topGenres, recommendedGenre }) {
   const [recommendedResults, setRecommendedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
-    if (topGenres.length > 0) {
-      api.search({ q: topGenres.at(-1), limit: 25 }).then((results) => {
+    if (topGenres.length > 0 && recommendedGenre) {
+      api.search({ q: recommendedGenre, limit: 25 }).then((results) => {
         setRecommendedResults(results.playlists.items);
         setIsLoading(false);
       });
     }
-  }, [topGenres]);
+  }, [topGenres, recommendedGenre]);
   return (
     <>
       {isLoading ? (

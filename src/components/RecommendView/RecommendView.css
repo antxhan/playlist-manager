@@ -6,6 +6,11 @@
 
 .view-more {
   text-align: center;
+  .skeleton {
+    width: 8ch;
+    height: var(--fs-normal);
+    display: inline-block;
+  }
 }
 
 .recommended__header-title {
@@ -16,7 +21,6 @@
 
 .recommended-genre {
   display: inline-block;
-  /* margin-left: 0.5rem; */
   &.skeleton {
     width: 10ch;
   }
