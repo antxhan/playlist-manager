@@ -5,7 +5,7 @@ import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 
 export default function ErrorPage() {
   const location = useLocation();
-  const errorMessage = location.state?.message || "An unexpected error occured";
+  const errorMessage = location.state?.message || "An unexpected error occured.";
   const statusCode = location.state?.statusCode || 500;
 
   return (
