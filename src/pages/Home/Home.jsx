@@ -34,7 +34,7 @@ export default function Home() {
         endpoint: `users/${user.id}/playlists`,
         body: { name: name, description: description },
       });
-      const newPlaylist = await response.json();
+      let newPlaylist = await response.json();
 
       if (addTopTracks) {
         try {
@@ -54,6 +54,9 @@ export default function Home() {
           handleError(error, "Failed to add tracks to playlist.");
         }
       }
+
+      const displayName = newPlaylist.owner.display_name ?? user.display_name;
+      newPlaylist.owner = { display_name: displayName };
 
       setPlaylists((prevPlaylists) => [newPlaylist, ...prevPlaylists]);
     } catch (error) {
