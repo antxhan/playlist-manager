@@ -1,6 +1,6 @@
 @media (max-width: 700px) {
   .page-wrapper {
-    padding-top: 6rem;
+    --_page-wrapper-padding-top: 6rem;
   }
   .page-header {
     background-color: hsl(from var(--clr-neutral-900) h s l / 0.8);
