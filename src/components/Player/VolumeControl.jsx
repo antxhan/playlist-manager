@@ -83,7 +83,7 @@ export default function VolumeControl() {
 				aria-label={volume > 0 ? "Mute" : "Unmute"}>
 				{volume > 0 ? <VolumeOnIcon /> : <VolumeOffIcon />}
 			</button>
-			{(showSlider || !isMobile) && (
+			<div className={`volume-slider-wrapper ${showSlider ? "visible" : ""}`}>
 				<input
 					className="volume-slider"
 					type="range"
@@ -94,7 +94,7 @@ export default function VolumeControl() {
 					onChange={handleVolumeChange}
 					aria-label="Volume"
 				/>
-			)}
+			</div>
 		</div>
 	);
 }
