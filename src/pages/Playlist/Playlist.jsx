@@ -117,113 +117,113 @@ export default function Playlist() {
     }
   }, [isSignedIn, id, isInitialFetch, handleError, fetchTracks]);
 
-  return (
-    <Layout>
-      <PlaylistSkeleton />
-    </Layout>
-  );
-  // if (isLoading)
-  //   return (
-  //     <Layout>
-  //       <PlaylistSkeleton />
-  //     </Layout>
-  //   );
-
   // return (
   //   <Layout>
-  //     <section className="playlist-wrapper">
-  //       <div className="playlist">
-  //         <div className="playlist__head-wrapper">
-  //           <div className="playlist__head">
-  //             <div className="playlist__image-wrapper">
-  //               <img
-  //                 src={
-  //                   playlist.images && playlist.images.length > 0
-  //                     ? playlist.images[1]
-  //                       ? playlist.images[1].url
-  //                       : playlist.images[0].url
-  //                     : placeholderImage
-  //                 }
-  //                 alt="Playlist cover"
-  //               />
-  //               <button
-  //                 className="playlist__edit-btn"
-  //                 onClick={() => setIsEditDialogOpen(true)}
-  //                 aria-label="Edit Playlist"
-  //               >
-  //                 <EditIcon />
-  //               </button>
-  //             </div>
-  //             <div className="playlist__info">
-  //               <h2 onClick={() => setIsEditDialogOpen(true)}>
-  //                 {playlist.name}
-  //               </h2>
-  //               <div className="playlist__info-group">
-  //                 <p>{playlist.owner.display_name}</p>
-  //                 <p>{playlist.tracks.total} tracks</p>
-  //               </div>
-  //               <p onClick={() => setIsEditDialogOpen(true)}>
-  //                 {playlist.description}
-  //               </p>
-  //             </div>
-  //           </div>
-  //         </div>
-  //         <div className="playlist__body">
-  //           <InfiniteScroll
-  //             dataLength={tracks.length}
-  //             next={fetchTracks}
-  //             hasMore={tracksHasMore}
-  //             loader={<h2>Loading more tracks...</h2>}
-  //             className="playlist__tracks"
-  //           >
-  //             {tracks.map((item, index) => (
-  //               <div
-  //                 key={index}
-  //                 onClick={() =>
-  //                   api.track.play({
-  //                     trackUri: item.track.uri,
-  //                     playlistId: id,
-  //                     deviceId: player.deviceId,
-  //                   })
-  //                 }
-  //               >
-  //                 <Track track={item.track} />
-  //               </div>
-  //             ))}
-  //           </InfiniteScroll>
-  //         </div>
-  //       </div>
-  //       <EditPlaylistDialog
-  //         isOpen={isEditDialogOpen}
-  //         onClose={() => setIsEditDialogOpen(false)}
-  //         onSubmit={handleEditPlaylist}
-  //         title="Edit Playlist"
-  //         initialName={playlist.name}
-  //         initialDescription={playlist.description}
-  //       >
-  //         <AccentButton type="submit" ariaLabel="Save">
-  //           Save
-  //         </AccentButton>
-  //         <StandardButton
-  //           onClick={() => setIsConfirmDialogOpen(true)}
-  //           ariaLabel="Delete Playlist"
-  //         >
-  //           Delete Playlist
-  //         </StandardButton>
-  //       </EditPlaylistDialog>
-  //       <ConfirmDialog
-  //         isOpen={isConfirmDialogOpen}
-  //         onClose={() => setIsConfirmDialogOpen(false)}
-  //         message="Do you want to delete your playlist?"
-  //       >
-  //         <StandardButton
-  //           onClick={handleDeletePlaylist}
-  //           ariaLabel="'Delete Playlist' confirmation"
-  //         >
-  //           Delete Playlist
-  //         </StandardButton>
-  //       </ConfirmDialog>
-  //     </section>
+  //     <PlaylistSkeleton />
   //   </Layout>
   // );
+  if (isLoading)
+    return (
+      <Layout>
+        <PlaylistSkeleton />
+      </Layout>
+    );
+
+  return (
+    <Layout>
+      <section className="playlist-wrapper">
+        <div className="playlist">
+          <div className="playlist__head-wrapper">
+            <div className="playlist__head">
+              <div className="playlist__image-wrapper">
+                <img
+                  src={
+                    playlist.images && playlist.images.length > 0
+                      ? playlist.images[1]
+                        ? playlist.images[1].url
+                        : playlist.images[0].url
+                      : placeholderImage
+                  }
+                  alt="Playlist cover"
+                />
+                <button
+                  className="playlist__edit-btn"
+                  onClick={() => setIsEditDialogOpen(true)}
+                  aria-label="Edit Playlist"
+                >
+                  <EditIcon />
+                </button>
+              </div>
+              <div className="playlist__info">
+                <h2 onClick={() => setIsEditDialogOpen(true)}>
+                  {playlist.name}
+                </h2>
+                <div className="playlist__info-group">
+                  <p>{playlist.owner.display_name}</p>
+                  <p>{playlist.tracks.total} tracks</p>
+                </div>
+                <p onClick={() => setIsEditDialogOpen(true)}>
+                  {playlist.description}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="playlist__body">
+            <InfiniteScroll
+              dataLength={tracks.length}
+              next={fetchTracks}
+              hasMore={tracksHasMore}
+              loader={<h2>Loading more tracks...</h2>}
+              className="playlist__tracks"
+            >
+              {tracks.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() =>
+                    api.track.play({
+                      trackUri: item.track.uri,
+                      playlistId: id,
+                      deviceId: player.deviceId,
+                    })
+                  }
+                >
+                  <Track track={item.track} />
+                </div>
+              ))}
+            </InfiniteScroll>
+          </div>
+        </div>
+        <EditPlaylistDialog
+          isOpen={isEditDialogOpen}
+          onClose={() => setIsEditDialogOpen(false)}
+          onSubmit={handleEditPlaylist}
+          title="Edit Playlist"
+          initialName={playlist.name}
+          initialDescription={playlist.description}
+        >
+          <AccentButton type="submit" ariaLabel="Save">
+            Save
+          </AccentButton>
+          <StandardButton
+            onClick={() => setIsConfirmDialogOpen(true)}
+            ariaLabel="Delete Playlist"
+          >
+            Delete Playlist
+          </StandardButton>
+        </EditPlaylistDialog>
+        <ConfirmDialog
+          isOpen={isConfirmDialogOpen}
+          onClose={() => setIsConfirmDialogOpen(false)}
+          message="Do you want to delete your playlist?"
+        >
+          <StandardButton
+            onClick={handleDeletePlaylist}
+            ariaLabel="'Delete Playlist' confirmation"
+          >
+            Delete Playlist
+          </StandardButton>
+        </ConfirmDialog>
+      </section>
+    </Layout>
+  );
 }
