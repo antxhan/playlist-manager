@@ -1,10 +1,12 @@
 import "./NotFound.css";
 import "../ErrorPage/ErrorPage.css";
-import { NavLink } from "react-router";
+import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import Layout from "../../Layout";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 
 export default function NotFound() {
+  const navigateWithTransition = useNavigateWithTransition();
+
   return (
     <Layout>
       <div className="error-wrapper">
@@ -19,9 +21,9 @@ export default function NotFound() {
 
           <p>Maybe you can find what you need back at home</p>
         </div>
-        <NavLink to="/" className="error__cta">
+        <a onClick={() => navigateWithTransition("/")} className="error__cta">
           <AccentButton>Back to Home</AccentButton>
-        </NavLink>
+        </a>
       </div>
     </Layout>
   );
