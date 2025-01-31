@@ -1,5 +1,5 @@
 import "./Home.css";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useHandleError } from "../../hooks/useHandleError";
 import { api } from "../../utils/api";
 import SearchBar from "../../components/SearchBar/SearchBar";
