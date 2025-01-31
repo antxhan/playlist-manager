@@ -100,7 +100,15 @@ export default function Home() {
   return (
     <>
       <header className="home__header page-header">
-        <h1>Welcome {user ? user.display_name : ""}!</h1>
+        <h1>
+          Welcome
+          {user ? (
+            <span className="home__username">{user.display_name}</span>
+          ) : (
+            <span className="home__username skeleton"></span>
+          )}
+          !
+        </h1>
       </header>
       <main className="home__main">
         <div className="main__header">
