@@ -2,21 +2,27 @@ import "./Search.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Layout from "../../Layout";
 import { useSearchParams } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { api } from "../../utils/api";
-import InfinitePlaylistGrid from "../../components/InfinitePlaylistGrid/InfinitePlaylistGrid";
+import InfinitePlaylistGridSkeleton from "../../components/InfinitePlaylistGrid/Skeleton";
+const InfinitePlaylistGrid = lazy(() =>
+  import("../../components/InfinitePlaylistGrid/InfinitePlaylistGrid")
+);
 
 export default function Search() {
   const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [nextPage, setNextPage] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const q = searchParams.get("q");
 
   useEffect(() => {
     if (q) {
+      setIsLoading(true);
       api.search({ q }).then((results) => {
         setSearchResults(results.playlists.items);
         setNextPage(results.playlists.next);
+        setIsLoading(false);
       });
     }
   }, [q]);
@@ -42,11 +48,15 @@ export default function Search() {
       </header>
       <main>
         {searchResults.length > 0 ? (
-          <InfinitePlaylistGrid
-            playlists={searchResults.filter((res) => !!res)}
-            getNextPage={getNextPage}
-            hasMore={nextPage}
-          />
+          <Suspense fallback={<InfinitePlaylistGridSkeleton />}>
+            <InfinitePlaylistGrid
+              playlists={searchResults.filter((res) => !!res)}
+              getNextPage={getNextPage}
+              hasMore={nextPage}
+            />
+          </Suspense>
+        ) : isLoading ? (
+          <InfinitePlaylistGridSkeleton />
         ) : null}
       </main>
     </Layout>

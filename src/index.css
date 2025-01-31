@@ -96,6 +96,13 @@ button {
   cursor: pointer;
 }
 
+.skeleton {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--clr-neutral-500);
+  border-radius: 1rem;
+  min-height: var(--fs-small);
+}
+
 @media (max-width: 700px) {
   #root {
     grid-template-columns: 1fr;

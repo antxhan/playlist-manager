@@ -20,9 +20,18 @@
 
   .playlist-card__info {
     color: var(--clr-neutral-100);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 
     p:not(:first-of-type) {
       font-size: var(--fs-small);
+      &.skeleton {
+        max-width: 9ch;
+      }
+    }
+    p:first-of-type.skeleton {
+      height: var(--fs-normal);
     }
   }
 
@@ -34,4 +43,9 @@
       scale: 1.02;
     }
   }
+}
+
+.playlist-card__image {
+  width: min(100%, 150px);
+  aspect-ratio: 1;
 }
