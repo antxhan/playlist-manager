@@ -15,6 +15,10 @@
   font-display: swap;
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 :root {
   /* COLORS */
   --clr-neutral-000: #fff;
