@@ -1,3 +1,5 @@
+import "./PlaylistCard.css";
+
 export default function Skeleton() {
   return (
     <div className="playlist-card skeleton">

@@ -1,3 +1,4 @@
+import "./InfinitePlaylistGrid.css";
 import PlaylistCardSkeleton from "../PlaylistCard/Skeleton";
 
 export default function Skeleton({ amount = 50 }) {

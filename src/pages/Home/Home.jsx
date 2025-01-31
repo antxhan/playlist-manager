@@ -1,5 +1,5 @@
 import "./Home.css";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense, lazy } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../utils/api";
 import { errorResponseMessages } from "../../utils/fetchError";
@@ -8,12 +8,16 @@ import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialogs/CreatePlaylistDialog/CreatePlaylistDialog";
-import InfinitePlaylistGrid from "../../components/InfinitePlaylistGrid/InfinitePlaylistGrid";
+import InfinitePlaylistGridSkeleton from "../../components/InfinitePlaylistGrid/Skeleton";
+const InfinitePlaylistGrid = lazy(() =>
+  import("../../components/InfinitePlaylistGrid/InfinitePlaylistGrid")
+);
 
 export default function Home() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [playlists, setPlaylists] = useState([]);
+  const [playlistsAreLoading, setPlaylistsAreLoading] = useState(true);
   const [nextPage, setNextPage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -83,7 +87,10 @@ export default function Home() {
       .catch((error) => handleError(error, "Failed to fetch user data."));
     api.me
       .playlists()
-      .then((playlists) => setPlaylists(playlists.items))
+      .then((playlists) => {
+        setPlaylists(playlists.items);
+        setPlaylistsAreLoading(false);
+      })
       .catch((error) => handleError(error, "Failed to fetch playlists."));
   }, [handleError]);
 
@@ -128,12 +135,16 @@ export default function Home() {
           />
         </div>
         {playlists.length > 0 ? (
-          <InfinitePlaylistGrid
-            playlists={playlists}
-            hasMore={nextPage}
-            getNextPage={getNextPage}
-            endMessage={null}
-          />
+          <Suspense fallback={<InfinitePlaylistGridSkeleton amount={10} />}>
+            <InfinitePlaylistGrid
+              playlists={playlists}
+              getNextPage={getNextPage}
+              hasMore={nextPage}
+              endMessage={null}
+            />
+          </Suspense>
+        ) : playlistsAreLoading ? (
+          <InfinitePlaylistGridSkeleton amount={10} />
         ) : (
           <div>
             You have no playlists. Create one by clicking the button above.
