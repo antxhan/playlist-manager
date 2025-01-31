@@ -34,11 +34,15 @@ export default function Playlist() {
 
   const handleError = useCallback(
     (error, additionalMessage = null) => {
+      const errorMessage =
+        errorResponseMessages[error.statusCode] ??
+        "An unexpected error occured.";
+
       navigate("/error", {
         state: {
           message: additionalMessage
-            ? additionalMessage + " " + errorResponseMessages[error.statusCode]
-            : errorResponseMessages[error.statusCode],
+            ? additionalMessage + " " + errorMessage
+            : errorMessage,
           statusCode: error.statusCode,
         },
       });

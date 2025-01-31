@@ -1,6 +1,8 @@
 import "./Home.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../../utils/api";
+import { errorResponseMessages } from "../../utils/fetchError";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
@@ -9,10 +11,29 @@ import CreatePlaylistDialog from "../../components/dialogs/PlaylistDialogs/Creat
 import InfinitePlaylistGrid from "../../components/InfinitePlaylistGrid/InfinitePlaylistGrid";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [playlists, setPlaylists] = useState([]);
   const [nextPage, setNextPage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleError = useCallback(
+    (error, additionalMessage = null) => {
+      const errorMessage =
+        errorResponseMessages[error.statusCode] ??
+        "An unexpected error occured.";
+
+      navigate("/error", {
+        state: {
+          message: additionalMessage
+            ? additionalMessage + " " + errorMessage
+            : errorMessage,
+          statusCode: error.statusCode,
+        },
+      });
+    },
+    [navigate]
+  );
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -23,39 +44,57 @@ export default function Home() {
     description,
     addTopTracks
   ) => {
-    const response = await api.post({
-      endpoint: `users/${user.id}/playlists`,
-      body: { name: name, description: description },
-    });
-    const newPlaylist = await response.json();
-
-    if (addTopTracks) {
-      const topTracks = await api.get({
-        endpoint: "me/top/tracks",
-        params: { time_range: "long_term", limit: 20 },
+    try {
+      const response = await api.post({
+        endpoint: `users/${user.id}/playlists`,
+        body: { name: name, description: description },
       });
+      const newPlaylist = await response.json();
 
-      await api.post({
-        endpoint: `playlists/${newPlaylist.id}/tracks`,
-        body: { uris: topTracks.items.map((track) => track.uri) },
-      });
+      if (addTopTracks) {
+        try {
+          const topTracks = await api.get({
+            endpoint: "me/top/tracks",
+            params: { time_range: "long_term", limit: 20 },
+          });
 
-      newPlaylist.tracks = { total: topTracks.items.length };
+          await api.post({
+            endpoint: `playlists/${newPlaylist.id}/tracks`,
+            body: { uris: topTracks.items.map((track) => track.uri) },
+          });
+
+          const total = topTracks.items.length ?? 0;
+          newPlaylist.tracks = { total: total };
+        } catch (error) {
+          handleError(error, "Failed to add tracks to playlist.");
+        }
+      }
+
+      setPlaylists((prevPlaylists) => [newPlaylist, ...prevPlaylists]);
+    } catch (error) {
+      handleError(error, "Failed to create playlist.");
     }
-
-    setPlaylists((prevPlaylists) => [newPlaylist, ...prevPlaylists]);
   };
 
   useEffect(() => {
-    api.me().then((user) => setUser(user));
-    api.me.playlists().then((playlists) => setPlaylists(playlists.items));
-  }, []);
+    api
+      .me()
+      .then((user) => setUser(user))
+      .catch((error) => handleError(error, "Failed to fetch user data."));
+    api.me
+      .playlists()
+      .then((playlists) => setPlaylists(playlists.items))
+      .catch((error) => handleError(error, "Failed to fetch playlists."));
+  }, [handleError]);
 
   const getNextPage = () => {
-    api.get({ url: nextPage }).then((results) => {
-      setPlaylists([...playlists, ...results.items]);
-      setNextPage(results.next);
-    });
+    api
+      .get({ url: nextPage })
+      .then((results) => {
+        setPlaylists([...playlists, ...results.items]);
+        setNextPage(results.next);
+      })
+      .catch((error) => handleError(error, "Failed to fetch playlists."));
   };
 
   return (
