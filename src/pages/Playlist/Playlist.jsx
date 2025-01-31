@@ -1,4 +1,5 @@
 import "./Playlist.css";
+import BulletIcon from "../../icons/BulletIcon";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
@@ -136,11 +137,14 @@ export default function Playlist() {
                   {playlist.name || "Unknown Playlist"}
                 </h2>
                 <div className="playlist__info-group">
-                  {playlist.owner
-                    ? playlist.owner.display_name
+                  <p>
+                    {playlist.owner
                       ? playlist.owner.display_name
-                      : playlist.owner.id
-                    : "Unknown owner"}
+                        ? playlist.owner.display_name
+                        : playlist.owner.id
+                      : "Unknown owner"}
+                  </p>
+                  <BulletIcon />
                   <p>
                     {playlist.tracks.total > 0
                       ? `${playlist.tracks.total} tracks`
