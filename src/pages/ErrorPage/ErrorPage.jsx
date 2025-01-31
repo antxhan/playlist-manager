@@ -1,10 +1,12 @@
 import "./ErrorPage.css";
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import Layout from "../../Layout";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 
 export default function ErrorPage() {
   const location = useLocation();
+  const navigateWithTransition = useNavigateWithTransition();
   const errorMessage =
     location.state?.message || "An unexpected error occured.";
   const statusCode = location.state?.statusCode || 500;
@@ -19,9 +21,9 @@ export default function ErrorPage() {
           <h1>Oops! Something went wrong</h1>
           <p>{errorMessage}</p>
         </div>
-        <NavLink to="/" className="error__cta">
+        <a onClick={() => navigateWithTransition("/")} className="error__cta">
           <AccentButton>Back to Home</AccentButton>
-        </NavLink>
+        </a>
       </div>
     </Layout>
   );
