@@ -1,0 +1,20 @@
+.recommend-view {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  gap: 1rem;
+}
+
+.top-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.top-genre {
+  background-color: var(--clr-neutral-900);
+  padding: 0.5rem 1rem;
+  border-radius: 100vw;
+  text-decoration: none;
+  color: inherit;
+}
