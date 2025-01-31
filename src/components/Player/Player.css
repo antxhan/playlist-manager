@@ -111,7 +111,7 @@
   .global-player {
     width: 100%;
     left: 0;
-    bottom: 5rem;
+    bottom: var(--_nav-mobile-height);
     position: fixed;
   }
 }

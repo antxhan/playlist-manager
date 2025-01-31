@@ -53,6 +53,9 @@
   --fs-large: 1.5rem;
   --fs-normal: 1rem;
   --fs-small: 0.8rem;
+
+  /* OTHER */
+  --_nav-mobile-height: 6.5rem;
 }
 
 *,
@@ -132,7 +135,7 @@ button {
   .page-wrapper {
     padding-inline: 2rem;
     padding-block-start: 2rem;
-    padding-block-end: 11rem;
+    padding-block-end: calc(var(--_nav-mobile-height) + 6.5rem);
   }
   .global-player {
     grid-row: 2;
