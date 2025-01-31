@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { usePlayer } from "../../hooks/usePlayer";
 import { api } from "../../utils/api";
 import PlayIcon from "../../icons/PlayIcon";
@@ -8,7 +9,18 @@ import VolumeControl from "./VolumeControl";
 
 export default function GlobalPlayer() {
 	const player = usePlayer();
-	if (!player)
+	// console.log("GlobalPlayer usePlayer() result:", player);
+
+	const [isWaitingForPlayer, setIsWaitingForPlayer] = useState(true);
+
+	// Wait for the player to be available
+	useEffect(() => {
+		if (player) {
+			setIsWaitingForPlayer(false);
+		}
+	}, [player]);
+
+	if (isWaitingForPlayer || !player)
 		return (
 			<div className="global-player">
 				<div className="player--wrapper__left">

@@ -53,7 +53,7 @@ export default function VolumeControl({ disabled }) {
 		);
 	}
 
-	const { volume, setVolume } = playerContext;
+	const { volume, setVolume, isSDKReady, deviceId, isLoading } = playerContext;
 
 	const toggleMute = () => {
 		if (!isMobile) {
@@ -75,7 +75,11 @@ export default function VolumeControl({ disabled }) {
 	};
 
 	const handleVolumeChange = (event) => {
-		if (disabled) return;
+		if (!deviceId) {
+			console.error("No deviceId available for setting volume.");
+			return;
+		}
+		if (disabled || !isSDKReady || isLoading || !deviceId) return;
 
 		const newVolume = Number(event.target.value);
 		setLocalVolume(newVolume);
@@ -100,7 +104,7 @@ export default function VolumeControl({ disabled }) {
 			<button
 				className="volume-button"
 				onClick={toggleMute}
-				disabled={disabled}
+				disabled={disabled || !isSDKReady || isLoading}
 				aria-label={volume > 0 ? "Mute" : "Unmute"}>
 				{volume > 0 ? <VolumeOnIcon /> : <VolumeOffIcon />}
 			</button>
@@ -113,7 +117,7 @@ export default function VolumeControl({ disabled }) {
 					step="1"
 					value={localVolume}
 					onChange={handleVolumeChange}
-					disabled={disabled}
+					disabled={disabled || !isSDKReady || isLoading}
 					aria-label="Volume"
 				/>
 			</div>

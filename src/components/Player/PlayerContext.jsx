@@ -93,83 +93,157 @@ export const PlayerProvider = ({ token, children }) => {
 		[player, isSDKReady, deviceId]
 	);
 
-	useEffect(() => {
-		api.me().then((user) => {
-			setUserIsPremium(user.product === "premium");
-		});
-	}, []);
+	// useEffect(() => {
+	// 	api.me().then((user) => {
+	// 		setUserIsPremium(user.product === "premium");
+	// 	});
+	// }, []);
 
 	useEffect(() => {
-		if (userIsPremium) {
-			if (!player) {
-				if (!token) {
-					setPlayer(null);
-					setIsLoading(false);
-					setIsSDKReady(false);
-				}
+		if (token) {
+			api
+				.me()
+				.then((user) => {
+					console.log("User API response:", user);
+					setUserIsPremium(user.product === "premium");
+				})
+				.catch((err) => console.error("Error fetching user data:", err));
+		}
+	}, [token]);
 
-				if (token) {
-					let scriptLoaded = false;
+	// useEffect(() => {
+	// 	if (userIsPremium) {
+	// 		if (!player) {
+	// 			if (!token) {
+	// 				setPlayer(null);
+	// 				setIsLoading(false);
+	// 				setIsSDKReady(false);
+	// 			}
 
-					const initializePlayer = () => {
-						console.log("Initializing Spotify Player");
-						createPlayerInstance(
-							token,
-							setPlayer,
-							setDeviceId,
-							setIsPaused,
-							setCurrentTrack,
-							setIsSDKReady,
-							setIsLoading,
-							setVolumeState
-						);
-						scriptLoaded = true;
-					};
+	// 			if (token) {
+	// 				let scriptLoaded = false;
 
-					if (!scriptLoaded) {
-						setIsLoading(true);
-						loadSDKScript();
+	// 				const initializePlayer = () => {
+	// 					console.log("Initializing Spotify Player");
+	// 					createPlayerInstance(
+	// 						token,
+	// 						setPlayer,
+	// 						setDeviceId,
+	// 						setIsPaused,
+	// 						setCurrentTrack,
+	// 						setIsSDKReady,
+	// 						setIsLoading,
+	// 						setVolumeState
+	// 					);
+	// 					scriptLoaded = true;
+	// 				};
 
-						// Set up the SDK Ready callback
-						window.onSpotifyWebPlaybackSDKReady = initializePlayer;
+	// 				if (!scriptLoaded) {
+	// 					setIsLoading(true);
+	// 					loadSDKScript();
 
-						// Check if SDK is already loaded
-						if (window.Spotify) {
-							initializePlayer();
-						}
-					}
-				}
-			}
+	// 					// Set up the SDK Ready callback
+	// 					window.onSpotifyWebPlaybackSDKReady = initializePlayer;
+
+	// 					// Check if SDK is already loaded
+	// 					if (window.Spotify) {
+	// 						initializePlayer();
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+
+	// 	return () => {
+	// 		if (player) {
+	// 			console.log("Disconnecting Spotify Player");
+	// 			player.disconnect();
+	// 		}
+	// 	};
+	// }, [token, player, userIsPremium]);
+
+	useEffect(() => {
+		if (!userIsPremium || !token) {
+			console.warn(
+				"User is not premium or token is missing. Skipping player initialization."
+			);
+			return;
 		}
 
-		return () => {
-			if (player) {
-				console.log("Disconnecting Spotify Player");
-				player.disconnect();
+		if (!player) {
+			console.log("Initializing Spotify Player...");
+
+			const initializePlayer = () => {
+				console.log("Creating Spotify Player instance...");
+				createPlayerInstance(
+					token,
+					setPlayer,
+					setDeviceId,
+					setIsPaused,
+					setCurrentTrack,
+					setIsSDKReady,
+					setIsLoading,
+					setVolumeState
+				);
+			};
+
+			// Check if SDK is already loaded
+			if (!window.Spotify) {
+				console.log("Spotify SDK not loaded yet. Loading...");
+				setIsLoading(true);
+				loadSDKScript();
+
+				window.onSpotifyWebPlaybackSDKReady = initializePlayer;
+			} else {
+				initializePlayer();
 			}
-		};
+		}
 	}, [token, player, userIsPremium]);
+
+	// useEffect(() => {
+	// 	if (isSDKReady && deviceId) {
+	// 		api.player.setVolume(volume);
+	// 	}
+	// }, [isSDKReady, deviceId, volume]);
 
 	useEffect(() => {
 		if (isSDKReady && deviceId) {
-			api.player.setVolume(volume);
+			api.player
+				.setVolume(volume)
+				.catch((err) => console.error("Failed to set volume:", err));
+		} else {
+			console.warn("Skipping API calls - SDK not ready or deviceId missing");
 		}
 	}, [isSDKReady, deviceId, volume]);
 
-	const value =
-		token && userIsPremium
-			? {
-					player,
-					currentTrack,
-					isPaused,
-					deviceId,
-					setIsPaused,
-					isSDKReady,
-					isLoading,
-					volume,
-					setVolume,
-			  }
-			: null;
+	// const value =
+	// 	token && userIsPremium
+	// 		? {
+	// 				player,
+	// 				currentTrack,
+	// 				isPaused,
+	// 				deviceId,
+	// 				setIsPaused,
+	// 				isSDKReady,
+	// 				isLoading,
+	// 				volume,
+	// 				setVolume,
+	// 		  }
+	// 		: null;
+
+	//fixes usePlayer must be used within a PlayerProvider Error Component Stack
+	const value = {
+		player,
+		currentTrack,
+		isPaused,
+		deviceId,
+		setIsPaused,
+		isSDKReady,
+		isLoading,
+		volume,
+		setVolume,
+		userIsPremium,
+	};
 
 	return (
 		<PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>
