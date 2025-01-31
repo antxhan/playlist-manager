@@ -5,7 +5,8 @@ import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 
 export default function ErrorPage() {
   const location = useLocation();
-  const errorMessage = location.state?.message || "An unexpected error occured.";
+  const errorMessage =
+    location.state?.message || "An unexpected error occured.";
   const statusCode = location.state?.statusCode || 500;
 
   return (
@@ -17,10 +18,10 @@ export default function ErrorPage() {
         <div className="error__info-wrapper">
           <h1>Oops! Something went wrong</h1>
           <p>{errorMessage}</p>
-          <NavLink to="/" className="error__cta">
-            <AccentButton>Back to Home</AccentButton>
-          </NavLink>
         </div>
+        <NavLink to="/" className="error__cta">
+          <AccentButton>Back to Home</AccentButton>
+        </NavLink>
       </div>
     </Layout>
   );
