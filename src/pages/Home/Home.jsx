@@ -90,7 +90,7 @@ export default function Home() {
 
   return (
     <>
-      <header className="home__header page-header">
+      <header className="home__header">
         <h1>
           Welcome
           {user ? (
