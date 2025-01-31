@@ -1,6 +1,7 @@
 import "./NotFound.css";
-import Layout from "../../Layout";
 import { NavLink } from "react-router";
+import Layout from "../../Layout";
+import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 
 export default function NotFound() {
 	return (
@@ -17,7 +18,7 @@ export default function NotFound() {
 
 					<p>Maybe you can find what you need back at home</p>
 					<NavLink to="/" className="notFound--cta">
-						back to home
+						<AccentButton>Back to Home</AccentButton>
 					</NavLink>
 				</div>
 			</div>

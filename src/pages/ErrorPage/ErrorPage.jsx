@@ -8,8 +8,6 @@ export default function ErrorPage() {
   const errorMessage = location.state?.message || "An unexpected error occured";
   const statusCode = location.state?.statusCode || 500;
 
-  console.log(location);
-
   return (
     <Layout>
       <div className="error-wrapper">
