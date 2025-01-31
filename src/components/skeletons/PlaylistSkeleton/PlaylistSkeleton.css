@@ -37,18 +37,6 @@
   background-color: var(--_skeleton-color);
 }
 
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 .playlist-skeleton__image,
 .playlist-skeleton__title,
 .playlist-skeleton__description,
