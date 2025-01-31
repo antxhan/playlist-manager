@@ -1,0 +1,24 @@
+.top-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.top-genre {
+  background-color: var(--clr-neutral-900);
+  padding: 0.5rem 1rem;
+  border-radius: 100vw;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: var(--clr-neutral-700);
+  }
+}
+
+.top-genre.skeleton {
+  min-height: calc(var(--fs-normal) + 1rem);
+  background-color: hsl(from var(--clr-neutral-900) h s l / 0.33);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  width: 10ch;
+}
