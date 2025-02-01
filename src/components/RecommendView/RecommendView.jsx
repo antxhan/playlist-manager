@@ -15,17 +15,18 @@ export default function RecommendView() {
   const isSignedIn = useAuth();
   const [topGenres, setTopGenres] = useState([]);
   const [recommendedGenre, setRecommendedGenre] = useState(null);
+  const numberOfGenres = 10;
 
   useEffect(() => {
     if (isSignedIn) {
       api.me.top().then((data) => {
         const genres = data.items.map((artist) => artist.genres).flat();
         const sortedGenres = sortByFrequency(genres);
-        console.log(sortedGenres);
+
         setTopGenres(
           sortedGenres
             .filter((g) => g.item !== "visa")
-            .slice(0, 10)
+            .slice(0, numberOfGenres)
             .map((g) => g.item)
         );
       });
@@ -51,7 +52,11 @@ export default function RecommendView() {
             {toCapitalize(recommendedGenre)}...
           </span>
         ) : (
-          <span className="recommended-genre skeleton"></span>
+          <>
+            {[...Array(numberOfGenres)].map((_, i) => (
+              <span className="recommended-genre skeleton"></span>
+            ))}
+          </>
         )}
       </h2>
       <Suspense fallback={<InfinitePlaylistGridSkeleton amount={10} />}>
