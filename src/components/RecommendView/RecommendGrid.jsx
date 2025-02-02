@@ -4,7 +4,11 @@ import { api } from "../../utils/api";
 import InfinitePlaylistGridSkeleton from "../InfinitePlaylistGrid/Skeleton";
 const PlaylistGrid = lazy(() => import("../PlaylistGrid/PlaylistGrid"));
 
-export default function RecommendGrid({ topGenres, recommendedGenre }) {
+export default function RecommendGrid({
+  topGenres,
+  recommendedGenre,
+  numberOfCards,
+}) {
   const [recommendedResults, setRecommendedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -18,11 +22,13 @@ export default function RecommendGrid({ topGenres, recommendedGenre }) {
   return (
     <>
       {isLoading ? (
-        <InfinitePlaylistGridSkeleton amount={10} />
+        <InfinitePlaylistGridSkeleton amount={numberOfCards} />
       ) : (
-        <Suspense fallback={<InfinitePlaylistGridSkeleton amount={10} />}>
+        <Suspense
+          fallback={<InfinitePlaylistGridSkeleton amount={numberOfCards} />}
+        >
           <PlaylistGrid
-            playlists={recommendedResults.filter((res) => !!res).slice(0, 10)}
+            playlists={recommendedResults.filter((res) => !!res).slice(0, numberOfCards)}
           />
         </Suspense>
       )}
