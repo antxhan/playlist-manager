@@ -15,7 +15,29 @@ export default function RecommendView() {
   const isSignedIn = useAuth();
   const [topGenres, setTopGenres] = useState([]);
   const [recommendedGenre, setRecommendedGenre] = useState(null);
+  const [numberOfCards, setNumberOfCards] = useState(10);
   const numberOfGenres = 10;
+
+  const calculateNumberOfCards = () => {
+    const container = document.querySelector(".page-wrapper");
+
+    if (container) {
+      const containerPadding =
+        container.offsetWidth < 610 ? 2 * 16 : 2 * 4 * 16;
+      const containerWidth = container.offsetWidth - containerPadding;
+      const cardWidth = 150; // Minimum width of each card
+      const gap = 16; // 1rem gap converted to pixels
+      const columns = Math.floor((containerWidth + gap) / (cardWidth + gap));
+      const rows = columns === 1 ? 4 : 2;
+      setNumberOfCards(columns * rows);
+    }
+  };
+
+  useEffect(() => {
+    calculateNumberOfCards();
+    window.addEventListener("resize", calculateNumberOfCards);
+    return () => window.removeEventListener("resize", calculateNumberOfCards);
+  }, []);
 
   useEffect(() => {
     if (isSignedIn) {
@@ -53,16 +75,17 @@ export default function RecommendView() {
           </span>
         ) : (
           <>
-            {[...Array(numberOfGenres)].map((_, i) => (
-              <span className="recommended-genre skeleton"></span>
-            ))}
+            <span className="recommended-genre skeleton"></span>
           </>
         )}
       </h2>
-      <Suspense fallback={<InfinitePlaylistGridSkeleton amount={10} />}>
+      <Suspense
+        fallback={<InfinitePlaylistGridSkeleton amount={numberOfCards} />}
+      >
         <RecommendGrid
           topGenres={topGenres}
           recommendedGenre={recommendedGenre}
+          numberOfCards={numberOfCards}
         />
       </Suspense>
       <div className="view-more">
