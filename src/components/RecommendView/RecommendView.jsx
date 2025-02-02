@@ -53,9 +53,7 @@ export default function RecommendView() {
           </span>
         ) : (
           <>
-            {[...Array(numberOfGenres)].map((_, i) => (
-              <span className="recommended-genre skeleton"></span>
-            ))}
+            <span className="recommended-genre skeleton"></span>
           </>
         )}
       </h2>
