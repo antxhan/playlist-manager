@@ -204,61 +204,69 @@
 
 /*mobile styles */
 @media (max-width: 600px) {
-  .volume-slider-wrapper {
-    display: none;
-    position: absolute;
-    bottom: 120%;
-    right: -50%;
-    height: 130px;
-    width: 50px;
-    background-color: hsl(from var(--clr-neutral-900) h s l / 1);
-    backdrop-filter: blur(4px);
-    border-radius: 8px;
-  }
 
-  .volume-slider-wrapper.visible {
-    display: block;
-  }
+	.volume-slider-wrapper {
+		display: none;
+		position: absolute;
+		bottom: 120%;
+		right: -50%;
+		height: 130px;
+		width: 50px;
+		background-color: hsl(from var(--clr-neutral-900) h s l / 1);
+		backdrop-filter: blur(4px);
+		border-radius: 8px;
+	}
 
-  .volume-slider {
-    position: relative;
-    transform: rotate(270deg);
-    top: 40%;
-    right: 50%;
-  }
+	.volume-slider-wrapper.visible {
+		display: block;
+	}
 
-  .volume-control .volume-slider.visible {
-    display: block;
-  }
+	.volume-slider {
+		position: relative;
+		transform: rotate(90deg);
+		top: 40%;
+		right: 50%;
+	}
 
-  /*always show thumb on mobile */
-  .volume-slider::-webkit-slider-thumb {
-    opacity: 1;
-  }
+	.volume-control .volume-slider.visible {
+		display: block;
+	}
 
-  .volume-slider::-moz-range-thumb {
-    opacity: 1;
-  }
+	.volume-button:hover .volumeSpan,
+	.volume-button:focus-visible .volumeSpan {
+		opacity: 1;
+		visibility: hidden;
+	}
 
-  .volume-slider::-ms-thumb {
-    opacity: 1;
-  }
+	/*always show thumb on mobile */
+	.volume-slider::-webkit-slider-thumb {
+		opacity: 1;
+	}
 
-  .volume-slider::-webkit-slider-runnable-track {
-    background: linear-gradient(
-      to right,
-      var(--clr-blue) 0%,
-      var(--clr-blue) var(--volume-percentage, 50%),
-      var(--clr-neutral-500) var(--volume-percentage, 50%),
-      var(--clr-neutral-500) 100%
-    );
-  }
+	.volume-slider::-moz-range-thumb {
+		opacity: 1;
+	}
 
-  .volume-slider::-moz-range-progress {
-    background: var(--clr-blue);
-  }
+	.volume-slider::-ms-thumb {
+		opacity: 1;
+	}
 
-  .volume-slider::-ms-fill-lower {
-    background: var(--clr-blue);
-  }
+	.volume-slider::-webkit-slider-runnable-track {
+		background: linear-gradient(
+			to right,
+			var(--clr-blue) 0%,
+			var(--clr-blue) var(--volume-percentage, 50%),
+			var(--clr-neutral-500) var(--volume-percentage, 50%),
+			var(--clr-neutral-500) 100%
+		);
+	}
+
+	.volume-slider::-moz-range-progress {
+		background: var(--clr-blue);
+	}
+
+	.volume-slider::-ms-fill-lower {
+		background: var(--clr-blue);
+	}
+
 }
