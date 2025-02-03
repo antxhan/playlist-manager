@@ -1,5 +1,4 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-// import PlaylistGrid from "../PlaylistGrid/PlaylistGrid";
 import { api } from "../../utils/api";
 import InfinitePlaylistGridSkeleton from "../InfinitePlaylistGrid/Skeleton";
 const PlaylistGrid = lazy(() => import("../PlaylistGrid/PlaylistGrid"));
@@ -13,7 +12,7 @@ export default function RecommendGrid({
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     if (topGenres.length > 0 && recommendedGenre) {
-      api.search({ q: recommendedGenre, limit: 35 }).then((results) => {
+      api.search({ q: recommendedGenre, limit: 50 }).then((results) => {
         setRecommendedResults(results.playlists.items);
         setIsLoading(false);
       });
