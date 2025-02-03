@@ -1,7 +1,8 @@
 import "./Home.css";
-import { useEffect, useState, Suspense, lazy } from "react";
+import { useEffect, useState, Suspense, lazy, useCallback } from "react";
 import { useHandleError } from "../../hooks/useHandleError";
 import { api } from "../../utils/api";
+import { calculateNumberOfCards } from "../../utils/utils";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
@@ -18,6 +19,17 @@ export default function Home() {
   const [playlistsAreLoading, setPlaylistsAreLoading] = useState(true);
   const [nextPage, setNextPage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [numberOfCards, setNumberOfCards] = useState(10);
+  const cardWidth = 150;
+  const cardGap = 16;
+  const skeletonRows = 3;
+
+  const setCalculateNumberOfCards = useCallback(
+    (width = cardWidth, gap = cardGap, rows = skeletonRows) => {
+      setNumberOfCards(calculateNumberOfCards(width, gap, rows));
+    },
+    [cardWidth, cardGap, skeletonRows]
+  );
 
   const handleCreatePlaylistSubmit = async (
     name,
@@ -58,6 +70,10 @@ export default function Home() {
       handleError(error, "Failed to create playlist.");
     }
   };
+
+  useEffect(() => {
+    setCalculateNumberOfCards();
+  }, []);
 
   useEffect(() => {
     api
@@ -108,7 +124,9 @@ export default function Home() {
           </StandardButton>
         </div>
         {playlists.length > 0 ? (
-          <Suspense fallback={<InfinitePlaylistGridSkeleton amount={10} />}>
+          <Suspense
+            fallback={<InfinitePlaylistGridSkeleton amount={numberOfCards} />}
+          >
             <InfinitePlaylistGrid
               playlists={playlists}
               getNextPage={getNextPage}
@@ -117,7 +135,7 @@ export default function Home() {
             />
           </Suspense>
         ) : playlistsAreLoading ? (
-          <InfinitePlaylistGridSkeleton amount={10} />
+          <InfinitePlaylistGridSkeleton amount={numberOfCards} />
         ) : (
           <div>
             You have no playlists. Create one by clicking the button above.
