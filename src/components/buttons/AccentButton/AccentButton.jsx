@@ -6,14 +6,12 @@ export default function AccentButton({
   onClick,
   children,
   className,
-  ariaLabel,
 }) {
   return (
     <StandardButton
       type={type}
       onClick={onClick}
       className={`accent-btn ${className || ""}`}
-      ariaLabel={ariaLabel}
     >
       {children}
     </StandardButton>

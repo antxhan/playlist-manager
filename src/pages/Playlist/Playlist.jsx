@@ -197,10 +197,7 @@ export default function Playlist() {
           <AccentButton type="submit" ariaLabel="Save">
             Save
           </AccentButton>
-          <StandardButton
-            onClick={() => setIsConfirmDialogOpen(true)}
-            ariaLabel="Delete Playlist"
-          >
+          <StandardButton onClick={() => setIsConfirmDialogOpen(true)}>
             Delete Playlist
           </StandardButton>
         </EditPlaylistDialog>
