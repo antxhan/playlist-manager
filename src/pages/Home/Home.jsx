@@ -1,5 +1,5 @@
 import "./Home.css";
-import { useEffect, useState, Suspense, lazy, useCallback } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import { useHandleError } from "../../hooks/useHandleError";
 import { api } from "../../utils/api";
 import { calculateNumberOfCards } from "../../utils/utils";
