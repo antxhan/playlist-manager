@@ -2,7 +2,6 @@ import "./Home.css";
 import { useEffect, useState, Suspense, lazy } from "react";
 import { useHandleError } from "../../hooks/useHandleError";
 import { api } from "../../utils/api";
-import SearchBar from "../../components/SearchBar/SearchBar";
 import AddPlaylistIcon from "../../icons/AddPlaylistIcon";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
