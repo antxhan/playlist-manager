@@ -17,14 +17,12 @@ export default function RecommendView() {
   const [topGenres, setTopGenres] = useState([]);
   const [recommendedGenre, setRecommendedGenre] = useState(null);
   const [numberOfCards, setNumberOfCards] = useState(10);
-  const numberOfGenres = 10;
   const cardWidth = 150;
   const cardGap = 16;
-
+  const numberOfGenres = 10;
+  
   useEffect(() => {
     setNumberOfCards(calculateNumberOfCards(cardWidth, cardGap));
-    window.addEventListener("resize", calculateNumberOfCards);
-    return () => window.removeEventListener("resize", calculateNumberOfCards);
   }, []);
 
   useEffect(() => {
