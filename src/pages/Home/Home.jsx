@@ -20,10 +20,6 @@ export default function Home() {
   const [nextPage, setNextPage] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-  };
-
   const handleCreatePlaylistSubmit = async (
     name,
     description,
@@ -103,20 +99,14 @@ export default function Home() {
       </header>
       <main className="home__main">
         <div className="main__header">
-          <div className="main__header-title">
-            <h2>Your Playlists</h2>
-            <StandardButton
-              onClick={() => setIsDialogOpen(true)}
-              className="small-btn"
-              ariaLabel="Create Playlist"
-            >
-              <AddPlaylistIcon />
-            </StandardButton>
-          </div>
-          <SearchBar
-            placeholder="Search your playlists..."
-            onChange={handleChange}
-          />
+          <h2>Your Playlists</h2>
+          <StandardButton
+            onClick={() => setIsDialogOpen(true)}
+            className="small-btn"
+            ariaLabel="Create Playlist"
+          >
+            <AddPlaylistIcon />
+          </StandardButton>
         </div>
         {playlists.length > 0 ? (
           <Suspense fallback={<InfinitePlaylistGridSkeleton amount={10} />}>
