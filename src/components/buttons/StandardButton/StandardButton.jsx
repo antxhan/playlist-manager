@@ -18,7 +18,7 @@ export default function StandardButton({
       >
         {children}
       </button>
-      <ToolTip text={ariaLabel} />
+      {ariaLabel && <ToolTip text={ariaLabel} />}
     </div>
   );
 }
