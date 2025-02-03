@@ -103,6 +103,7 @@ export default function VolumeControl({ disabled }) {
 				disabled={disabled || !isSDKReady || isLoading}
 				aria-label={volume > 0 ? "Mute" : "Unmute"}>
 				{volume > 0 ? <VolumeOnIcon /> : <VolumeOffIcon />}
+				<span className="volumeSpan">{volume > 0 ? "Mute" : "Unmute"}</span>
 			</button>
 			<div className={`volume-slider-wrapper ${showSlider ? "visible" : ""}`}>
 				<input

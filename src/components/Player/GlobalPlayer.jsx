@@ -90,8 +90,10 @@ export default function GlobalPlayer() {
 				<button
 					className="player--button"
 					onClick={() => !isLoading && api.player.previous(deviceId)}
-					disabled={isLoading || !isSDKReady}>
+					disabled={isLoading || !isSDKReady}
+					aria-label="skip to previous song">
 					<PreviousSongIcon />
+					<span className="playerSpan">Previous</span>
 				</button>
 
 				<button
@@ -102,15 +104,19 @@ export default function GlobalPlayer() {
 							setIsPaused(!isPaused);
 						}
 					}}
-					disabled={isLoading || !isSDKReady}>
+					disabled={isLoading || !isSDKReady}
+					aria-label={isPaused ? "Play" : "Pause"}>
 					{isPaused ? <PlayIcon /> : <PauseIcon />}
+					<span className="playerSpan">{isPaused ? "Play" : "Pause"}</span>
 				</button>
 
 				<button
 					className="player--button"
 					onClick={() => !isLoading && api.player.next(deviceId)}
-					disabled={isLoading || !isSDKReady}>
+					disabled={isLoading || !isSDKReady}
+					aria-label="skip to next song">
 					<NextSongIcon />
+					<span className="playerSpan">Next</span>
 				</button>
 			</div>
 			<VolumeControl disabled={isLoading || !isSDKReady} />
