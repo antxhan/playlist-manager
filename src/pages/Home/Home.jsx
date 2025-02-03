@@ -89,10 +89,7 @@ export default function Home() {
         <h1>
           <span>Welcome</span>
           {user ? (
-            // <span className="home__username">{user.display_name}!</span>
-            <span className="home__username">
-              Kevin Garcia Garcia Garcia Garcia Garcia Martin!
-            </span>
+            <span className="home__username">{user.display_name}!</span>
           ) : (
             <span className="home__username skeleton"></span>
           )}
