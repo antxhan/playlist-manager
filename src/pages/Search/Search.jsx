@@ -1,7 +1,7 @@
 import "./Search.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Layout from "../../Layout";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { api } from "../../utils/api";
 import InfinitePlaylistGridSkeleton from "../../components/InfinitePlaylistGrid/Skeleton";
@@ -11,24 +11,29 @@ const InfinitePlaylistGrid = lazy(() =>
 );
 
 export default function Search() {
+  let navigate = useNavigate();
   const [searchResults, setSearchResults] = useState([]);
-  // const [topGenres, setTopGenres] = useState([]);
-  // const [recommendedResults, setRecommendedResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [nextPage, setNextPage] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const q = searchParams.get("q");
 
   useEffect(() => {
+    console.log("HERE:", q);
     if (q) {
-      // setIsLoading(true);
+      setIsLoading(true);
       api.search({ q }).then((results) => {
         setSearchResults(results.playlists.items);
         setNextPage(results.playlists.next);
         setIsLoading(false);
       });
+    } else {
+      setSearchParams({ q: "" });
+      setSearchResults([]);
+      setIsLoading(false);
+      navigate("/search");
     }
-  }, [q]);
+  }, [q, searchParams, navigate, setSearchParams]);
 
   const getNextPage = () => {
     api.get({ url: nextPage }).then((results) => {
@@ -47,10 +52,10 @@ export default function Search() {
   return (
     <Layout>
       <header className="page-header">
-        <SearchBar q={q} onSubmit={handleSearch} />
+        <SearchBar q={searchParams.get("q")} onSubmit={handleSearch} />
       </header>
       <main>
-        {searchResults.length > 0 ? (
+        {q || searchResults.length > 0 ? (
           <Suspense fallback={<InfinitePlaylistGridSkeleton />}>
             <InfinitePlaylistGrid
               playlists={searchResults.filter((res) => !!res)}
@@ -61,10 +66,7 @@ export default function Search() {
         ) : isLoading ? (
           <InfinitePlaylistGridSkeleton />
         ) : (
-          <RecommendView
-          // topGenres={topGenres}
-          // recommendedResults={recommendedResults}
-          />
+          <RecommendView />
         )}
       </main>
     </Layout>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { usePlayer } from "../../hooks/usePlayer";
 import { api } from "../../utils/api";
 import PlayIcon from "../../icons/PlayIcon";
@@ -8,7 +9,16 @@ import VolumeControl from "./VolumeControl";
 
 export default function GlobalPlayer() {
 	const player = usePlayer();
-	if (!player)
+	const [isWaitingForPlayer, setIsWaitingForPlayer] = useState(true);
+
+	// Wait for the player to be available
+	useEffect(() => {
+		if (player) {
+			setIsWaitingForPlayer(false);
+		}
+	}, [player]);
+
+	if (isWaitingForPlayer || !player)
 		return (
 			<div className="global-player">
 				<div className="player--wrapper__left">
@@ -80,8 +90,10 @@ export default function GlobalPlayer() {
 				<button
 					className="player--button"
 					onClick={() => !isLoading && api.player.previous(deviceId)}
-					disabled={isLoading || !isSDKReady}>
+					disabled={isLoading || !isSDKReady}
+					aria-label="skip to previous song">
 					<PreviousSongIcon />
+					<span className="playerSpan">Previous</span>
 				</button>
 
 				<button
@@ -92,15 +104,19 @@ export default function GlobalPlayer() {
 							setIsPaused(!isPaused);
 						}
 					}}
-					disabled={isLoading || !isSDKReady}>
+					disabled={isLoading || !isSDKReady}
+					aria-label={isPaused ? "Play" : "Pause"}>
 					{isPaused ? <PlayIcon /> : <PauseIcon />}
+					<span className="playerSpan">{isPaused ? "Play" : "Pause"}</span>
 				</button>
 
 				<button
 					className="player--button"
 					onClick={() => !isLoading && api.player.next(deviceId)}
-					disabled={isLoading || !isSDKReady}>
+					disabled={isLoading || !isSDKReady}
+					aria-label="skip to next song">
 					<NextSongIcon />
+					<span className="playerSpan">Next</span>
 				</button>
 			</div>
 			<VolumeControl disabled={isLoading || !isSDKReady} />

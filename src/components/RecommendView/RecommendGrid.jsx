@@ -13,7 +13,7 @@ export default function RecommendGrid({
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     if (topGenres.length > 0 && recommendedGenre) {
-      api.search({ q: recommendedGenre, limit: 25 }).then((results) => {
+      api.search({ q: recommendedGenre, limit: 35 }).then((results) => {
         setRecommendedResults(results.playlists.items);
         setIsLoading(false);
       });
@@ -28,7 +28,9 @@ export default function RecommendGrid({
           fallback={<InfinitePlaylistGridSkeleton amount={numberOfCards} />}
         >
           <PlaylistGrid
-            playlists={recommendedResults.filter((res) => !!res).slice(0, numberOfCards)}
+            playlists={recommendedResults
+              .filter((res) => !!res)
+              .slice(0, numberOfCards)}
           />
         </Suspense>
       )}

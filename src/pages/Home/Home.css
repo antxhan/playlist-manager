@@ -4,6 +4,10 @@
   gap: 1rem;
   h1 {
     display: flex;
+    flex-wrap: wrap;
+    & > span:first-child {
+      margin-right: 0.5rem;
+    }
   }
 }
 .home__main {
@@ -28,7 +32,6 @@
 
 .home__username {
   display: inline-block;
-  margin-left: 0.5rem;
   &.skeleton {
     width: 10ch;
   }

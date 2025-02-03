@@ -96,13 +96,12 @@ export default function Home() {
     <>
       <header className="home__header">
         <h1>
-          Welcome
+          <span>Welcome</span>
           {user ? (
-            <span className="home__username">{user.display_name}</span>
+            <span className="home__username">{user.display_name}!</span>
           ) : (
             <span className="home__username skeleton"></span>
           )}
-          !
         </h1>
       </header>
       <main className="home__main">

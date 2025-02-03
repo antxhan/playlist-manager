@@ -12,36 +12,38 @@ import Search from "./pages/Search/Search";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { PlayerProvider } from "./components/Player/PlayerContext";
 import { db } from "./utils/db";
+import GlobalPlayer from "./components/Player/GlobalPlayer";
 
 const token = db.token.get();
 const routes = (
-  <>
-    <Route path="/" element={<App />} />
-    <Route path="callback" element={<Callback />} />
-    <Route path="*" element={<NotFound />} />
-    <Route path="/error" element={<ErrorPage />} />
-    <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
-      <Route path="/playlists/:id" element={<Playlist />} />
-    </Route>
-    <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
-      <Route path="/search?" element={<Search />} />
-    </Route>
-  </>
+	<>
+		<Route path="/" element={<App />} />
+		<Route path="callback" element={<Callback />} />
+		<Route path="*" element={<NotFound />} />
+		<Route path="/error" element={<ErrorPage />} />
+		<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+			<Route path="/playlists/:id" element={<Playlist />} />
+		</Route>
+		<Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+			<Route path="/search?" element={<Search />} />
+		</Route>
+	</>
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <React.StrictMode>
-      {token ? (
-        <PlayerProvider token={token}>
-          {<Routes>{routes}</Routes>}
-        </PlayerProvider>
-      ) : (
-        <Routes>{routes}</Routes>
-      )}
-    </React.StrictMode>
-  </BrowserRouter>
+	<BrowserRouter>
+		<React.StrictMode>
+			{token ? (
+				<PlayerProvider token={token}>
+					{<Routes>{routes}</Routes>}
+					<GlobalPlayer />
+				</PlayerProvider>
+			) : (
+				<Routes>{routes}</Routes>
+			)}
+		</React.StrictMode>
+	</BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
