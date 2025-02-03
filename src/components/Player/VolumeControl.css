@@ -222,7 +222,7 @@
 
   .volume-slider {
     position: relative;
-    transform: rotate(90deg);
+    transform: rotate(270deg);
     top: 40%;
     right: 50%;
   }
