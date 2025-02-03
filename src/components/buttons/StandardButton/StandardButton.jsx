@@ -1,3 +1,4 @@
+import ToolTip from "../../ToolTip/ToolTip";
 import "./StandardButton.css";
 
 export default function StandardButton({
@@ -8,13 +9,16 @@ export default function StandardButton({
   ariaLabel = "",
 }) {
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      className={`standard-btn ${className || ""}`}
-      aria-label={ariaLabel}
-    >
-      {children}
-    </button>
+    <div className="standard-btn-wrapper">
+      <button
+        type={type}
+        onClick={onClick}
+        className={`standard-btn ${className || ""}`}
+        aria-label={ariaLabel}
+      >
+        {children}
+      </button>
+      <ToolTip text={ariaLabel} />
+    </div>
   );
 }

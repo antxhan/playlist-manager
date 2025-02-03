@@ -3,6 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { auth } from "../../utils/auth";
 import SignInIcon from "../../icons/SignInIcon";
 import SignOutIcon from "../../icons/SignOutIcon";
+import ToolTip from "../ToolTip/ToolTip";
 
 export default function SignInOutButton() {
   const isSignedIn = useAuth();
@@ -15,7 +16,7 @@ export default function SignInOutButton() {
       >
         {isSignedIn ? <SignOutIcon /> : <SignInIcon />}
       </button>
-      <span>{isSignedIn ? "Sign Out" : "Sign In"}</span>
+      <ToolTip text={isSignedIn ? "Sign Out" : "Sign In"} postition="right" />
     </>
   );
 }

@@ -1,9 +1,12 @@
+.standard-btn-wrapper {
+  position: relative;
+}
+
 .standard-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  
   color: var(--clr-neutral-100);
   background-color: transparent;
   border: 1px solid var(--clr-neutral-100);
@@ -17,7 +20,8 @@
     padding: 0;
   }
 
-  &:hover, &:focus-visible {
+  &:hover,
+  &:focus-visible {
     color: var(--clr-neutral-000);
     background-color: hsl(from var(--clr-purple) h s 20%);
     border-color: var(--clr-neutral-100);
