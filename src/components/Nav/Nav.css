@@ -59,34 +59,6 @@
     }
   }
 
-  ul li span {
-    position: absolute;
-    top: 50%;
-    left: 4rem;
-
-    background-color: #100911;
-    border: 1px solid black;
-    border-radius: 0.5rem;
-    color: var(--clr-neutral-000);
-    font-size: var(--fs-small);
-    visibility: hidden;
-    opacity: 0;
-    text-wrap: nowrap;
-    transform: translateY(-50%);
-    padding: 0.25rem 0.5rem;
-    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
-    transition: all 200ms ease-in-out;
-    transition-delay: 200ms;
-  }
-
-  ul li a:hover + span,
-  ul li a:focus-visible + span,
-  ul li button:hover + span,
-  ul li button:focus-visible + span {
-    opacity: 1;
-    visibility: visible;
-  }
-
   ul li:nth-last-child(2) {
     margin-top: auto;
   }

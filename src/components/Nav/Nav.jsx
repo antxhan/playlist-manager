@@ -6,6 +6,7 @@ import HomeIcon from "../../icons/HomeIcon";
 // import PlaylistIcon from "../../icons/PlaylistIcon";
 import SettingsIcon from "../../icons/SettingsIcon";
 import SearchIcon from "../../icons/SearchIcon";
+import ToolTip from "../ToolTip/ToolTip";
 // import DiscoverIcon from "../../icons/DiscoverIcon";
 
 export default function Nav() {
@@ -37,7 +38,8 @@ export default function Nav() {
               {route.icon}
               {route.icon}
             </NavLink>
-            <span>{route.label}</span>
+            {/* <span>{route.label}</span> */}
+            <ToolTip text={route.label} postition="right" />
           </li>
         ))}
         <li>

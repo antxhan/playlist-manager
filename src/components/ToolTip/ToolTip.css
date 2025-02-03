@@ -1,0 +1,35 @@
+.tooltip {
+  position: absolute;
+  background-color: #100911;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  color: var(--clr-neutral-000);
+  font-size: var(--fs-small);
+  visibility: hidden;
+  opacity: 0;
+  text-wrap: nowrap;
+  padding: 0.25rem 0.5rem;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
+  transition: all 200ms ease-in-out;
+
+  /* THIS GETS ADDED BY THE TOOLTIP COMPONENT */
+  /* TOP POSITION */
+  /* left: 50%;
+  bottom: 100%;
+  transform: translateY(-50%) translateX(-50%); */
+
+  /* RIGHT POSITION */
+  /* transform: translateY(-50%);
+  top: 50%;
+  left: calc(100% + 0.5rem); */
+}
+
+a:hover + .tooltip,
+a:focus-visible + .tooltip,
+button:hover + .tooltip,
+button:focus-visible + .tooltip {
+  transition: all 200ms ease-in-out;
+  transition-delay: 500ms;
+  opacity: 1;
+  visibility: visible;
+}
