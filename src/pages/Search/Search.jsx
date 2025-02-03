@@ -19,7 +19,6 @@ export default function Search() {
   const q = searchParams.get("q");
 
   useEffect(() => {
-    console.log("HERE:", q);
     if (q) {
       setIsLoading(true);
       api.search({ q }).then((results) => {
