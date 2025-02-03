@@ -24,13 +24,6 @@ export default function Home() {
   const cardGap = 16;
   const skeletonRows = 3;
 
-  const setCalculateNumberOfCards = useCallback(
-    (width = cardWidth, gap = cardGap, rows = skeletonRows) => {
-      setNumberOfCards(calculateNumberOfCards(width, gap, rows));
-    },
-    [cardWidth, cardGap, skeletonRows]
-  );
-
   const handleCreatePlaylistSubmit = async (
     name,
     description,
@@ -72,7 +65,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    setCalculateNumberOfCards();
+    setNumberOfCards(calculateNumberOfCards(cardWidth, cardGap, skeletonRows));
   }, []);
 
   useEffect(() => {
