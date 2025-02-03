@@ -31,7 +31,7 @@ export default function VolumeControl({ disabled }) {
 	}, [localVolume]);
 
 	// Early return if no player context
-	if (!playerContext) {
+	if (!playerContext || disabled) {
 		return (
 			<div className="volume-control" role="group" aria-label="Volume controls">
 				<button className="volume-button" disabled>
@@ -53,7 +53,7 @@ export default function VolumeControl({ disabled }) {
 		);
 	}
 
-	const { volume, setVolume } = playerContext;
+	const { volume, setVolume, isSDKReady, deviceId, isLoading } = playerContext;
 
 	const toggleMute = () => {
 		if (!isMobile) {
@@ -61,11 +61,11 @@ export default function VolumeControl({ disabled }) {
 				console.log("muted");
 				setPrevVolume(volume);
 				setLocalVolume(0);
-				setVolume(0);
+				setVolume(0, deviceId);
 			} else {
 				console.log("sound on");
 				setLocalVolume(prevVolume);
-				setVolume(prevVolume);
+				setVolume(prevVolume, deviceId);
 			}
 		}
 
@@ -75,7 +75,7 @@ export default function VolumeControl({ disabled }) {
 	};
 
 	const handleVolumeChange = (event) => {
-		if (disabled) return;
+		if (disabled || !isSDKReady || isLoading || !deviceId) return;
 
 		const newVolume = Number(event.target.value);
 		setLocalVolume(newVolume);
@@ -86,7 +86,7 @@ export default function VolumeControl({ disabled }) {
 
 		debouncedSetVolume.current = setTimeout(() => {
 			if (playerContext && playerContext.setVolume) {
-				playerContext.setVolume(newVolume);
+				playerContext.setVolume(newVolume, deviceId);
 			}
 		}, 200);
 	};
@@ -100,7 +100,7 @@ export default function VolumeControl({ disabled }) {
 			<button
 				className="volume-button"
 				onClick={toggleMute}
-				disabled={disabled}
+				disabled={disabled || !isSDKReady || isLoading}
 				aria-label={volume > 0 ? "Mute" : "Unmute"}>
 				{volume > 0 ? <VolumeOnIcon /> : <VolumeOffIcon />}
 			</button>
@@ -113,7 +113,7 @@ export default function VolumeControl({ disabled }) {
 					step="1"
 					value={localVolume}
 					onChange={handleVolumeChange}
-					disabled={disabled}
+					disabled={disabled || !isSDKReady || isLoading}
 					aria-label="Volume"
 				/>
 			</div>
