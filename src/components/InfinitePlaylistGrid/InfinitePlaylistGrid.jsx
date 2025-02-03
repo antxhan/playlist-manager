@@ -10,8 +10,8 @@ export default function InfinitePlaylistGrid({
   endMessage = "No more results",
   loading = (
     <>
-      {Array.from(Array(10)).map((i) => (
-        <PlaylistCardSkeleton key={i} />
+      {Array.from(Array(10)).map((_, index) => (
+        <PlaylistCardSkeleton key={index} />
       ))}
     </>
   ),
@@ -25,8 +25,8 @@ export default function InfinitePlaylistGrid({
       loader={loading}
       endMessage={<p>{endMessage}</p>}
     >
-      {playlists.map((playlist) => (
-        <PlaylistCard playlist={playlist} key={playlist.id} />
+      {playlists.map((playlist, index) => (
+        <PlaylistCard playlist={playlist} key={playlist.id + index} />
       ))}
     </InfiniteScroll>
   );
