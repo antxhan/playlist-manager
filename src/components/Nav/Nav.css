@@ -1,10 +1,8 @@
 .nav {
   display: flex;
-
   position: sticky;
   inset: 0 auto 0 0;
   z-index: 9999;
-
   background-color: hsl(from var(--clr-neutral-900) h s l / 0.6);
   height: 100vh;
   width: 5rem;
@@ -12,25 +10,24 @@
   ul {
     display: flex;
     flex-direction: column;
-
     gap: 1.5rem;
     height: 100%;
     width: inherit;
     padding-block: 5rem;
+    align-items: center;
   }
 
   ul li {
     display: flex;
     align-items: center;
     justify-content: center;
-
     position: relative;
+    width: max-content;
   }
 
   ul li a {
     &.active {
       color: var(--clr-neutral-000);
-
       svg:last-of-type {
         filter: blur(5px);
       }
@@ -48,7 +45,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     color: var(--clr-neutral-500);
     width: max-content;
     transition: all 0.2s ease-in-out;
@@ -67,7 +63,6 @@
 @media (max-width: 700px) {
   .nav {
     align-items: center;
-
     position: fixed;
     inset: auto 0 0 0;
     z-index: 9999;
@@ -85,12 +80,12 @@
     li {
       flex-direction: column;
       height: 100%;
+      width: 100%;
+      gap: 0.5rem;
 
-      span {
+      .tooltip {
         display: flex;
-
         position: static;
-
         border: none;
         color: var(--clr-neutral-500);
         opacity: 1;
@@ -99,6 +94,7 @@
         padding: 0;
         box-shadow: none;
         transition-delay: 0s;
+        font-size: var(--fs-normal);
       }
     }
     a,

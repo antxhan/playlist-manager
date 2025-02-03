@@ -38,7 +38,6 @@ export default function Nav() {
               {route.icon}
               {route.icon}
             </NavLink>
-            {/* <span>{route.label}</span> */}
             <ToolTip text={route.label} postition="right" />
           </li>
         ))}
