@@ -17,10 +17,10 @@ export default function NotFound() {
         <div className="error__info-wrapper">
           <h1>
             The page you are looking for is either a deep cut... or it doesn't
-            exist
+            exist.
           </h1>
 
-          <p>Maybe you can find what you need back at home</p>
+          <p>Maybe you can find what you need back at home.</p>
         </div>
         <Link
           to={{
