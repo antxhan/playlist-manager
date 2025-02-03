@@ -1,5 +1,6 @@
 import "./SearchBar.css";
 import SearchIcon from "../../icons/SearchIcon";
+import { useEffect, useState } from "react";
 
 export default function SearchBar({
   q = "",
@@ -7,8 +8,21 @@ export default function SearchBar({
   onSubmit = (e) => {
     e.preventDefault();
   },
-  onChange = null,
 }) {
+  const [newQ, setNewQ] = useState(q);
+
+  const onChange = (e) => {
+    setNewQ(e.target.value);
+  };
+
+  useEffect(() => {
+    onChange({ target: { value: q } });
+  }, [q]);
+
+  useEffect(() => {
+    setNewQ(q ?? "");
+  }, [q]);
+
   return (
     <form className="search-bar" onSubmit={onSubmit}>
       <SearchIcon />
@@ -16,6 +30,7 @@ export default function SearchBar({
         type="text"
         name="q"
         placeholder={placeholder}
+        value={newQ}
         defaultValue={q}
         onChange={onChange}
       />
