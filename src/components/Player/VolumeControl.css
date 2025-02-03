@@ -225,6 +225,12 @@
 		display: block;
 	}
 
+	.volume-button:hover .volumeSpan,
+	.volume-button:focus-visible .volumeSpan {
+		opacity: 1;
+		visibility: hidden;
+	}
+
 	/*always show thumb on mobile */
 	.volume-slider::-webkit-slider-thumb {
 		opacity: 1;
