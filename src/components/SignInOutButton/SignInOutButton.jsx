@@ -16,7 +16,6 @@ export default function SignInOutButton() {
       >
         {isSignedIn ? <SignOutIcon /> : <SignInIcon />}
       </button>
-      {/* <span>{isSignedIn ? "Sign Out" : "Sign In"}</span> */}
       <ToolTip text={isSignedIn ? "Sign Out" : "Sign In"} postition="right" />
     </>
   );

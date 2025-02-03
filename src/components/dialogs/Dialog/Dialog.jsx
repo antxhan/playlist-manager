@@ -25,7 +25,11 @@ export default function Dialog({ isOpen, onClose, title, children }) {
       <div className="dialog__content">
         <header className="dialog__header">
           <h3>{title}</h3>
-          <StandardButton onClick={onClose} className={"small-btn"}>
+          <StandardButton
+            onClick={onClose}
+            className={"small-btn"}
+            ariaLabel="Close"
+          >
             <XIcon />
           </StandardButton>
         </header>
