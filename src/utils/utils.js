@@ -65,7 +65,7 @@ export function calculateNumberOfCards(cardWidth, gap, rows = null) {
     const containerPadding = container.offsetWidth < 610 ? 2 * 16 : 2 * 4 * 16;
     const containerWidth = container.offsetWidth - containerPadding;
     const columns = Math.floor((containerWidth + gap) / (cardWidth + gap));
-    rows = rows ?? columns === 1 ? 4 : 2;
+    rows = rows ?? (columns === 1 ? 4 : 2);
     return columns * rows;
   }
 }
