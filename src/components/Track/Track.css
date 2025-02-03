@@ -8,7 +8,6 @@
   justify-items: start;
 
   color: var(--clr-neutral-100);
-  /* background-color: transparent; */
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem 0;
@@ -24,7 +23,6 @@
     border-radius: 0.5rem;
     max-width: 2.5rem;
     aspect-ratio: 1;
-    height: 100%;
     object-fit: cover;
   }
 }
