@@ -6,11 +6,9 @@ import { useHandleError } from "../../hooks/useHandleError";
 
 export default function Track({ track, playlistId, player }) {
   const handleError = useHandleError();
-
   return (
     <>
       <div
-        key={track.id}
         onClick={() =>
           api.track
             .play({

@@ -5,12 +5,10 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useHandleError } from "../../hooks/useHandleError";
 import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
-import { usePlayer } from "../../hooks/usePlayer";
 import { api } from "../../utils/api";
 import he from "he";
+import { usePlayer } from "../../hooks/usePlayer";
 import Layout from "../../Layout";
-import Track from "../../components/Track/Track";
-import InfiniteScroll from "react-infinite-scroll-component";
 import EditPlaylistDialog from "../../components/dialogs/PlaylistDialogs/EditPlaylistDialog/EditPlaylistDialog";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog/ConfirmDialog";
 import EditIcon from "../../icons/EditIcon";
@@ -18,6 +16,7 @@ import placeholderImage from "../../img/placeholder.webp";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 import PlaylistSkeleton from "../../components/skeletons/PlaylistSkeleton/PlaylistSkeleton";
+import Tracklist from "../../components/Tracklist/Tracklist";
 
 export default function Playlist() {
   const player = usePlayer();
@@ -25,30 +24,49 @@ export default function Playlist() {
   const navigateWithTransition = useNavigateWithTransition();
   const handleError = useHandleError();
   const { id } = useParams();
-  const [playlist, setPlaylist] = useState([]);
+  const [playlist, setPlaylist] = useState(null);
   const [tracks, setTracks] = useState([]);
-  const [tracksHasMore, setTracksHasMore] = useState(true);
-  const [trackOffset, setTrackOffset] = useState(0);
-  const trackLimit = 20;
-  const [isInitialFetch, setIsInitialFetch] = useState(true);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [nextPage, setNextPage] = useState(null);
 
-  const fetchTracks = useCallback(() => {
-    if (isSignedIn && id) {
-      api.playlist
-        .tracks({ id, limit: trackLimit, offset: trackOffset })
-        .then((newTracks) => {
-          setTracks((prevTracks) => [...prevTracks, ...newTracks.items]);
-          setTracksHasMore(newTracks.next !== null);
-          setTrackOffset(trackOffset + trackLimit);
-        })
-        .catch((error) =>
-          handleError(error, "Failed to fetch playlist tracks.")
-        );
-    }
-  }, [isSignedIn, id, trackLimit, trackOffset, handleError]);
+  useEffect(() => {
+    api
+      .playlist(id)
+      .then((res) => {
+        setPlaylist(res);
+        setTracks(res.tracks.items);
+        if (res.tracks.next) {
+          const nextUrl = new URL(res.tracks.next);
+          nextUrl.searchParams.delete("fields");
+          setNextPage(nextUrl.toString());
+        } else {
+          setNextPage(null);
+        }
+      })
+      .then(() => setIsLoading(false))
+      .catch((error) => handleError(error, "Failed to fetch playlist data."));
+
+    setIsLoading(false);
+  }, [handleError, id]);
+
+  const getNextPage = useCallback(() => {
+    api
+      .get({ url: nextPage })
+      .then((res) => {
+        setTracks([...tracks, ...res.items]);
+        if (res.next) {
+          const nextUrl = new URL(res.next);
+          setNextPage(nextUrl.toString());
+        } else {
+          setNextPage(null);
+        }
+      })
+      .catch((error) =>
+        handleError(error, "Failed to fetch next tracks page.")
+      );
+  }, [handleError, nextPage, tracks]);
 
   const handleEditPlaylist = (newName, newDescription) => {
     if (isSignedIn && id) {
@@ -84,25 +102,7 @@ export default function Playlist() {
     }
   };
 
-  useEffect(() => {
-    if (isSignedIn && id && isInitialFetch) {
-      api
-        .playlist(id)
-        .then(({ description, name, ...playlist }) => {
-          setPlaylist({
-            ...playlist,
-            name: he.decode(name),
-            description: he.decode(description),
-          });
-        })
-        .then(() => setIsLoading(false))
-        .catch((error) => handleError(error, "Failed to fetch playlist data."));
-      fetchTracks();
-      setIsInitialFetch(false);
-    }
-  }, [isSignedIn, id, isInitialFetch, handleError, fetchTracks]);
-
-  if (isLoading)
+  if (isLoading || !playlist)
     return (
       <Layout>
         <PlaylistSkeleton />
@@ -158,17 +158,14 @@ export default function Playlist() {
             </div>
           </div>
           <div className="playlist__body">
-            <InfiniteScroll
-              dataLength={tracks.length}
-              next={fetchTracks}
-              hasMore={tracksHasMore}
-              loader={<h2>Loading more tracks...</h2>}
-              className="playlist__tracks"
-            >
-              {tracks.map((item, index) => (
-                <Track track={item.track} playlistId={id} player={player} />
-              ))}
-            </InfiniteScroll>
+            <Tracklist
+              playlistId={id}
+              player={player}
+              tracks={tracks}
+              getNextPage={getNextPage}
+              hasMore={nextPage}
+              endMessage={null}
+            />
           </div>
         </div>
         <EditPlaylistDialog
