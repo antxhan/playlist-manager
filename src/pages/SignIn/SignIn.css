@@ -13,24 +13,60 @@
 }
 
 .sign-in__header h1 {
-  font-size: clamp(1rem, 5vw + 0.5rem, 5rem);
+  font-size: clamp(2.25rem, 5vw + 0.5rem, 5rem);
 }
 
 .sign-in__main {
+  background-color: var(--clr-neutral-900);
+  border-radius: 1rem;
+  overflow: hidden;
+
+  width: min(300px, 100%);
+}
+
+.sign-in__window {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  background-color: var(--clr-neutral-900);
+  border: 1px solid var(--clr-neutral-800);
+  padding: 2rem;
+  width: 100%;
+}
+
+.frequency-bars {
+  display: flex;
+  gap: 0.225rem;
   align-items: center;
   justify-content: center;
 }
 
-.sing-in__window {
-  border: 1px solid var(--clr-neutral-800);
-  padding: 1rem;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: min(300px, 100%);
-  align-items: center;
-  background-color: var(--clr-neutral-900);
+.bar {
+  background-color: var(--clr-neutral-100);
+  border-radius: 2px;
+  height: calc(2.5rem + (var(--i, 0) * -2px));
+  width: 0.375rem;
+  transition: all 200ms ease-out;
+
+  &:hover {
+    background-color: var(--clr-blue);
+  }
+  &:has(+ .bar:hover),
+  &:hover + .bar {
+    background-color: hsl(from var(--clr-blue) h s 60%);
+  }
+  &:has(+ .bar + .bar:hover),
+  &:hover + .bar + .bar {
+    background-color: hsl(from var(--clr-blue) h s 70%);
+  }
+  &:has(+ .bar + .bar + .bar:hover),
+  &:hover + .bar + .bar + .bar {
+    background-color: hsl(from var(--clr-blue) h s 80%);
+  }
+  &:has(.bar + .bar + .bar + .bar:hover),
+  &:hover + .bar + .bar + .bar + .bar {
+    background-color: hsl(from var(--clr-blue) h s 90%);
+  }
 }
