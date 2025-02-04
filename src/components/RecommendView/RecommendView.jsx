@@ -20,7 +20,7 @@ export default function RecommendView() {
   const cardWidth = 150;
   const cardGap = 16;
   const numberOfGenres = 10;
-  
+
   useEffect(() => {
     setNumberOfCards(calculateNumberOfCards(cardWidth, cardGap));
   }, []);
@@ -49,40 +49,44 @@ export default function RecommendView() {
 
   return (
     <div className="recommend-view">
-      <h2>Your Top Genres</h2>
-      <Suspense fallback={<TopGenresSkeleton />}>
-        <TopGenres topGenres={topGenres} />
-      </Suspense>
-      <h2 className="recommended__header-title">
-        Because you like
-        {topGenres.length > 0 && recommendedGenre ? (
-          <span className="recommended-genre">
-            {toCapitalize(recommendedGenre)}...
-          </span>
-        ) : (
-          <>
-            <span className="recommended-genre skeleton"></span>
-          </>
-        )}
-      </h2>
-      <Suspense
-        fallback={<InfinitePlaylistGridSkeleton amount={numberOfCards} />}
-      >
-        <RecommendGrid
-          topGenres={topGenres}
-          recommendedGenre={recommendedGenre}
-          numberOfCards={numberOfCards}
-        />
-      </Suspense>
-      <div className="view-more">
-        {recommendedGenre ? (
-          <Link to={`/search?q=${recommendedGenre}`}>
-            <StandardButton>See more</StandardButton>
-          </Link>
-        ) : (
-          <span className="skeleton"></span>
-        )}
-      </div>
+      <section className="recommend-view__header">
+        <h2>Your Top Genres</h2>
+        <Suspense fallback={<TopGenresSkeleton />}>
+          <TopGenres topGenres={topGenres} />
+        </Suspense>
+      </section>
+      <section className="recommend-view__body">
+        <h2 className="recommended__header-title">
+          Because you like
+          {topGenres.length > 0 && recommendedGenre ? (
+            <span className="recommended-genre">
+              {toCapitalize(recommendedGenre)}...
+            </span>
+          ) : (
+            <>
+              <span className="recommended-genre skeleton"></span>
+            </>
+          )}
+        </h2>
+        <Suspense
+          fallback={<InfinitePlaylistGridSkeleton amount={numberOfCards} />}
+        >
+          <RecommendGrid
+            topGenres={topGenres}
+            recommendedGenre={recommendedGenre}
+            numberOfCards={numberOfCards}
+          />
+        </Suspense>
+        <div className="view-more">
+          {recommendedGenre ? (
+            <Link to={`/search?q=${recommendedGenre}`}>
+              <StandardButton>See more</StandardButton>
+            </Link>
+          ) : (
+            <span className="skeleton"></span>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

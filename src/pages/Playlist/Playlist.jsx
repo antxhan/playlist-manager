@@ -1,22 +1,23 @@
 import "./Playlist.css";
-import BulletIcon from "../../icons/BulletIcon";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useHandleError } from "../../hooks/useHandleError";
 import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
-import { api } from "../../utils/api";
-import he from "he";
 import { usePlayer } from "../../hooks/usePlayer";
+import { api } from "../../utils/api";
+import { easeOut, motion } from "framer-motion";
+import he from "he";
 import Layout from "../../Layout";
 import EditPlaylistDialog from "../../components/dialogs/PlaylistDialogs/EditPlaylistDialog/EditPlaylistDialog";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog/ConfirmDialog";
-import EditIcon from "../../icons/EditIcon";
-import placeholderImage from "../../img/placeholder.webp";
 import StandardButton from "../../components/buttons/StandardButton/StandardButton";
 import AccentButton from "../../components/buttons/AccentButton/AccentButton";
 import PlaylistSkeleton from "../../components/skeletons/PlaylistSkeleton/PlaylistSkeleton";
 import Tracklist from "../../components/Tracklist/Tracklist";
+import placeholderImage from "../../img/placeholder.webp";
+import BulletIcon from "../../icons/BulletIcon";
+import EditIcon from "../../icons/EditIcon";
 
 export default function Playlist() {
   const player = usePlayer();
@@ -113,7 +114,12 @@ export default function Playlist() {
     <Layout>
       <section className="playlist-wrapper">
         <div className="playlist">
-          <div className="playlist__head-wrapper">
+          <motion.div
+            className="playlist__head-wrapper"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{duration: 0.5, ease: easeOut}}
+          >
             <div className="playlist__head">
               <div className="playlist__image-wrapper">
                 <img
@@ -156,7 +162,7 @@ export default function Playlist() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
           <div className="playlist__body">
             <Tracklist
               playlistId={id}

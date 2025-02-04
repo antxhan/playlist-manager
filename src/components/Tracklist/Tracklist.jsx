@@ -25,6 +25,7 @@ export default function Tracklist({
           track={item.track}
           playlistId={playlistId}
           player={player}
+          index={index}
         />
       ))}
     </InfiniteScroll>

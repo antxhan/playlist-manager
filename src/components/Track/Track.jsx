@@ -1,14 +1,15 @@
 import "./Track.css";
-import missingAlbumCover from "../../img/placeholder.webp";
-import { msToMMSS } from "../../utils/utils";
+import { easeInOut, motion } from "framer-motion";
 import { api } from "../../utils/api";
+import { msToMMSS } from "../../utils/utils";
 import { useHandleError } from "../../hooks/useHandleError";
+import missingAlbumCover from "../../img/placeholder.webp";
 
-export default function Track({ track, playlistId, player }) {
+export default function Track({ track, playlistId, player, index }) {
   const handleError = useHandleError();
   return (
     <>
-      <div
+      <motion.button
         onClick={() =>
           api.track
             .play({
@@ -18,9 +19,16 @@ export default function Track({ track, playlistId, player }) {
             })
             .catch((error) => handleError(error, "Failed to play track."))
         }
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          duration: 0.2,
+          ease: easeInOut,
+          delay: index < 20 ? 0.05 * index : 0,
+        }}
       >
         {!track ? null : (
-          <button className="track">
+          <div className="track">
             <img
               src={track?.album?.images?.[2]?.url || missingAlbumCover}
               alt="Track album cover"
@@ -35,9 +43,9 @@ export default function Track({ track, playlistId, player }) {
             <p className="track__duration">
               {track.duration_ms ? msToMMSS(track.duration_ms) : "--:--"}
             </p>
-          </button>
+          </div>
         )}
-      </div>
+      </motion.button>
     </>
   );
 }
