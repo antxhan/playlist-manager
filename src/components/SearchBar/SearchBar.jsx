@@ -30,8 +30,7 @@ export default function SearchBar({
         type="text"
         name="q"
         placeholder={placeholder}
-        value={newQ}
-        defaultValue={q}
+        value={newQ || ""}
         onChange={onChange}
       />
     </form>

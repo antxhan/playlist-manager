@@ -1,24 +1,13 @@
 import "./Track.css";
 import { easeInOut, motion } from "framer-motion";
-import { api } from "../../utils/api";
 import { msToMMSS } from "../../utils/utils";
-import { useHandleError } from "../../hooks/useHandleError";
 import missingAlbumCover from "../../img/placeholder.webp";
 
-export default function Track({ track, playlistId, player, index }) {
-  const handleError = useHandleError();
+export default function Track({ track, onClick, index }) {
   return (
     <>
       <motion.button
-        onClick={() =>
-          api.track
-            .play({
-              trackUri: track.uri,
-              playlistId: playlistId,
-              deviceId: player.deviceId,
-            })
-            .catch((error) => handleError(error, "Failed to play track."))
-        }
+        onClick={onClick}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{
