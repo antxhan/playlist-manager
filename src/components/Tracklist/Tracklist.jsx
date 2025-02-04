@@ -37,15 +37,18 @@ export default function Tracklist({
       loader={loading}
       endMessage={<p>{endMessage}</p>}
     >
-      {tracks.map((item, index) => (
-        <Track
-          key={item.track.id + index}
-          track={item.track}
-          playlistId={playlistId}
-          onClick={() => trackOnClick(item.track.uri)}
-          index={index}
-        />
-      ))}
+      {tracks.map((item, index) => {
+        if (!item || !item.track) return null;
+        return (
+          <Track
+            key={item.track.id + index}
+            track={item.track}
+            playlistId={playlistId}
+            onClick={() => trackOnClick(item.track.uri)}
+            index={index}
+          />
+        );
+      })}
     </InfiniteScroll>
   );
 }
