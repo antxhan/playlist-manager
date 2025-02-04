@@ -1,13 +1,22 @@
 import "./Track.css";
-import missingAlbumCover from "../../img/placeholder.webp";
+import { easeInOut, motion } from "framer-motion";
 import { msToMMSS } from "../../utils/utils";
 
 export default function Track({ track, onClick }) {
   return (
     <>
-      <div onClick={onClick}>
+      <motion.button
+        onClick={onClick}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{
+          duration: 0.2,
+          ease: easeInOut,
+          delay: index < 20 ? 0.05 * index : 0,
+        }}
+      >
         {!track ? null : (
-          <button className="track">
+          <div className="track">
             <img
               src={track?.album?.images?.[2]?.url || missingAlbumCover}
               alt="Track album cover"
@@ -22,9 +31,9 @@ export default function Track({ track, onClick }) {
             <p className="track__duration">
               {track.duration_ms ? msToMMSS(track.duration_ms) : "--:--"}
             </p>
-          </button>
+          </div>
         )}
-      </div>
+      </motion.button>
     </>
   );
 }

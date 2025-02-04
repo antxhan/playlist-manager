@@ -43,6 +43,7 @@ export default function Tracklist({
           track={item.track}
           playlistId={playlistId}
           onClick={() => trackOnClick(item.track.uri)}
+          index={index}
         />
       ))}
     </InfiniteScroll>
