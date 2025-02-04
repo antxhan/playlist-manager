@@ -103,6 +103,9 @@ h2 {
 button {
   cursor: pointer;
   background-color: transparent;
+  &[disabled] {
+    cursor: initial;
+  }
 }
 
 .skeleton {
