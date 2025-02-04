@@ -3,7 +3,16 @@
 	align-items: center;
 	gap: 0.5rem;
 	position: relative;
-	margin-left: 1rem;
+	justify-content: center;
+	margin-left: 0.5rem;
+
+	.standard-btn-wrapper {
+		.standard-btn {
+			border: none;
+
+			margin: 0.5rem rem 0.5rem 1rem;
+		}
+	}
 }
 
 .volume-button {
@@ -20,32 +29,6 @@
 	touch-action: none;
 }
 
-.volumeSpan {
-	position: absolute;
-	bottom: 100%;
-	left: 10%;
-	transform: translateX(-50%);
-
-	background-color: rgba(16, 9, 17, 0.9);
-	border: 1px solid black;
-	border-radius: 0.5rem;
-	color: var(--clr-neutral-000);
-	font-size: var(--fs-small);
-	padding: 0.25rem 0.5rem;
-	white-space: nowrap;
-	box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
-
-	opacity: 0;
-	visibility: hidden;
-	transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out;
-}
-
-.volume-button:hover .volumeSpan,
-.volume-button:focus-visible .volumeSpan {
-	opacity: 1;
-	visibility: visible;
-}
-
 /*reset default styles */
 .volume-slider {
 	-webkit-appearance: none;
@@ -58,6 +41,7 @@
 	background: transparent;
 	position: relative;
 	touch-action: none;
+	margin-left: 0;
 }
 
 /*webkit */
@@ -216,6 +200,15 @@
 		background-color: hsl(from var(--clr-neutral-900) h s l / 1);
 		backdrop-filter: blur(4px);
 		border-radius: 8px;
+	}
+
+	.volume-control {
+		.standard-btn-wrapper {
+			.standard-btn {
+				padding: 0 0 0 0;
+				border: none;
+			}
+		}
 	}
 
 	.volume-slider-wrapper.visible {
