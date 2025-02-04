@@ -166,22 +166,7 @@ export default function Playlist() {
               className="playlist__tracks"
             >
               {tracks.map((item, index) => (
-                <div
-                  key={index}
-                  onClick={() =>
-                    api.track
-                      .play({
-                        trackUri: item.track.uri,
-                        playlistId: id,
-                        deviceId: player.deviceId,
-                      })
-                      .catch((error) =>
-                        handleError(error, "Failed to play track.")
-                      )
-                  }
-                >
-                  <Track track={item.track} />
-                </div>
+                <Track track={item.track} playlistId={id} player={player} />
               ))}
             </InfiniteScroll>
           </div>
