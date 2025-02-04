@@ -14,18 +14,22 @@
 
   &:hover {
     background-color: var(--clr-blue);
+    scale: 1.5;
   }
   &:has(+ .bar:hover),
   &:hover + .bar {
     background-color: hsl(from var(--clr-blue) h s 60%);
+    scale: 1.375;
   }
   &:has(+ .bar + .bar:hover),
   &:hover + .bar + .bar {
     background-color: hsl(from var(--clr-blue) h s 70%);
+    scale: 1.25;
   }
   &:has(+ .bar + .bar + .bar:hover),
   &:hover + .bar + .bar + .bar {
     background-color: hsl(from var(--clr-blue) h s 80%);
+    scale: 1.125;
   }
   &:has(.bar + .bar + .bar + .bar:hover),
   &:hover + .bar + .bar + .bar + .bar {
