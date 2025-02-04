@@ -1,6 +1,6 @@
 import "./PlaylistCard.css";
 import { Link } from "react-router-dom";
-import { easeInOut, easeOut, motion } from "framer-motion";
+import { easeInOut, motion } from "framer-motion";
 import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import placeholderImage from "../../img/placeholder.webp";
 
