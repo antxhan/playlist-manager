@@ -3,6 +3,7 @@ import Track from "../Track/Track";
 import { usePlayer } from "../../hooks/usePlayer";
 import { api } from "../../utils/api";
 import { useHandleError } from "../../hooks/useHandleError";
+import toast from "react-hot-toast";
 
 export default function Tracklist({
   playlistId,
@@ -16,7 +17,7 @@ export default function Tracklist({
   const { deviceId, userIsPremium } = usePlayer();
   const trackOnClick = (trackUri) => {
     if (!userIsPremium) {
-      console.log("not premium");
+      toast.error("You need Spotify Premium to be able to play tracks");
       return;
     }
     api.track
