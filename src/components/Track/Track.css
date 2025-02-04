@@ -1,3 +1,7 @@
+button:has(.track) {
+  border: none;
+}
+
 .track {
   container-type: inline-size;
 
