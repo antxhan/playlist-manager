@@ -31,24 +31,6 @@ export default function VolumeControl({ disabled }) {
 		}
 	}, [localVolume]);
 
-	useEffect(() => {
-		const preventScroll = (event) => {
-			if (showSlider) {
-				event.preventDefault();
-			}
-		};
-
-		if (showSlider) {
-			document.addEventListener("touchmove", preventScroll, { passive: false });
-		} else {
-			document.removeEventListener("touchmove", preventScroll);
-		}
-
-		return () => {
-			document.removeEventListener("touchmove", preventScroll);
-		};
-	}, [showSlider]);
-
 	// Early return if no player context
 	if (!playerContext || disabled) {
 		return (
