@@ -6,20 +6,16 @@
 .playlists {
   container-name: playlists;
   container-type: inline-size;
-
   .playlist-grid {
     --_playlist-grid-column-width: 150px;
     --_playlist-grid-gap: 1rem;
-
     display: grid;
     grid-template-columns: repeat(
       auto-fill,
       minmax(var(--_playlist-grid-column-width), 1fr)
     );
     gap: var(--_playlist-grid-gap);
-
     list-style: none;
-
     .playlist-card__info p {
       display: -webkit-box;
       line-clamp: 1;
@@ -29,6 +25,7 @@
       word-break: break-all;
       overflow: hidden;
       text-overflow: ellipsis;
+      line-height: 1.2;
     }
   }
 }

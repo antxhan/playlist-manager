@@ -14,6 +14,7 @@ import { PlayerProvider } from "./components/Player/PlayerContext";
 import { db } from "./utils/db";
 import GlobalPlayer from "./components/Player/GlobalPlayer";
 import { Toaster } from "react-hot-toast";
+import SearchSkeleton from "./pages/Search/Skeleton";
 
 const token = db.token.get();
 const routes = (
@@ -25,7 +26,7 @@ const routes = (
     <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
       <Route path="/playlists/:id" element={<Playlist />} />
     </Route>
-    <Route element={<ProtectedRoute loading={<div>Loading...</div>} />}>
+    <Route element={<ProtectedRoute loading={<SearchSkeleton />} />}>
       <Route path="/search?" element={<Search />} />
     </Route>
   </>
