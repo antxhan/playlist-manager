@@ -1,122 +1,126 @@
 .global-player {
-	position: fixed;
-	left: 5rem;
-	right: 0;
-	z-index: 9998;
-	background-color: hsl(from var(--clr-neutral-900) h s l / 0.8);
+  position: fixed;
+  left: 5rem;
+  right: 0;
+  z-index: 9998;
+  background-color: hsl(from var(--clr-neutral-900) h s l / 0.8);
 
-	backdrop-filter: blur(4px);
-	padding: 0.5rem 2rem 0.5rem 2rem;
-	display: flex;
-	bottom: 0px;
+  backdrop-filter: blur(4px);
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  display: flex;
+  bottom: 0px;
 
-	.player--wrapper__left {
-		container-type: inline-size;
+  .player--wrapper__left {
+    container-type: inline-size;
 
-		display: grid;
-		grid-template-columns: auto 1fr auto;
-		gap: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
 
-		border-radius: 0.5rem;
-		padding: 0.5rem 0;
-		width: 100%;
-		transition: background-color 200ms ease-out;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    width: 100%;
+    transition: background-color 200ms ease-out;
 
-		.player--img {
-			border-radius: 0.5rem;
-			max-width: 4rem;
-			width: 4rem;
-			aspect-ratio: 1;
-			height: 100%;
-			object-fit: cover;
-		}
-		.player--info__wrapper {
-			display: flex;
-			flex-direction: column;
-			gap: 0.3em;
-			justify-content: center;
-			.player--currentTrackName {
-				font-size: var(--fs-normal);
-				display: -webkit-box;
-				line-clamp: 1;
-				-webkit-line-clamp: 1;
-				-webkit-box-orient: vertical;
-				white-space: unset;
-				word-break: break-all;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				min-height: var(--fs-normal);
-				&.skeleton,
-				&.disabled {
-					max-width: 10rem;
-				}
-			}
-			.player--currentTrackArtists {
-				font-size: var(--fs-small);
-				color: var(--clr-neutral-400);
-				display: -webkit-box;
-				line-clamp: 1;
-				-webkit-line-clamp: 1;
-				-webkit-box-orient: vertical;
-				white-space: unset;
-				word-break: break-all;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				&.skeleton,
-				&.disabled {
-					max-width: 6rem;
-					height: var(--fs-small);
-				}
-			}
-		}
-	}
+    .player--img {
+      border-radius: 0.5rem;
+      max-width: 4rem;
+      width: 4rem;
+      aspect-ratio: 1;
+      height: 100%;
+      object-fit: cover;
+    }
+    .player--info__wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3em;
+      justify-content: center;
+      .player--currentTrackName {
+        font-size: var(--fs-normal);
+        display: -webkit-box;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        white-space: unset;
+        word-break: break-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-height: var(--fs-normal);
+        &.skeleton,
+        &.disabled {
+          max-width: 10rem;
+        }
+      }
+      .player--currentTrackArtists {
+        font-size: var(--fs-small);
+        color: var(--clr-neutral-400);
+        display: -webkit-box;
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        white-space: unset;
+        word-break: break-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &.skeleton,
+        &.disabled {
+          max-width: 6rem;
+          height: var(--fs-small);
+        }
+      }
+    }
+  }
 
-	.player--wrapper__right {
-		position: relative;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 0.5rem;
-		.standard-btn-wrapper {
-			.standard-btn {
-				border: none;
-			}
-		}
-	}
+  .player--wrapper__right {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    .standard-btn-wrapper {
+      .standard-btn {
+        border: none;
+      }
+    }
+  }
 }
 
 @container (max-width: 500px) {
-	.global-player {
-		.player--wrapper__left {
-			.player--img {
-				max-width: 2.5rem;
-			}
-		}
-	}
+  .global-player {
+    .player--wrapper__left {
+      .player--img {
+        max-width: 2.5rem;
+      }
+    }
+  }
 }
 
 .animate-pulse {
-	animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @media (max-width: 700px) {
-	.global-player {
-		width: 100%;
-		left: 0;
-		bottom: var(--_nav-mobile-height);
-		position: fixed;
-		.player--wrapper__right {
-			.standard-btn-wrapper {
-				.standard-btn {
-					padding: 0 0 0 0;
-					border: none;
-				}
-			}
-		}
-	}
+  .global-player {
+    width: 100%;
+    left: 0;
+    bottom: var(--_nav-mobile-height);
+    position: fixed;
+    .player--wrapper__right {
+      .standard-btn-wrapper {
+        .standard-btn {
+          padding: 0 0 0 0;
+          border: none;
+        }
+      }
+    }
+  }
+}
+
+.player--button[disabled] {
+  border: none;
 }
 
 .disabled {
-	background-color: var(--clr-neutral-700);
-	border-radius: 1rem;
+  background-color: var(--clr-neutral-700);
+  border-radius: 1rem;
 }
