@@ -1,8 +1,9 @@
 import "./Track.css";
 import { easeInOut, motion } from "framer-motion";
 import { msToMMSS } from "../../utils/utils";
+import missingAlbumCover from "../../img/placeholder.webp";
 
-export default function Track({ track, onClick }) {
+export default function Track({ track, onClick, index }) {
   return (
     <>
       <motion.button
