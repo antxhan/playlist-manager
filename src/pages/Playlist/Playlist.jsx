@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useHandleError } from "../../hooks/useHandleError";
 import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
-import { usePlayer } from "../../hooks/usePlayer";
 import { api } from "../../utils/api";
 import { easeOut, motion } from "framer-motion";
 import he from "he";
@@ -20,7 +19,6 @@ import BulletIcon from "../../icons/BulletIcon";
 import EditIcon from "../../icons/EditIcon";
 
 export default function Playlist() {
-  const player = usePlayer();
   const isSignedIn = useAuth();
   const navigateWithTransition = useNavigateWithTransition();
   const handleError = useHandleError();
@@ -118,7 +116,7 @@ export default function Playlist() {
             className="playlist__head-wrapper"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{duration: 0.5, ease: easeOut}}
+            transition={{ duration: 0.5, ease: easeOut }}
           >
             <div className="playlist__head">
               <div className="playlist__image-wrapper">
@@ -166,7 +164,6 @@ export default function Playlist() {
           <div className="playlist__body">
             <Tracklist
               playlistId={id}
-              player={player}
               tracks={tracks}
               getNextPage={getNextPage}
               hasMore={nextPage}
