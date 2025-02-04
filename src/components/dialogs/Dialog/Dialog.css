@@ -15,7 +15,7 @@
 
   &::backdrop {
     background-color: hsl(from var(--clr-neutral-900) h s l / 0.75);
-    filter: blur(100px)
+    filter: blur(100px);
   }
 }
 
