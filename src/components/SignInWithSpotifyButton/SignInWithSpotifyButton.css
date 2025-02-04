@@ -2,14 +2,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  text-wrap: nowrap;
-  gap: 0.33rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 
   background-color: var(--clr-neutral-900);
   border: 1px solid var(--clr-neutral-500);
   color: var(--clr-neutral-000);
   font-size: var(--fs-normal);
   padding: 0.75rem 1.25rem;
+  text-wrap: nowrap;
   &:hover {
     background-color: var(--clr-neutral-800);
   }
