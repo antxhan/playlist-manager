@@ -17,12 +17,16 @@ export const api = {
       },
     })
       .then((res) => {
+        // console.log(res);
         if (!res.ok) {
           throw new FetchError("HTTP error!", res.status);
         }
         return res.json();
       })
-      .then((data) => data)
+      .then((data) => {
+        // console.log(data);
+        return data;
+      })
       .catch((error) => {
         console.error("Error fetching data:", error);
         throw error;
@@ -114,8 +118,8 @@ export const api = {
         "images",
         "name",
         "description",
-        "tracks(total)",
-        "owner(display_name",
+        "tracks",
+        "owner(display_name)",
       ].join(",");
       return api.get({ endpoint: `playlists/${id}`, params: { fields } });
     },
