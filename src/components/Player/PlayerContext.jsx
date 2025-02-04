@@ -84,7 +84,7 @@ export const PlayerProvider = ({ token, children }) => {
 
       debouncedApiSetVolume.current = setTimeout(() => {
         if (isSDKReady && deviceId) {
-          console.log("Setting volume via API:", newVolume, deviceId);
+          // console.log("Setting volume via API:", newVolume, deviceId);
           api.player
             .setVolume(newVolume, deviceId)
             .catch((err) => console.error("Failed to set volume:", err));
