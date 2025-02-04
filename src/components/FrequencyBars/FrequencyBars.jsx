@@ -5,8 +5,8 @@ export default function FrequencyBars() {
   return (
     <motion.div
       className="frequency-bars"
-      initial={{ height: 0, opacity: 0 }}
-      animate={{ height: "auto", opacity: 1 }}
+      initial={{ scaleY: 0, opacity: 0 }}
+      animate={{ scaleY: 1, opacity: 1 }}
       transition={{ duration: 0.5, ease: easeInOut }}
     >
       {Array.from({ length: 30 }).map((_, index) => (
