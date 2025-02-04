@@ -7,6 +7,7 @@ import { useHandleError } from "../../hooks/useHandleError";
 import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import { usePlayer } from "../../hooks/usePlayer";
 import { api } from "../../utils/api";
+import { easeOut, motion } from "framer-motion";
 import he from "he";
 import Layout from "../../Layout";
 import Track from "../../components/Track/Track";
@@ -113,7 +114,12 @@ export default function Playlist() {
     <Layout>
       <section className="playlist-wrapper">
         <div className="playlist">
-          <div className="playlist__head-wrapper">
+          <motion.div
+            className="playlist__head-wrapper"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{duration: 0.5, ease: easeOut}}
+          >
             <div className="playlist__head">
               <div className="playlist__image-wrapper">
                 <img
@@ -156,13 +162,13 @@ export default function Playlist() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
           <div className="playlist__body">
             <InfiniteScroll
               dataLength={tracks.length}
               next={fetchTracks}
               hasMore={tracksHasMore}
-              loader={<h2>Loading more tracks...</h2>}
+              loader={<div>Loading more tracks...</div>}
               className="playlist__tracks"
             >
               {tracks.map((item, index) => (
@@ -180,7 +186,7 @@ export default function Playlist() {
                       )
                   }
                 >
-                  <Track track={item.track} />
+                  <Track track={item.track} index={index} />
                 </div>
               ))}
             </InfiniteScroll>
