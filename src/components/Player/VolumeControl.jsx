@@ -3,6 +3,7 @@ import { usePlayer } from "../../hooks/usePlayer";
 import "./VolumeControl.css";
 import VolumeOnIcon from "../../icons/VolumeOnIcon";
 import VolumeOffIcon from "../../icons/VolumeOffIcon";
+import StandardButton from "../buttons/StandardButton/StandardButton";
 
 export default function VolumeControl({ disabled }) {
 	const playerContext = usePlayer();
@@ -115,16 +116,12 @@ export default function VolumeControl({ disabled }) {
 			role="group"
 			aria-label="Volume controls"
 			ref={sliderRef}>
-			<button
-				className="volume-button"
+			<StandardButton
 				onClick={toggleMute}
 				disabled={disabled || !isSDKReady || isLoading}
-				aria-label={volume > 0 ? "Mute" : "Unmute"}>
-				{volume > 0 ? <VolumeOnIcon /> : <VolumeOffIcon />}
-				<span className="volumeSpan">
-					{window.innerWidth < 600 ? "Volume" : volume > 0 ? "Mute" : "Unmute"}
-				</span>
-			</button>
+				ariaLabel={volume > 0 ? "Mute" : "Unmute"}
+				children={volume > 0 ? <VolumeOnIcon /> : <VolumeOffIcon />}
+			/>
 			<div className={`volume-slider-wrapper ${showSlider ? "visible" : ""}`}>
 				<input
 					className={`volume-slider ${disabled ? "disabled" : ""}`}

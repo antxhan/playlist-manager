@@ -6,6 +6,7 @@ import PauseIcon from "../../icons/PauseIcon";
 import NextSongIcon from "../../icons/NextSongIcon";
 import PreviousSongIcon from "../../icons/PreviousSongIcon";
 import VolumeControl from "./VolumeControl";
+import StandardButton from "../buttons/StandardButton/StandardButton";
 
 export default function GlobalPlayer() {
 	const player = usePlayer();
@@ -87,17 +88,14 @@ export default function GlobalPlayer() {
 				)}
 			</div>
 			<div className="player--wrapper__right">
-				<button
-					className="player--button"
+				<StandardButton
 					onClick={() => !isLoading && api.player.previous(deviceId)}
 					disabled={isLoading || !isSDKReady}
-					aria-label="skip to previous song">
-					<PreviousSongIcon />
-					<span className="playerSpan">Previous</span>
-				</button>
+					ariaLabel="Previous"
+					children={<PreviousSongIcon />}
+				/>
 
-				<button
-					className="player--button"
+				<StandardButton
 					onClick={() => {
 						if (!isLoading) {
 							isPaused ? api.player.play() : api.player.pause();
@@ -105,19 +103,16 @@ export default function GlobalPlayer() {
 						}
 					}}
 					disabled={isLoading || !isSDKReady}
-					aria-label={isPaused ? "Play" : "Pause"}>
-					{isPaused ? <PlayIcon /> : <PauseIcon />}
-					<span className="playerSpan">{isPaused ? "Play" : "Pause"}</span>
-				</button>
+					ariaLabel={isPaused ? "Play" : "Pause"}
+					children={isPaused ? <PlayIcon /> : <PauseIcon />}
+				/>
 
-				<button
-					className="player--button"
-					onClick={() => !isLoading && api.player.next(deviceId)}
+				<StandardButton
+					onClick={() => !isLoading && api.player.previous(deviceId)}
 					disabled={isLoading || !isSDKReady}
-					aria-label="skip to next song">
-					<NextSongIcon />
-					<span className="playerSpan">Next</span>
-				</button>
+					ariaLabel="Previous"
+					children={<NextSongIcon />}
+				/>
 			</div>
 			<VolumeControl disabled={isLoading || !isSDKReady} />
 		</div>
