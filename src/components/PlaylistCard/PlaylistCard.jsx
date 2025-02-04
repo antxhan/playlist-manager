@@ -1,6 +1,6 @@
 import "./PlaylistCard.css";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { easeInOut, easeOut, motion } from "framer-motion";
 import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import placeholderImage from "../../img/placeholder.webp";
 
@@ -13,7 +13,7 @@ export default function PlaylistCard({ playlist }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5}}
+      transition={{ duration: 0.5, ease: easeInOut}}
     >
       <Link
         to={{
