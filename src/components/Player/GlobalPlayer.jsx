@@ -19,6 +19,41 @@ export default function GlobalPlayer() {
 		}
 	}, [player]);
 
+	// space to toggle play and pause, m for mute and unmute
+	useEffect(() => {
+		const handleKeyDown = (event) => {
+			//prevent keyboard events if player is not ready or loading
+			if (isWaitingForPlayer || !player || player.isLoading) return;
+
+			//space key for play/pause
+			if (event.code === "Space") {
+				//prevent space from scrolling
+				event.preventDefault();
+				if (!player.isLoading) {
+					player.isPaused ? api.player.play() : api.player.pause();
+					player.setIsPaused(!player.isPaused);
+				}
+			}
+
+			//m key for mute/unmute
+			if (event.code === "KeyM") {
+				const { volume, setVolume, deviceId } = player;
+				if (volume > 0) {
+					setVolume(0, deviceId);
+				} else {
+					//restore to previous volume or default to 50
+					setVolume(50, deviceId);
+				}
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [player, isWaitingForPlayer]);
+
 	if (isWaitingForPlayer || !player)
 		return (
 			<div className="global-player">
