@@ -4,7 +4,7 @@ import { msToMMSS } from "../../utils/utils";
 import { api } from "../../utils/api";
 import { useHandleError } from "../../hooks/useHandleError";
 
-export default function Track({ track, playlistId, player }) {
+export default function Track({ track, playlistId, deviceId }) {
   const handleError = useHandleError();
   return (
     <>
@@ -14,7 +14,7 @@ export default function Track({ track, playlistId, player }) {
             .play({
               trackUri: track.uri,
               playlistId: playlistId,
-              deviceId: player.deviceId,
+              deviceId: deviceId,
             })
             .catch((error) => handleError(error, "Failed to play track."))
         }

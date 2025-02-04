@@ -7,7 +7,6 @@ import { useHandleError } from "../../hooks/useHandleError";
 import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
 import { api } from "../../utils/api";
 import he from "he";
-import { usePlayer } from "../../hooks/usePlayer";
 import Layout from "../../Layout";
 import EditPlaylistDialog from "../../components/dialogs/PlaylistDialogs/EditPlaylistDialog/EditPlaylistDialog";
 import ConfirmDialog from "../../components/dialogs/ConfirmDialog/ConfirmDialog";
@@ -19,7 +18,6 @@ import PlaylistSkeleton from "../../components/skeletons/PlaylistSkeleton/Playli
 import Tracklist from "../../components/Tracklist/Tracklist";
 
 export default function Playlist() {
-  const player = usePlayer();
   const isSignedIn = useAuth();
   const navigateWithTransition = useNavigateWithTransition();
   const handleError = useHandleError();
@@ -160,7 +158,6 @@ export default function Playlist() {
           <div className="playlist__body">
             <Tracklist
               playlistId={id}
-              player={player}
               tracks={tracks}
               getNextPage={getNextPage}
               hasMore={nextPage}

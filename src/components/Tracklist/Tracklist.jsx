@@ -1,15 +1,17 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import Track from "../Track/Track";
+import { usePlayer } from "../../hooks/usePlayer";
 
 export default function Tracklist({
   playlistId,
-  player,
   tracks,
   getNextPage,
   hasMore,
   endMessage = "",
   loading = "Loading tracks...",
 }) {
+  const { deviceId } = usePlayer();
+  console.log(deviceId);
   return (
     <InfiniteScroll
       className="playlist__tracks"
@@ -24,7 +26,7 @@ export default function Tracklist({
           key={item.track.id + index}
           track={item.track}
           playlistId={playlistId}
-          player={player}
+          deviceId={deviceId}
         />
       ))}
     </InfiniteScroll>
