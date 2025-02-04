@@ -1,6 +1,8 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import Track from "../Track/Track";
 import { usePlayer } from "../../hooks/usePlayer";
+import { api } from "../../utils/api";
+import { useHandleError } from "../../hooks/useHandleError";
 
 export default function Tracklist({
   playlistId,
@@ -10,8 +12,21 @@ export default function Tracklist({
   endMessage = "",
   loading = "Loading tracks...",
 }) {
-  const { deviceId } = usePlayer();
-  console.log(deviceId);
+  const handleError = useHandleError();
+  const { deviceId, userIsPremium } = usePlayer();
+  const trackOnClick = (trackUri) => {
+    if (!userIsPremium) {
+      console.log("not premium");
+      return;
+    }
+    api.track
+      .play({
+        trackUri: trackUri,
+        playlistId: playlistId,
+        deviceId: deviceId,
+      })
+      .catch((error) => handleError(error, "Failed to play track."));
+  };
   return (
     <InfiniteScroll
       className="playlist__tracks"
@@ -26,7 +41,7 @@ export default function Tracklist({
           key={item.track.id + index}
           track={item.track}
           playlistId={playlistId}
-          deviceId={deviceId}
+          onClick={() => trackOnClick(item.track.uri)}
         />
       ))}
     </InfiniteScroll>

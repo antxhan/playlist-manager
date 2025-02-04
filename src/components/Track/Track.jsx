@@ -1,24 +1,11 @@
 import "./Track.css";
 import missingAlbumCover from "../../img/placeholder.webp";
 import { msToMMSS } from "../../utils/utils";
-import { api } from "../../utils/api";
-import { useHandleError } from "../../hooks/useHandleError";
 
-export default function Track({ track, playlistId, deviceId }) {
-  const handleError = useHandleError();
+export default function Track({ track, onClick }) {
   return (
     <>
-      <div
-        onClick={() =>
-          api.track
-            .play({
-              trackUri: track.uri,
-              playlistId: playlistId,
-              deviceId: deviceId,
-            })
-            .catch((error) => handleError(error, "Failed to play track."))
-        }
-      >
+      <div onClick={onClick}>
         {!track ? null : (
           <button className="track">
             <img
