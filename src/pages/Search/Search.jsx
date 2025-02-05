@@ -6,6 +6,7 @@ import { useEffect, useState, lazy, Suspense } from "react";
 import { api } from "../../utils/api";
 import InfinitePlaylistGridSkeleton from "../../components/InfinitePlaylistGrid/Skeleton";
 import RecommendView from "../../components/RecommendView/RecommendView";
+// import { useHandleError } from "../../hooks/useHandleError";
 const InfinitePlaylistGrid = lazy(() =>
   import("../../components/InfinitePlaylistGrid/InfinitePlaylistGrid")
 );
@@ -17,6 +18,12 @@ export default function Search() {
   const [nextPage, setNextPage] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const q = searchParams.get("q");
+
+  // const handleError = useHandleError();
+
+  // useEffect(() => {
+  //   api.me().catch((error) => handleError(error, "Failed to fetch user data."));
+  // }, [handleError]);
 
   useEffect(() => {
     if (q) {

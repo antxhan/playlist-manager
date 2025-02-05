@@ -1,13 +1,14 @@
 import "./RecommendView.css";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { shuffle, sortByFrequency, toCapitalize } from "../../utils/utils";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
 import { api } from "../../utils/api";
 import { calculateNumberOfCards } from "../../utils/utils";
 import InfinitePlaylistGridSkeleton from "../InfinitePlaylistGrid/Skeleton";
 import TopGenresSkeleton from "../TopGenres/Skeleton";
 import StandardButton from "../buttons/StandardButton/StandardButton";
+import { useHandleError } from "../../hooks/useHandleError";
 
 const TopGenres = lazy(() => import("../TopGenres/TopGenres"));
 const RecommendGrid = lazy(() => import("./RecommendGrid"));
@@ -21,25 +22,33 @@ export default function RecommendView() {
   const cardGap = 16;
   const numberOfGenres = 10;
 
+  const navigate = useNavigate();
+  const handleError = useHandleError();
+
   useEffect(() => {
     setNumberOfCards(calculateNumberOfCards(cardWidth, cardGap));
   }, []);
 
   useEffect(() => {
     if (isSignedIn) {
-      api.me.top().then((data) => {
-        const genres = data.items.map((artist) => artist.genres).flat();
-        const sortedGenres = sortByFrequency(genres);
+      api.me
+        .top()
+        .then((data) => {
+          const genres = data.items.map((artist) => artist.genres).flat();
+          const sortedGenres = sortByFrequency(genres);
 
-        setTopGenres(
-          sortedGenres
-            .filter((g) => g.item !== "visa")
-            .slice(0, numberOfGenres)
-            .map((g) => g.item)
-        );
-      });
+          setTopGenres(
+            sortedGenres
+              .filter((g) => g.item !== "visa")
+              .slice(0, numberOfGenres)
+              .map((g) => g.item)
+          );
+        })
+        .catch((error) => {
+          handleError(error, "Failed to fetch top genres.");
+        });
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, navigate, handleError]);
 
   useEffect(() => {
     if (topGenres.length > 0) {
