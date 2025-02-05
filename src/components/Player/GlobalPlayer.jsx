@@ -148,9 +148,9 @@ export default function GlobalPlayer() {
 				/>
 
 				<StandardButton
-					onClick={() => !isLoading && api.player.previous(deviceId)}
+					onClick={() => !isLoading && api.player.next(deviceId)}
 					disabled={isLoading || !isSDKReady || !player.userIsPremium}
-					ariaLabel="Previous"
+					ariaLabel="Next"
 					children={<NextSongIcon />}
 				/>
 			</div>
