@@ -1,5 +1,9 @@
+// import toast from "react-hot-toast";
 import { db } from "./db";
 import FetchError from "./fetchError";
+// import { Navigate } from "react-router";
+
+// const navigate = Navigate;
 
 export const api = {
   baseUrl: "https://api.spotify.com/v1/",
@@ -17,8 +21,15 @@ export const api = {
       },
     })
       .then((res) => {
-        // console.log(res);
         if (!res.ok) {
+          // const isSignedIn = !!db.token.get().access_token;
+          // if (isSignedIn && res.status === 403) {
+          // window.location.href = "/sign-in";
+          // db.token.remove();
+          // navigate("/sign-in");
+          // toast.error("You are not whitelisted!");
+          // }
+          // console.log(res);
           throw new FetchError("HTTP error!", res.status);
         }
         return res.json();

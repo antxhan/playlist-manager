@@ -2,6 +2,7 @@ import "./SignIn.css";
 import { easeInOut, motion } from "framer-motion";
 import FrequencyBars from "../../components/FrequencyBars/FrequencyBars";
 import SignInWithSpotifyButton from "../../components/SignInWithSpotifyButton/SignInWithSpotifyButton";
+import { Link } from "react-router";
 
 export default function SignIn() {
   return (
@@ -24,6 +25,12 @@ export default function SignIn() {
         <div className="sign-in__window">
           <p>Please sign in to continue</p>
           <SignInWithSpotifyButton />
+          <Link
+            to="https://forms.gle/JsNWEx3GHCLfNhy77"
+            className="sign-up-link"
+          >
+            Sign Up
+          </Link>
         </div>
       </motion.main>
     </div>
