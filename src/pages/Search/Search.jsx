@@ -26,13 +26,8 @@ export default function Search() {
         setNextPage(results.playlists.next);
         setIsLoading(false);
       });
-    } else {
-      setSearchParams({ q: "" });
-      setSearchResults([]);
-      setIsLoading(false);
-      navigate("/search");
     }
-  }, [q, searchParams, navigate, setSearchParams]);
+  }, [q]);
 
   const getNextPage = () => {
     api.get({ url: nextPage }).then((results) => {
@@ -43,8 +38,12 @@ export default function Search() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const q = e.target.q.value;
     setSearchResults([]);
+    const q = e.target.q.value;
+    if (!q) {
+      navigate("/search");
+      return;
+    }
     setSearchParams({ q });
   };
 
