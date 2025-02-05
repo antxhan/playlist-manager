@@ -1,15 +1,15 @@
 import "./FrequencyBars.css";
 import { motion, easeInOut } from "framer-motion";
 
-export default function FrequencyBars() {
+export default function FrequencyBars({ type = "nav" }) {
   return (
     <motion.div
-      className="frequency-bars"
+      className={`frequency-bars frequency-bars-${type}`}
       initial={{ scaleY: 0, opacity: 0 }}
       animate={{ scaleY: 1, opacity: 1 }}
       transition={{ duration: 0.5, ease: easeInOut }}
     >
-      {Array.from({ length: 30 }).map((_, index) => (
+      {Array.from({ length: type === "nav" ? 10 : 30 }).map((_, index) => (
         <motion.span
           key={index}
           className="bar"

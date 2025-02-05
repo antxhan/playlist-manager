@@ -1,6 +1,8 @@
 import "./Nav.css";
 import { NavLink } from "react-router";
+import { useAuth } from "../../hooks/useAuth";
 import { useNavigateWithTransition } from "../../hooks/useNavigateWithTransition";
+import FrequencyBars from "../FrequencyBars/FrequencyBars";
 import SignInOutButton from "../SignInOutButton/SignInOutButton";
 import HomeIcon from "../../icons/HomeIcon";
 // import PlaylistIcon from "../../icons/PlaylistIcon";
@@ -10,6 +12,7 @@ import ToolTip from "../ToolTip/ToolTip";
 // import DiscoverIcon from "../../icons/DiscoverIcon";
 
 export default function Nav() {
+  const isSignedIn = useAuth();
   const navigateWithTransition = useNavigateWithTransition();
   const routes = [
     { path: "/", label: "Home", icon: <HomeIcon /> },
@@ -20,6 +23,7 @@ export default function Nav() {
   ];
   return (
     <nav className="nav">
+      {isSignedIn && <FrequencyBars />}
       <ul>
         {routes.map((route) => (
           <li key={route.path}>

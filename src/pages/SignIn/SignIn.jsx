@@ -14,7 +14,7 @@ export default function SignIn() {
       >
         <h1>Playlist Manager</h1>
       </motion.header>
-      <FrequencyBars />
+      <FrequencyBars type={null} />
       <motion.main
         className="sign-in__main"
         initial={{ opacity: 0 }}
