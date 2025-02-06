@@ -24,6 +24,7 @@ The app will include the following features:
 - Personalized Recommendations: Get suggested playlists based on favorite genres.
 
 ## Group member contributions
+
 While everyone contributed in every aspect of this project, the primary contribution of each person was;
 
 - Anton:
@@ -31,9 +32,10 @@ While everyone contributed in every aspect of this project, the primary contribu
 - Jod:
   Music player
 - Kevin:
-  CRUD implementation, animations, view transitions 
+  CRUD implementation, animations, view transitions, responsiveness 
 
 ## Known bugs
+
 - Website may be blocked if you have an ad-blocker
 - 2 hours after signing in there will be a 401, however after refreshing it will be handled.
 - User shouldn’t have the option to edit other users playlists
