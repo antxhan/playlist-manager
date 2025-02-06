@@ -32,7 +32,7 @@ While everyone contributed in every aspect of this project, the primary contribu
 - Jod:
   Music player
 - Kevin:
-  CRUD implementation, animations, view transitions, responsiveness 
+  CRUD implementation, animations, view transitions, responsiveness, error handling 
 
 ## Known bugs
 
