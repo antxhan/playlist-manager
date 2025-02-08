@@ -1,13 +1,14 @@
 import "./Track.css";
 import { easeInOut, motion } from "framer-motion";
 import { msToMMSS } from "../../utils/utils";
+import TrackPlayButton from "../buttons/TrackPlayButton/TrackPlayButton";
+import TrackLink from "../TrackLink/TrackLink";
 import missingAlbumCover from "../../img/placeholder.webp";
 
 export default function Track({ track, onClick, index }) {
   return (
     <>
-      <motion.button
-        onClick={onClick}
+      <motion.div
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{
@@ -18,23 +19,37 @@ export default function Track({ track, onClick, index }) {
       >
         {!track ? null : (
           <div className="track">
+            <TrackPlayButton onClick={onClick} />
             <img
               src={track?.album?.images?.[2]?.url || missingAlbumCover}
               alt="Track album cover"
             />
             <div className="track__info">
-              <p className="track__name">{track?.name || "Unknown Track"}</p>
-              <p className="track__artists">
-                {track?.artists.map((artist) => artist.name).join(", ") ||
-                  "Unknown Artist"}
-              </p>
+              <TrackLink endpoint={`track/${track.id}`}>
+                <p className="track__name">{track?.name || "Unknown Track"}</p>
+              </TrackLink>
+              {track.artists ? (
+                <div className="track__artists">
+                  {track.artists.map((artist, index, array) => (
+                    <TrackLink endpoint={`artist/${artist.id}`}>
+                      <p>
+                        {index === array.length - 1
+                          ? artist.name
+                          : `${artist.name},`}
+                      </p>
+                    </TrackLink>
+                  ))}
+                </div>
+              ) : (
+                <p>Unknown Artist</p>
+              )}
             </div>
             <p className="track__duration">
               {track.duration_ms ? msToMMSS(track.duration_ms) : "--:--"}
             </p>
           </div>
         )}
-      </motion.button>
+      </motion.div>
     </>
   );
 }
