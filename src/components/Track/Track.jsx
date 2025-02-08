@@ -2,6 +2,7 @@ import "./Track.css";
 import { Link } from "react-router-dom";
 import { easeInOut, motion } from "framer-motion";
 import { msToMMSS } from "../../utils/utils";
+import TrackLink from "../TrackLink/TrackLink";
 import missingAlbumCover from "../../img/placeholder.webp";
 
 export default function Track({ track, onClick, index }) {
@@ -24,39 +25,28 @@ export default function Track({ track, onClick, index }) {
               alt="Track album cover"
             />
             <div className="track__info">
-              <Link
-                to={`https://open.spotify.com/track/${track.id}`}
-                target="_blank"
+              <TrackLink
+                endpoint={`track/${track.id}`}
               >
                 <p className="track__name">{track?.name || "Unknown Track"}</p>
-              </Link>
+              </TrackLink>
               {track.artists ? (
                 <div className="track__artists">
                   {track.artists.map((artist, index, array) => (
-                    <Link
-                      to={`https://open.spotify.com/artist/${artist.id}`}
-                      target="_blank"
+                    <TrackLink
+                      endpoint={`artist/${artist.id}`}
                     >
                       <p>
                         {index === array.length - 1
                           ? artist.name
                           : `${artist.name},`}
                       </p>
-                    </Link>
+                    </TrackLink>
                   ))}
                 </div>
               ) : (
                 <p>Unknown Artist</p>
               )}
-              {/* <Link
-                to={`https://open.spotify.com/artist/0JeTRYMH7FoBiMcLXg1n8g`}
-                target="_blank"
-              >
-                <p className="track__artists">
-                  {track?.artists.map((artist) => artist.name).join(", ") ||
-                    "Unknown Artist"}
-                </p>
-              </Link> */}
             </div>
             <p className="track__duration">
               {track.duration_ms ? msToMMSS(track.duration_ms) : "--:--"}
