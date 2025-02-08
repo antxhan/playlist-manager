@@ -1,7 +1,3 @@
-button:has(.track) {
-  border: none;
-}
-
 .track {
   container-type: inline-size;
 
@@ -51,6 +47,12 @@ button:has(.track) {
     word-break: break-all;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+@container (width < 500px) {
+  .track .track-play-btn {
+    padding: 0.5rem;
   }
 }
 
