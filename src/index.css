@@ -51,9 +51,9 @@
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
   /* FONT SIZES */
-  --fs-large: 1.5rem;
-  --fs-normal: 1rem;
   --fs-small: 0.8rem;
+  --fs-normal: 1rem;
+  --fs-large: 1.5rem;
 
   /* OTHER */
   --_nav-mobile-height: 5rem;
@@ -112,7 +112,7 @@ button {
 .skeleton {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   background-color: hsl(from var(--clr-neutral-500) h s l / 0.33);
-  border-radius: 1rem;
+  border-radius: 0.25rem;
   min-height: var(--fs-small);
 }
 
