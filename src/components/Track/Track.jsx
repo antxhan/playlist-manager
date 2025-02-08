@@ -3,6 +3,7 @@ import { easeInOut, motion } from "framer-motion";
 import { msToMMSS } from "../../utils/utils";
 import TrackPlayButton from "../buttons/TrackPlayButton/TrackPlayButton";
 import TrackLink from "../TrackLink/TrackLink";
+import SpotifyIcon from "../../icons/SpotifyIcon";
 import missingAlbumCover from "../../img/placeholder.webp";
 
 export default function Track({ track, onClick, index }) {
@@ -47,6 +48,7 @@ export default function Track({ track, onClick, index }) {
             <p className="track__duration">
               {track.duration_ms ? msToMMSS(track.duration_ms) : "--:--"}
             </p>
+            <SpotifyIcon />
           </div>
         )}
       </motion.div>

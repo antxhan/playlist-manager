@@ -2,7 +2,7 @@
   container-type: inline-size;
 
   display: grid;
-  grid-template-columns: auto auto 1fr auto;
+  grid-template-columns: auto auto 1fr auto auto;
   gap: 1rem;
   align-items: center;
   justify-items: start;
@@ -17,12 +17,23 @@
   &:hover,
   &:focus-within {
     background-color: hsl(from var(--clr-purple) h s 20%);
+
+    >svg{
+      fill: var(--clr-neutral-100);
+    }
   }
 
   img {
     max-width: 2.5rem;
     aspect-ratio: 1;
     object-fit: cover;
+  }
+
+  > svg {
+    display: none;
+    width: 1rem;
+    fill: var(--clr-neutral-600);
+    transition: fill 200ms ease;
   }
 }
 
@@ -57,8 +68,13 @@
 }
 
 @container (min-width: 500px) {
-  .track img {
-    max-width: 4rem;
+  .track {
+    img {
+      max-width: 4rem;
+    }
+    > svg {
+      display: block;
+    }
   }
 
   .track__info {
