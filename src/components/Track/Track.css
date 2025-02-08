@@ -14,7 +14,7 @@ button:has(.track) {
   color: var(--clr-neutral-100);
   border: none;
   border-radius: 0.5rem;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
   width: 100%;
   transition: background-color 200ms ease-out;
 
