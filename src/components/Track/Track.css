@@ -6,7 +6,7 @@ button:has(.track) {
   container-type: inline-size;
 
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto 1fr auto;
   gap: 1rem;
   align-items: center;
   justify-items: start;
@@ -19,7 +19,7 @@ button:has(.track) {
   transition: background-color 200ms ease-out;
 
   &:hover,
-  &:focus-visible {
+  &:focus-within {
     background-color: hsl(from var(--clr-purple) h s 20%);
   }
 
@@ -31,12 +31,16 @@ button:has(.track) {
 }
 
 .track__info {
-  justify-self: start;
   display: grid;
   grid-template-columns: 1fr;
   justify-items: start;
 
   width: 100%;
+
+  .track__artists {
+    display: flex;
+    gap: 0.375ch;
+  }
 
   p {
     display: -webkit-box;
@@ -56,7 +60,7 @@ button:has(.track) {
   }
 
   .track__info {
-    grid-template-columns: repeat(2, minmax(175px, 1fr));
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
     gap: 1rem;
   }
 }
