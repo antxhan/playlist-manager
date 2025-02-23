@@ -5,23 +5,24 @@ import { errorResponseMessages } from "../utils/fetchError";
 export function useHandleError() {
   const navigateWithTransition = useNavigateWithTransition();
 
-  const handleError = useCallback(
+  // can be refactored to
+  return useCallback(
     (error, additionalMessage = null) => {
+      // update to include all falsy values
       const errorMessage =
-        errorResponseMessages[error.statusCode] ??
+        errorResponseMessages[error.statusCode] ||
         "An unexpected error occured.";
+      const message = additionalMessage
+        ? `${additionalMessage} ${errorMessage}`
+        : errorMessage;
 
       navigateWithTransition("/error", {
         state: {
-          message: additionalMessage
-            ? additionalMessage + " " + errorMessage
-            : errorMessage,
+          message,
           statusCode: error.statusCode,
         },
       });
     },
     [navigateWithTransition]
   );
-
-  return handleError;
 }

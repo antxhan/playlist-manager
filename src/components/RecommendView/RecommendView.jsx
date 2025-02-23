@@ -72,9 +72,8 @@ export default function RecommendView() {
               {toCapitalize(recommendedGenre)}...
             </span>
           ) : (
-            <>
-              <span className="recommended-genre skeleton"></span>
-            </>
+            // dont need fragment
+            <span className="recommended-genre skeleton"></span>
           )}
         </h2>
         <Suspense

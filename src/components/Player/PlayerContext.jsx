@@ -97,7 +97,7 @@ export const PlayerProvider = ({ token, children }) => {
   useEffect(() => {
     if (token) {
       api
-        .me()
+        .get({ endpoint: "me" })
         .then((user) => {
           setUserIsPremium(user.product === "premium");
         })

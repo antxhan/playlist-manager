@@ -1,36 +1,42 @@
 import { auth } from "./auth";
 
+// break down the storage object into smaller functions
+const storage = {
+  get: (key, storageType = localStorage) =>
+    JSON.parse(storageType.getItem(key)),
+  set: (key, value, storageType = localStorage) =>
+    storageType.setItem(key, JSON.stringify(value)),
+  delete: (key, storageType = localStorage) => storageType.removeItem(key),
+};
+
+// handle token expiration
+const handleTokenExpiration = (token) => {
+  if (token.expires_at < Date.now()) {
+    if (token.refresh_token) {
+      auth.refreshToken(token.refresh_token);
+    } else {
+      return null;
+    }
+  }
+  return token;
+};
+
 export const db = {
+  // refactor the token object for better readability
   token: {
     get() {
-      const token = JSON.parse(localStorage.getItem("token"));
-      if (!token) {
-        // user needs to sign in: auth.signIn();
-        // auth.signIn();
-        return null;
-      } else if (token.expires_at < Date.now()) {
-        if (token.refresh_token) {
-          auth.refreshToken(token.refresh_token);
-        } else {
-          // user needs to sign in: auth.signIn();
-          // do it automatically
-          // auth.signIn();
-          return null;
-        }
-      }
-      return token;
+      const token = storage.get("token");
+      return token ? handleTokenExpiration(token) : null;
     },
     set(token) {
       token.expires_at = Date.now() + token.expires_in * 1000;
-      // token.expires_at = Date.now() + 3 * 1000; // expires after 3 seconds for testing
-      localStorage.setItem("token", JSON.stringify(token));
+      storage.set("token", token);
     },
     delete() {
-      localStorage.removeItem("token");
+      storage.delete("token");
     },
   },
   state: {
-    // state for spotify auth
     get() {
       return sessionStorage.getItem("spotify_auth_state");
     },
@@ -39,7 +45,6 @@ export const db = {
     },
   },
   returnTo: {
-    // where to redirect the user after signing in
     get() {
       return sessionStorage.getItem("return_to");
     },

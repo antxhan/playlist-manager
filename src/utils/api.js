@@ -1,130 +1,86 @@
-// import toast from "react-hot-toast";
 import { db } from "./db";
 import FetchError from "./fetchError";
-// import { Navigate } from "react-router";
 
-// const navigate = Navigate;
+const BASE_URL = "https://api.spotify.com/v1/";
+
+// break out function for readability
+const handleResponse = (res) => {
+  if (!res.ok) {
+    throw new FetchError("HTTP error!", res.status);
+  }
+  return res.json();
+};
+
+// break out function for readability
+const handleError = (error) => {
+  console.error("Error:", error);
+  throw error;
+};
+
+// break out duplicate code for readability
+const getHeaders = () => ({
+  Authorization: `Bearer ${db.token.get().access_token}`,
+  "Content-Type": "application/json",
+});
 
 export const api = {
-  baseUrl: "https://api.spotify.com/v1/",
+  // refactor for better readability
+  baseUrl: BASE_URL,
+
   get({ url = "", endpoint = "", params = null }) {
-    // if no url, construct it from endpoint and params
     if (!url) {
       url = this._createUrl(endpoint, params);
     }
-
-    // makes request to api and returns data
     return fetch(url, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${db.token.get().access_token}`,
-      },
+      headers: getHeaders(),
     })
-      .then((res) => {
-        if (!res.ok) {
-          // const isSignedIn = !!db.token.get().access_token;
-          // if (isSignedIn && res.status === 403) {
-          // window.location.href = "/sign-in";
-          // db.token.remove();
-          // navigate("/sign-in");
-          // toast.error("You are not whitelisted!");
-          // }
-          // console.log(res);
-          throw new FetchError("HTTP error!", res.status);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        // console.log(data);
-        return data;
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        throw error;
-      });
+      .then(handleResponse)
+      .catch(handleError);
   },
+
   post({ endpoint = "", body = {}, returnJSON = false }) {
     return fetch(this.baseUrl + endpoint, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${db.token.get().access_token}`,
-        "Content-Type": "application/json",
-      },
+      headers: getHeaders(),
       body: JSON.stringify(body),
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new FetchError("HTTP error!", res.status);
-        }
-        if (returnJSON) return res.json();
-        else return res;
-      })
-      .then((data) => data)
-      .catch((error) => console.error("Error posting data:", error));
+      .then((res) => (returnJSON ? handleResponse(res) : res))
+      .catch(handleError);
   },
+
   put({ endpoint = "", body = {} }, returnJSON = false) {
     return fetch(this.baseUrl + endpoint, {
       method: "PUT",
-      headers: {
-        Authorization: `Bearer ${db.token.get().access_token}`,
-        "Content-Type": "application/json",
-      },
-      body: body ? JSON.stringify(body) : null,
+      headers: getHeaders(),
+      body: JSON.stringify(body),
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new FetchError("HTTP error!", res.status);
-        }
-        if (returnJSON) return res.json();
-        else return res;
-      })
-      .then((data) => data)
-      .catch((error) => console.error("Error putting data:", error));
+      .then((res) => (returnJSON ? handleResponse(res) : res))
+      .catch(handleError);
   },
+
   delete({ url = "", endpoint = "", params = null }) {
-    // if no url, construct it from endpoint and params
     if (!url) {
       url = this._createUrl(endpoint, params);
     }
-
-    // makes request to api and returns data
     return fetch(url.href, {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${db.token.get().access_token}`,
-      },
+      headers: getHeaders(),
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new FetchError("HTTP error!", res.status);
-        }
-        return res.text();
-      })
-      .then((data) => {
-        return data ? JSON.parse(data) : null;
-      })
-      .catch((error) => {
-        console.error("Error deleting data:", error);
-        throw error;
-      });
+      .then((res) => res.text())
+      .then((data) => (data ? JSON.parse(data) : null))
+      .catch(handleError);
   },
-  me: Object.assign(
-    () => {
-      return api.get({ endpoint: "me" });
-    },
-    {
-      playlists() {
-        return api.get({ endpoint: "me/playlists" });
-      },
-    },
-    {
-      top(type = "artists", limit = 50) {
-        return api.get({ endpoint: `me/top/${type}`, params: { limit } });
-      },
-    }
-  ),
-  playlist: Object.assign(
-    (id) => {
+
+  me: {
+    get: () => api.get({ endpoint: "me" }),
+    playlists: () => api.get({ endpoint: "me/playlists" }),
+    top: (type = "artists", limit = 50) =>
+      api.get({ endpoint: `me/top/${type}`, params: { limit } }),
+  },
+
+  playlist: {
+    get: (id) => {
       const fields = [
         "images",
         "name",
@@ -134,72 +90,37 @@ export const api = {
       ].join(",");
       return api.get({ endpoint: `playlists/${id}`, params: { fields } });
     },
-    {
-      tracks({ id, limit = 100, offset = 0 }) {
-        return api.get({
-          endpoint: `playlists/${id}/tracks`,
-          params: { limit, offset },
-        });
-      },
-    }
-  ),
-  search({ q, type = "playlist", limit = 50 }) {
-    return this.get({ endpoint: "search", params: { q, type, limit } });
+    tracks: ({ id, limit = 100, offset = 0 }) =>
+      api.get({
+        endpoint: `playlists/${id}/tracks`,
+        params: { limit, offset },
+      }),
   },
-  player: Object.assign(
-    () => {
-      return api.get({ endpoint: "me/player" });
-    },
-    {
-      play() {
-        return api.put({
-          endpoint: "me/player/play",
-        });
-      },
-    },
-    {
-      pause() {
-        return api.put({
-          endpoint: "me/player/pause",
-        });
-      },
-    },
-    {
-      next(deviceId) {
-        return api.post({
-          endpoint: "me/player/next",
-          body: { device_id: deviceId },
-        });
-      },
-    },
-    {
-      previous(deviceId) {
-        return api.post({
-          endpoint: "me/player/previous",
-          body: { device_id: deviceId },
-        });
-      },
-    },
-    {
-      transferPlaybackToPlayer(deviceId) {
-        return api.put({
-          endpoint: "me/player",
-          body: {
-            device_ids: [deviceId],
-            play: false,
-          },
-        });
-      },
-    },
-    {
-      setVolume(volumePercent) {
-        return api.put({
-          endpoint: `me/player/volume?volume_percent=${volumePercent}`,
-        });
-      },
-    }
-  ),
-  track: Object.assign(() => {}, {
+
+  search: ({ q, type = "playlist", limit = 50 }) =>
+    api.get({ endpoint: "search", params: { q, type, limit } }),
+
+  player: {
+    get: () => api.get({ endpoint: "me/player" }),
+    play: () => api.put({ endpoint: "me/player/play" }),
+    pause: () => api.put({ endpoint: "me/player/pause" }),
+    next: (deviceId) =>
+      api.post({ endpoint: "me/player/next", body: { device_id: deviceId } }),
+    previous: (deviceId) =>
+      api.post({
+        endpoint: "me/player/previous",
+        body: { device_id: deviceId },
+      }),
+    transferPlaybackToPlayer: (deviceId) =>
+      api.put({
+        endpoint: "me/player",
+        body: { device_ids: [deviceId], play: false },
+      }),
+    setVolume: (volumePercent) =>
+      api.put({ endpoint: `me/player/volume?volume_percent=${volumePercent}` }),
+  },
+
+  track: {
     play: ({ trackUri, playlistId, deviceId }) => {
       if (!deviceId) throw new Error("No device ID found");
       return api.put({
@@ -211,17 +132,17 @@ export const api = {
         },
       });
     },
-  }),
+  },
+
   _createUrl(endpoint, params) {
     const url = new URL(this.baseUrl + endpoint);
-
-    // appends params to url if their value exists
     if (params) {
       url.search = new URLSearchParams(
         Object.entries(params).filter(([key, value]) => value != null)
       );
     }
-
     return url;
   },
 };
+
+export default api;

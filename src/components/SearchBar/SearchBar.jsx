@@ -3,6 +3,7 @@ import SearchIcon from "../../icons/SearchIcon";
 import { useEffect, useState } from "react";
 
 export default function SearchBar({
+  // more descripive variable names
   q = "",
   placeholder = "Search playlists...",
   onSubmit = (e) => {

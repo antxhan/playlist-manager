@@ -10,11 +10,8 @@ export default function Dialog({ isOpen, onClose, title, children }) {
   useEffect(() => {
     const dialog = dialogRef.current;
     if (dialog) {
-      if (isOpen) {
-        dialog.showModal();
-      } else {
-        dialog.close();
-      }
+      // can be simplified with a ternary operator
+      isOpen ? dialog.showModal() : dialog.close();
     }
   }, [isOpen]);
 

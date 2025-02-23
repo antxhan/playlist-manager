@@ -9,47 +9,31 @@ export default function PlaylistCard({ playlist }) {
 
   if (!playlist) return null;
 
+  // refactor for better readability
+  const { id, images, name, owner, tracks } = playlist;
+  const imageUrl = images?.[0]?.url || placeholderImage;
+  const ownerName = owner?.display_name || owner?.id || "Unknown owner";
+  const trackCount = tracks?.total > 0 ? `${tracks.total} tracks` : "No tracks";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: easeInOut}}
+      transition={{ duration: 0.5, ease: easeInOut }}
     >
       <Link
-        to={{
-          pathname: `/playlists/${playlist.id}`,
-          state: { transition: true },
-        }}
+        to={`/playlists/${id}`}
         className="playlist-card"
         onClick={(e) => {
           e.preventDefault();
-          navigateWithTransition(`/playlists/${playlist.id}`);
+          navigateWithTransition(`/playlists/${id}`);
         }}
       >
-        <img
-          src={
-            playlist.images && playlist.images[0]
-              ? playlist.images[0].url
-              : placeholderImage
-          }
-          alt="Playlist cover"
-          width={150}
-          loading="lazy"
-        />
+        <img src={imageUrl} alt="Playlist cover" width={150} loading="lazy" />
         <div className="playlist-card__info">
-          <p>{playlist.name || "Unknown Playlist"}</p>
-          <p>
-            {playlist.owner
-              ? playlist.owner.display_name
-                ? playlist.owner.display_name
-                : playlist.owner.id
-              : "Unknown owner"}
-          </p>
-          <p>
-            {playlist.tracks.total > 0
-              ? `${playlist.tracks.total} tracks`
-              : "No tracks"}
-          </p>
+          <p>{name || "Unknown Playlist"}</p>
+          <p>{ownerName}</p>
+          <p>{trackCount}</p>
         </div>
       </Link>
     </motion.div>

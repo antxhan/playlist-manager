@@ -11,19 +11,32 @@ export default function PlaylistDialog({
   initialName = "",
   initialDescription = "",
 }) {
-  const [name, setName] = useState(initialName);
-  const [description, setDescription] = useState(initialDescription);
+  // can be made into an object with keys for each input field
+  const [formState, setFormState] = useState({
+    name: initialName,
+    description: initialDescription,
+  });
 
   useEffect(() => {
     if (isOpen) {
-      setName(initialName);
-      setDescription(initialDescription);
+      setFormState({
+        name: initialName,
+        description: initialDescription,
+      });
     }
   }, [isOpen, initialName, initialDescription]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(name, description);
+    onSubmit(formState.name, formState.description);
     onClose();
   };
 
@@ -32,14 +45,16 @@ export default function PlaylistDialog({
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="name"
+          value={formState.name}
+          onChange={handleChange}
           placeholder="Playlist name (required)"
           required
         />
         <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          name="description"
+          value={formState.description}
+          onChange={handleChange}
           placeholder="Playlist description"
         ></textarea>
         <div className="dialog__button-wrapper">{children}</div>
