@@ -1,16 +1,15 @@
-export function generateRandomString(length) {
-  let result = "";
+export const generateRandomString = (length) => {
+  // can be refactored to return directly
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
+  return Array.from({ length }, () =>
+    characters.charAt(Math.floor(Math.random() * characters.length))
+  ).join("");
+};
 
-export function toCamelCase(str) {
-  return str
+export const toCamelCase = (str) =>
+  // can have implicit return
+  str
     .replace(/['’]/g, "")
     .split(/[\s\-_]+/)
     .map((word, index) =>
@@ -19,7 +18,6 @@ export function toCamelCase(str) {
         : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
     )
     .join("");
-}
 
 export function decodeHTMLEntities(str) {
   const tempDiv = document.createElement("div");
@@ -43,12 +41,11 @@ export function sortByFrequency(items) {
   }));
 }
 
-export function toCapitalize(str) {
-  if (typeof str !== "string" || str.length === 0) {
-    return "";
-  }
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
+export const toCapitalize = (str) =>
+  // can use ternary operator for readability and use of implicit return
+  typeof str === "string" && str.length > 0
+    ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+    : "";
 
 export function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -60,20 +57,18 @@ export function shuffle(array) {
 
 export function calculateNumberOfCards(cardWidth, gap, rows = null) {
   const container = document.querySelector(".page-wrapper");
+  // can turn the logic for better readability
+  if (!container) return 1;
 
-  if (container) {
-    const containerPadding = container.offsetWidth < 610 ? 2 * 16 : 2 * 4 * 16;
-    const containerWidth = container.offsetWidth - containerPadding;
+  const containerPadding = container.offsetWidth < 610 ? 32 : 128;
+  const containerWidth = container.offsetWidth - containerPadding;
+  const columns = Math.max(
+    Math.floor((containerWidth + gap) / (cardWidth + gap)),
+    1
+  );
 
-    const denominator = cardWidth + gap;
-    const columns =
-      denominator !== 0 ? Math.floor((containerWidth + gap) / denominator) : 1;
-
-    rows = rows ?? (columns === 1 ? 4 : 2);
-    return Math.max(columns * rows, 1);
-  }
-
-  return 1;
+  rows = rows ?? (columns === 1 ? 4 : 2);
+  return Math.max(columns * rows, 1);
 }
 
 export function msToMMSS(ms) {

@@ -14,11 +14,12 @@ export default function PlaylistSkeleton() {
                 <span className="skeleton"></span>
               </div>
               <div className="playlist-skeleton__description">
-                <span className="skeleton"></span>
-                <span className="skeleton"></span>
-                <span className="skeleton"></span>
-                <span className="skeleton"></span>
-                <span className="skeleton"></span>
+                {/* refactor to use map to reduce duplicated code */}
+                {Array(5)
+                  .fill()
+                  .map((_, index) => (
+                    <span key={index} className="skeleton"></span>
+                  ))}
               </div>
             </div>
           </div>

@@ -17,8 +17,10 @@ import { Toaster } from "react-hot-toast";
 import SearchSkeleton from "./pages/Search/Skeleton";
 
 const token = db.token.get();
-const routes = (
-  <>
+
+// refactor to its own component
+const AppRoutes = () => (
+  <Routes>
     <Route path="/" element={<App />} />
     <Route path="callback" element={<Callback />} />
     <Route path="*" element={<NotFound />} />
@@ -29,7 +31,7 @@ const routes = (
     <Route element={<ProtectedRoute loading={<SearchSkeleton />} />}>
       <Route path="/search?" element={<Search />} />
     </Route>
-  </>
+  </Routes>
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -38,11 +40,12 @@ root.render(
     <React.StrictMode>
       {token ? (
         <PlayerProvider token={token}>
-          {<Routes>{routes}</Routes>}
+          {/* refactor for readability */}
+          <AppRoutes />
           <GlobalPlayer />
         </PlayerProvider>
       ) : (
-        <Routes>{routes}</Routes>
+        <AppRoutes />
       )}
       <Toaster
         toastOptions={{

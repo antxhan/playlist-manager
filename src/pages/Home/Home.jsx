@@ -34,7 +34,8 @@ export default function Home() {
         endpoint: `users/${user.id}/playlists`,
         body: { name: name, description: description },
       });
-      let newPlaylist = await response.json();
+      // preferably use const instead of let
+      const newPlaylist = await response.json();
 
       if (addTopTracks) {
         try {
@@ -48,15 +49,17 @@ export default function Home() {
             body: { uris: topTracks.items.map((track) => track.uri) },
           });
 
-          const total = topTracks.items.length ?? 0;
-          newPlaylist.tracks = { total: total };
+          // can be on one line
+          newPlaylist.tracks = { total: topTracks.items.length ?? 0 };
         } catch (error) {
           handleError(error, "Failed to add tracks to playlist.");
         }
       }
 
-      const displayName = newPlaylist.owner.display_name ?? user.display_name;
-      newPlaylist.owner = { display_name: displayName };
+      // can be one line
+      newPlaylist.owner = {
+        display_name: newPlaylist.owner.display_name ?? user.display_name,
+      };
 
       setPlaylists((prevPlaylists) => [newPlaylist, ...prevPlaylists]);
     } catch (error) {
@@ -70,7 +73,7 @@ export default function Home() {
 
   useEffect(() => {
     api
-      .me()
+      .get({ endpoint: "me" })
       .then((user) => setUser(user))
       .catch((error) => handleError(error, "Failed to fetch user data."));
     api.me
@@ -115,7 +118,8 @@ export default function Home() {
             <AddPlaylistIcon />
           </StandardButton>
         </div>
-        {playlists.length > 0 ? (
+        {/* can use this as condition */}
+        {!!playlists.length ? (
           <Suspense
             fallback={<InfinitePlaylistGridSkeleton amount={numberOfCards} />}
           >

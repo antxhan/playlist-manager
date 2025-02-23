@@ -17,8 +17,10 @@ export default function Search() {
   // const [isLoading, setIsLoading] = useState(false);
   const [nextPage, setNextPage] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  // preferably use a more descriptive variable name than q
   const q = searchParams.get("q");
 
+  // delete commented out code
   // const handleError = useHandleError();
 
   // useEffect(() => {

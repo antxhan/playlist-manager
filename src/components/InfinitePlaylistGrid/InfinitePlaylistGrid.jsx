@@ -8,13 +8,10 @@ export default function InfinitePlaylistGrid({
   getNextPage,
   hasMore,
   endMessage = "No more results",
-  loading = (
-    <>
-      {Array.from(Array(10)).map((_, index) => (
-        <PlaylistCardSkeleton key={index} />
-      ))}
-    </>
-  ),
+  // doesnt need to be in a fragment
+  loading = Array.from(Array(10)).map((_, index) => (
+    <PlaylistCardSkeleton key={index} />
+  )),
 }) {
   return (
     <InfiniteScroll

@@ -8,6 +8,10 @@ export default function Skeleton() {
         <p className="skeleton"></p>
         <p className="skeleton"></p>
         <p className="skeleton"></p>
+        {/* ALTERNATIVE */}
+        {/* {[...Array(3)].map((_, index) => (
+          <p key={index} className="skeleton"></p>
+        ))} */}
       </div>
     </div>
   );

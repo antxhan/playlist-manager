@@ -1,24 +1,38 @@
-import "../PlaylistDialog/PlaylistDialog.css";
-import "./CreatePlaylistDialog.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dialog from "../../Dialog/Dialog";
+import "./PlaylistDialog.css";
+import "./CreatePlaylistDialog.css";
+import "./EditPlaylistDialog.css";
 
-export default function CreatePlaylistDialog({
+// a new consolidated playlist dialog component instead of having multiple playlist dialog components
+export default function ConsolidatedPlaylistDialog({
   isOpen,
   onClose,
   onSubmit,
   title,
   children,
+  initialName = "",
+  initialDescription = "",
+  addTopTracksOption = false,
+  initialAddTopTracks = false,
 }) {
   const DESCRIPTION_LIMIT = 300;
-  // can be made into an object with keys for each input field
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    addTopTracks: false,
+    name: initialName,
+    description: initialDescription,
+    addTopTracks: initialAddTopTracks,
   });
 
-  // onChange handler for input fields
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        name: initialName,
+        description: initialDescription,
+        addTopTracks: initialAddTopTracks,
+      });
+    }
+  }, [isOpen, initialName, initialDescription, initialAddTopTracks]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
@@ -62,16 +76,18 @@ export default function CreatePlaylistDialog({
             /{DESCRIPTION_LIMIT}
           </span>
         </div>
-        <div className="playlist-dialog__checkbox-wrapper">
-          <input
-            type="checkbox"
-            name="addTopTracks"
-            id="addTopTracks"
-            checked={formData.addTopTracks}
-            onChange={handleChange}
-          />
-          <label htmlFor="addTopTracks">Add your top 20 tracks</label>
-        </div>
+        {addTopTracksOption && (
+          <div className="playlist-dialog__checkbox-wrapper">
+            <input
+              type="checkbox"
+              name="addTopTracks"
+              id="addTopTracks"
+              checked={formData.addTopTracks}
+              onChange={handleChange}
+            />
+            <label htmlFor="addTopTracks">Add your top 20 tracks</label>
+          </div>
+        )}
         <div className="dialog__button-wrapper">{children}</div>
       </form>
     </Dialog>

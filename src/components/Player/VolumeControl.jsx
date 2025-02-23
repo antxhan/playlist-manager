@@ -15,9 +15,8 @@ export default function VolumeControl({ disabled }) {
   const sliderRef = useRef(null);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 600);
-    };
+    // can be one line
+    const handleResize = () => setIsMobile(window.innerWidth <= 600);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -57,21 +56,14 @@ export default function VolumeControl({ disabled }) {
   const { volume, setVolume, isSDKReady, deviceId, isLoading } = playerContext;
 
   const toggleMute = () => {
-    if (!isMobile) {
-      if (volume > 0) {
-        console.log("muted");
-        setPrevVolume(volume);
-        setLocalVolume(0);
-        setVolume(0, deviceId);
-      } else {
-        console.log("sound on");
-        setLocalVolume(prevVolume);
-        setVolume(prevVolume, deviceId);
-      }
-    }
-
+    // refactored for readability
     if (isMobile) {
       setShowSlider(!showSlider);
+    } else {
+      const newVolume = volume > 0 ? 0 : prevVolume;
+      setPrevVolume(volume > 0 ? volume : prevVolume);
+      setLocalVolume(newVolume);
+      setVolume(newVolume, deviceId);
     }
   };
 

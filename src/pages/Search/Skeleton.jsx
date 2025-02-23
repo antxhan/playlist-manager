@@ -6,7 +6,8 @@ export default function SearchSkeleton() {
   return (
     <Layout>
       <header className="page-header">
-        <SearchBar q={""} />
+        {/* an empty string shouldnt be in curly braces */}
+        <SearchBar q="" />
       </header>
       <main>
         <RecommendView />

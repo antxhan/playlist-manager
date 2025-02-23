@@ -10,16 +10,16 @@ export default function ErrorPage() {
   const navigateWithTransition = useNavigateWithTransition();
   let errorMessage = location.state?.message || "An unexpected error occured.";
   const statusCode = location.state?.statusCode || 500;
-
   const token = db.token.get();
-  console.log(token);
-  if (token) {
-    const isSignedIn = !!db.token.get().access_token;
-    if (isSignedIn && statusCode === 403) {
-      errorMessage =
-        "Your account is not whitelisted. Sign up to get access. Spots are limited and are manually reviewed.";
-    }
-  } else {
+  const isSignedIn = !!token?.access_token;
+
+  // delete console.log from production code
+
+  // refactor for readability
+  if (isSignedIn && statusCode === 403) {
+    errorMessage =
+      "Your account is not whitelisted. Sign up to get access. Spots are limited and are manually reviewed.";
+  } else if (!token) {
     navigateWithTransition("/");
   }
 
@@ -33,7 +33,8 @@ export default function ErrorPage() {
           <h1>Oops! Something went wrong</h1>
           <p>{errorMessage}</p>
         </div>
-        {token && !!db.token.get().access_token && statusCode === 403 ? (
+        {/* simplify to */}
+        {isSignedIn && statusCode === 403 ? (
           <Link to="https://forms.gle/JsNWEx3GHCLfNhy77" className="error__cta">
             <AccentButton
               onClick={() => {

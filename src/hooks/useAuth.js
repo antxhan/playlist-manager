@@ -5,8 +5,8 @@ export function useAuth() {
   const [isSignedIn, setIsSignedIn] = useState(null);
 
   useEffect(() => {
-    const token = db.token.get();
-    setIsSignedIn(!!token);
+    // can be one line
+    setIsSignedIn(!!db.token.get());
   }, []);
 
   return isSignedIn;
