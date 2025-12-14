@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router";
+import { Toaster } from "react-hot-toast";
+import "./index.css";
+import App from "./App.jsx";
 import Playlist from "./pages/Playlist/Playlist";
 import Callback from "./utils/callback/Callback";
 import NotFound from "./pages/NotFound/NotFound";
@@ -13,7 +13,6 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { PlayerProvider } from "./components/Player/PlayerContext";
 import { db } from "./utils/db";
 import GlobalPlayer from "./components/Player/GlobalPlayer";
-import { Toaster } from "react-hot-toast";
 import SearchSkeleton from "./pages/Search/Skeleton";
 
 const token = db.token.get();
@@ -32,13 +31,12 @@ const routes = (
   </>
 );
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <React.StrictMode>
       {token ? (
         <PlayerProvider token={token}>
-          {<Routes>{routes}</Routes>}
+          <Routes>{routes}</Routes>
           <GlobalPlayer />
         </PlayerProvider>
       ) : (
@@ -57,8 +55,3 @@ root.render(
     </React.StrictMode>
   </BrowserRouter>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
